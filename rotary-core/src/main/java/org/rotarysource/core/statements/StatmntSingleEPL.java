@@ -1,17 +1,31 @@
+/*
+Copyright (c) 2013 J. L. Canales Gasco
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+ 
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+*/
+
 package org.rotarysource.core.statements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.UpdateListener;
-import com.espertech.esperha.client.EPStatementExistsException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to create and register a single EPL statement associated to multiple
@@ -20,23 +34,9 @@ import org.apache.commons.logging.LogFactory;
  * 
  * @author J.L. Canales
  */
-public class StatmntSingleEPL implements Statement {
-	private static Log log = LogFactory.getLog(StatmntSingleEPL.class);
+public class StatmntSingleEPL extends StatmntPrepare {
+	private static Logger  log = LoggerFactory.getLogger(StatmntSingleEPL.class);
 
-	/**
-	 * EPL Statement for this Item
-	 */
-	private String eplStatement;
-	
-	/**
-	 * EPL Statement for this Item
-	 */
-	private String eplName;	
-
-	/**
-	 * Esper to manage statements in Esper core
-	 */
-	private EPStatement statementObj;
 
     /**
      * Listener list linked to this Statement Item
@@ -47,7 +47,7 @@ public class StatmntSingleEPL implements Statement {
 	 * Create a new StatmntSingleQuery, for bean-style usage.
 	 */
 	public StatmntSingleEPL() {
-		eplStatement = "";
+		super();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class StatmntSingleEPL implements Statement {
 	 *            EPL statement to initialize this Item
 	 */
 	public StatmntSingleEPL(String aiEplStatement) {
-		setEplStatement(aiEplStatement);
+		super(aiEplStatement);
     	this.listeners = new ArrayList<UpdateListener>();
 	}
 
@@ -68,8 +68,7 @@ public class StatmntSingleEPL implements Statement {
 	 *            EPL statement to initialize this Item
 	 */
 	public StatmntSingleEPL(String aiEplStatement, String aiEplName) {
-		this.eplStatement = aiEplStatement;
-		this.eplName      = aiEplName;
+		super( aiEplStatement, aiEplName);
     	this.listeners    = new ArrayList<UpdateListener>();
 	}
 	/**
@@ -80,74 +79,19 @@ public class StatmntSingleEPL implements Statement {
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {
-		log.info("Registering Statement: " + eplStatement);
-		if (statementObj != null) {
-			log.debug("Statement registered yet. Destroying");
-			statementObj.destroy();
-			statementObj = null;
-		}
-		try {
-				statementObj = cepEngine.getEPAdministrator().createEPL( eplStatement);
+		super.register(cepEngine);
 
-			
-		} catch (EPStatementExistsException exception) {
-			log.warn(exception.getMessage());
-			
-			// Processing to recover eplName from exception Message.
-			// EPL statement can be named using @Name() notation in EPL sentence.
-			// In that case, setEplStatement has extract the EPL Name, so
-			// we recover the statement Object related with that eplName to inject
-			// the listener
-			
-			statementObj = cepEngine.getEPAdministrator().getStatement( eplName);
-			log.warn("Recovering EplName= " +eplName);
-
-		}
+		log.info("Adding Listeners to : {}", this.getEplName());
 		
-		// Joining listeners to EPL
+		// Joining listeners to EPL object
 		for (int i = 0; i < listeners.size(); i++){
-			statementObj.addListener(listeners.get(i));
+			this.statementObj.addListener(listeners.get(i));
 		}
+		
+		log.info("Successfull listener registration for: {}", this.getEplName());
 	}
 
-	/**
-	 * Method to Statement unregistering in a EventProcessor engine when destoy
-	 * is called, Event Processor Engine stops to use this statement
-	 * 
-	 * @param EPServiceProvider
-	 *            . Esper Event Processor engine where register the statement.
-	 */
-	@Override
-	public void destroy() {
-		if (statementObj != null) {
-			log.info("Unregistering Statement: " + statementObj.getText());
-			statementObj.destroy();
-			statementObj = null;
-		}
-	}
 
-	/**
-	 * Set the EPL Statement for this item.
-	 * 
-	 * @param aiEplStatement  EPL Statement
-	 */
-	public void setEplStatement(String aiEplStatement) {
-		this.eplStatement = aiEplStatement;
-		
-		// EPL statement can be named using @Name() notation in EPL sentence.
-		// Statement object hasnt any Name reference to recover the EPL so
-		// Its necessary to parse the EPL to recover the EPL Name
-		// and attach the listener.	
-		
-		String expression = ".*@Name\\('.*'\\).*";
-		//Make the comparison case-insensitive.  
-		Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);  
-		Matcher matcher = pattern.matcher(aiEplStatement); 
-		if(matcher.matches()){  
-			eplName = aiEplStatement.split("@Name\\('")[1].split("'\\)")[0];
-			log.debug("Localized EPL Name in EPL Statement: " + eplName);
-		}
-	}
 
 	/**
 	* Set the Listeners list for this item.
@@ -156,19 +100,5 @@ public class StatmntSingleEPL implements Statement {
 	public void setListeners(List<UpdateListener> aiListeners) {
 		this.listeners = aiListeners;
 	}
-	
 
-	public String getEplName() {
-		return eplName;
-	}
-
-	/**
-	 * Set the Statement Name to locate it in the engine
-	 * 
-	 * @param aiEplName
-	 *            EPL Statement name
-	 */	
-	public void setEplName(String aiEplName) {
-		this.eplName = aiEplName;
-	}
 }
