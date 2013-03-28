@@ -24,12 +24,16 @@
 
 	<modules>
 		<module>rotary-events</module>
+		<module>rotary-core</module>
 	</modules>
 
 	<properties>
 		<!-- Project properties -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Esper CEP Framework Version -->
+		<esper-version>4.6.0</esper-version>
 
 		<!-- Java libraries versions -->
 		<junit-version>4.10</junit-version>
@@ -167,6 +171,38 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+
+			<!-- ###################################### -->
+			<!-- Esper Framework Dependencies -->
+			<!-- ###################################### -->
+			<dependency>
+				<groupId>com.espertech</groupId>
+				<artifactId>esper</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.espertech</groupId>
+				<artifactId>esperha-core</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.espertech</groupId>
+				<artifactId>esperha-xsbdb</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.espertech</groupId>
+				<artifactId>esperha-xscass</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.espertech</groupId>
+				<artifactId>esperha-xsdboe</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+
+
 			<!-- Spring dependencies -->
 			<dependency>
 				<groupId>org.springframework</groupId>
