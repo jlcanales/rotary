@@ -25,6 +25,7 @@
 	<modules>
 		<module>rotary-events</module>
 		<module>rotary-core</module>
+		<module>rotary-listener</module>
 	</modules>
 
 	<properties>
