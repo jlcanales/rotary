@@ -28,9 +28,9 @@ import com.espertech.esperha.client.ConfigurationHA;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.rotarysource.core.statements.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement the CEP Core class.
@@ -41,7 +41,7 @@ import org.rotarysource.core.statements.Statement;
  */
 public class CepEngine {
 	
-	private static Log        log = LogFactory.getLog(CepEngine.class);
+	private static Logger  log = LoggerFactory.getLogger(CepEngine.class);
 	
 	/**
 	 * Stand Alone Mode. Statement processor without High Availability behavior
@@ -100,7 +100,7 @@ public class CepEngine {
 	 */
 	private void registerEsperStatements(){
 		if(statements == null || statements.size() == 0){
-			log.info("No statements registered");
+			log.info("No statements defined for this CEP Engine");
 			return;
 		}
 			
@@ -118,8 +118,8 @@ public class CepEngine {
 	 * @return EPServiceProvider Instantiated Esper cep engine 
 	 */
 	private EPServiceProvider initCepEngine(){
-		log.info("Initializing EP Engine");
-		log.info("Configurating EP Engine with High Availability Mode: " + haMode);		
+		log.info("Initializing CEP Engine");
+		log.info("Configurating CEP Engine with High Availability Mode: " + haMode);		
 		
 		Configuration configuration = null;
         
@@ -141,13 +141,7 @@ public class CepEngine {
 				
 		}
 
-		
-		/*
-        configuration.addEventType("ProdEvent", ProdEvent.class.getName());
-        configuration.addImport("com.edcontrol.server.eplUtils.*"); // package import
-        
-        */
-        
+
         EPServiceProvider engine = EPServiceProviderManager.getDefaultProvider(configuration);
 
         return engine;
@@ -167,7 +161,7 @@ public class CepEngine {
 	 * the correct HA storage
 	 */	
 	public void shutdown(){
-		log.info("Executing CEP Engine graceful SHUTDOWN");
+		log.info("Starting CEP Engine graceful SHUTDOWN");
 		cepEngine.destroy();
 	}
 	
