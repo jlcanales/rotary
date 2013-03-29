@@ -31,17 +31,6 @@ public class StatmntSingleQuery extends StatmntSingleEPL {
 		super(aiEplStatement);
 	}
 
-	/**
-	 * Create a new StatmntSingleQuery, given a EPL statement
-	 * 
-	 * @param aiEplStatement
-	 *            EPL statement to initialize this Item
-	 */
-	public StatmntSingleQuery(String aiEplStatement, String aiEplName) {
-		super( aiEplStatement, aiEplName);
-	}
-
-
 
 	/**
 	 * Set the Listener for this item.

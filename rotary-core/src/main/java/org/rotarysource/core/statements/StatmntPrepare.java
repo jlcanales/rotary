@@ -43,11 +43,6 @@ public class StatmntPrepare implements Statement {
 	 * EPL Statement for this Item
 	 */
 	private String eplStatement;
-	
-	/**
-	 * EPL Statement Name for this Item
-	 */
-	private String eplName;	
 
 	/**
 	 * Esper Statement Object to manage statements in Esper core
@@ -73,16 +68,6 @@ public class StatmntPrepare implements Statement {
 	}
 
 	/**
-	 * Create a new StatmntSingleQuery, given a EPL statement
-	 * 
-	 * @param aiEplStatement
-	 *            EPL statement to initialize this Item
-	 */
-	public StatmntPrepare(String aiEplStatement, String aiEplName) {
-		this.eplStatement = aiEplStatement;
-		this.eplName      = aiEplName;
-	}
-	/**
 	 * Method to Statement registering in a EventProcessor engine
 	 * 
 	 * @param EPServiceProvider
@@ -104,18 +89,27 @@ public class StatmntPrepare implements Statement {
 		} catch (EPStatementExistsException exception) {
 			log.warn(exception.getMessage());
 			
-			// Processing to recover eplName from exception Message.
+			
 			// EPL statement can be named using @Name() notation in EPL sentence.
-			// In that case, setEplStatement has extract the EPL Name, so
-			// we recover the statement Object related with that eplName to inject
-			// the listener
+			// Statement object hasnt any Name reference to recover the EPL so
+			// Its necessary to parse the EPL to recover the EPL Name
+			String eplName = null;
+			String expression = ".*@Name\\('.*'\\).*";
+			//Make the comparison case-insensitive.  
+			Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);  
+			Matcher matcher = pattern.matcher(eplStatement); 
+			if(matcher.matches()){  
+				eplName = eplStatement.split("@Name\\('")[1].split("'\\)")[0];
+				log.debug("Localized EPL Name in EPL Statement: " + eplName);
+			}
+			
 			
 			statementObj = cepEngine.getEPAdministrator().getStatement( eplName);
 			log.warn("Recovered EplName={}", eplName);
 
 		}
 		
-		log.info("Successfull registered Statement: {}", eplName);
+		log.info("Successfull registered Statement: {}", getEplName());
 	}
 
 	/**
@@ -141,20 +135,6 @@ public class StatmntPrepare implements Statement {
 	 */
 	public void setEplStatement(String aiEplStatement) {
 		this.eplStatement = aiEplStatement;
-		
-		// EPL statement can be named using @Name() notation in EPL sentence.
-		// Statement object hasnt any Name reference to recover the EPL so
-		// Its necessary to parse the EPL to recover the EPL Name
-		// and attach the listener.	
-		
-		String expression = ".*@Name\\('.*'\\).*";
-		//Make the comparison case-insensitive.  
-		Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);  
-		Matcher matcher = pattern.matcher(aiEplStatement); 
-		if(matcher.matches()){  
-			eplName = aiEplStatement.split("@Name\\('")[1].split("'\\)")[0];
-			log.debug("Localized EPL Name in EPL Statement: {}", eplName);
-		}
 	}
 
 	
@@ -163,16 +143,11 @@ public class StatmntPrepare implements Statement {
 	 * @return EPL Statement name
 	 */
 	public String getEplName() {
-		return eplName;
+		
+		if ( statementObj != null)
+			return 	statementObj.getName();
+		else
+			return null;
 	}
 
-	/**
-	 * Set the Statement Name to locate it in the engine
-	 * 
-	 * @param aiEplName
-	 *            EPL Statement name
-	 */	
-	public void setEplName(String aiEplName) {
-		this.eplName = aiEplName;
-	}
 }

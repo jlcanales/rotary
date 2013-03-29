@@ -62,16 +62,6 @@ public class StatmntSingleEPL extends StatmntPrepare {
 	}
 
 	/**
-	 * Create a new StatmntSingleQuery, given a EPL statement
-	 * 
-	 * @param aiEplStatement
-	 *            EPL statement to initialize this Item
-	 */
-	public StatmntSingleEPL(String aiEplStatement, String aiEplName) {
-		super( aiEplStatement, aiEplName);
-    	this.listeners    = new ArrayList<UpdateListener>();
-	}
-	/**
 	 * Method to Statement registering in a EventProcessor engine
 	 * 
 	 * @param EPServiceProvider
