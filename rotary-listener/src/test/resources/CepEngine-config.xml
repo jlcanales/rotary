@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+ 
+	
+    <!-- CEP engine structure definition                                    -->
+    <!-- In this bean all the statements are injected                       -->
+	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
+		<constructor-arg>
+			<set>
+				<ref bean="objectBaseListenerStatement"/>
+			</set>
+		</constructor-arg>
+		<constructor-arg value = "0"/> <!-- 0: STANDALONE_HA_MODE  1: FILESOUPORT_HA_MODE-->
+	</bean>
+	
+	<!-- Statements for Object Under Test  -->
+	<!-- ObjectBaseListner -->
+	<bean id="objectBaseListenerMock"
+		class="org.rotarysource.listener.ObjectBaseMock"/>
+	
+	<bean id="objectBaseListenerStatement"
+		class="org.rotarysource.core.statements.StatmntSingleQuery">
+		<property name="eplStatement" value="@Name('objectBaseListenerStatement') select istream * from IntegerEvent" />
+		<property name="listener" ref="objectBaseListenerMock"/>
+	</bean>  
+       
+</beans>
