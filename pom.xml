@@ -26,6 +26,7 @@
 		<module>rotary-events</module>
 		<module>rotary-core</module>
 		<module>rotary-listener</module>
+		<module>rotary-inputadapter</module>
 	</modules>
 
 	<properties>

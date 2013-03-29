@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+   <appender name="Terminal" class="org.apache.log4j.ConsoleAppender">
+      <param name="Threshold" value="INFO"/>
+      <param name="Target" value="System.out"/>
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="[%30.30t] %-30.30c{1} %-5p %m%n"/>
+      </layout>
+   </appender>
+
+
+  <!--  ### Uncomment ALL for iBATIS logging -->
+<!-- 
+    <logger name="java.sql">
+        <level value="debug" />
+    </logger>
+
+    <logger name="org.apache.ibatis">
+        <level value="debug" />
+    </logger>
+    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <level value="debug" />
+    </logger>
+-->  
+
+    <root>
+       <level value="INFO" />
+       <appender-ref ref="Terminal" />
+    </root>
+
+
+</log4j:configuration>
