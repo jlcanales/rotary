@@ -18,14 +18,25 @@
 	</bean>
 	
 	<!-- Statements for Object Under Test  -->
-	<!-- ObjectBaseListner -->
-	<bean id="objectBaseListenerMock"
-		class="org.rotarysource.listener.ObjectBaseMock"/>
+
 	
 	<bean id="objectBaseListenerStatement"
 		class="org.rotarysource.core.statements.StatmntSingleQuery">
 		<property name="eplStatement" value="@Name('objectBaseListenerStatement') select istream * from IntegerEvent" />
-		<property name="listener" ref="objectBaseListenerMock"/>
+		<property name="listener" ref="objectBaseListenerSpy"/>
 	</bean>  
+	
+	<!--  ############################################################################# -->
+	<!--  This test Aplication Context is parametriced to use Spy object instead      -->
+	<!--  ObjectBaseMock Object.														-->
+	<!--  ############################################################################# -->
+	
+	<bean id="objectBaseListenerSpy" name="objectBaseListenerSpy" class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="objectBaseListenerMock"/>
+	</bean>
+	
+	<!-- ObjectBaseListner -->
+	<bean id="objectBaseListenerMock"
+		class="org.rotarysource.listener.ObjectBaseMock"/>
        
 </beans>
