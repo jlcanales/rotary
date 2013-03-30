@@ -15,21 +15,29 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
 */
-		
+
+
 package org.rotarysource.events;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class represent a multi-purpose event.
  * Basic Event has simple event information as header and a variable
  * Map with the body event information.
  * 
+ * It is JAXB annotated in such way it can be XML marshall and unmarshall allowing
+ * bind it to any transport (such JMS).
  * @author J. L. Canales
  * 
  */
+
+@XmlRootElement
 public class BasicEvent implements Serializable{
 	
 	/**
@@ -78,6 +86,7 @@ public class BasicEvent implements Serializable{
 	* Return the Event Id for this item.
 	* @return String Event Identificator
 	*/
+	@XmlElement(required=true)
 	public String getEventId() {
 		return eventId;
 	}
@@ -86,6 +95,7 @@ public class BasicEvent implements Serializable{
 	* Return the Event Code for this item.
 	* @return String Event Code Identificator
 	*/
+	@XmlElement(required=true)
 	public String getEventCode() {
 		return eventCode;
 	}
@@ -94,6 +104,7 @@ public class BasicEvent implements Serializable{
 	* Return the Event occurrence timestamp for this item.
 	* @return Date Event occurrence timestamp
 	*/
+	@XmlElement(required=true)
 	public Date getEventTimestamp() {
 		return eventTimestamp;
 	}
@@ -103,6 +114,7 @@ public class BasicEvent implements Serializable{
 	* Available values are  CRITICAL, FATAL, ERROR, DEBUG, INFO
 	* @return String Event Type
 	*/
+	@XmlElement(required=true)
 	public String getEventType() {
 		return eventType;
 	}

@@ -43,7 +43,7 @@
 		<spring-version>3.0.7.RELEASE</spring-version>
 		<aspectj-version>1.6.11</aspectj-version> <!-- Must be compatible with spring-version -->
 		<slf4j-version>1.6.6</slf4j-version>
-		<xmlbeans-version>2.5.0</xmlbeans-version>
+		<jaxb-version>2.2</jaxb-version>
 		<activemq-version>5.5.1</activemq-version>
 		<!-- Java SDK version -->
 		<source-java-version>1.6</source-java-version>
@@ -323,12 +323,24 @@
 				<version>${slf4j-version}</version>
 			</dependency>
 
-			<!-- xmlbeans -->
-			<dependency>
-				<groupId>org.apache.xmlbeans</groupId>
-				<artifactId>xmlbeans</artifactId>
-				<version>${xmlbeans-version}</version>
-			</dependency>
+		<!-- ###################################### -->
+		<!-- JAXB dependencies 	for XML marshall	-->
+		<!-- ###################################### -->		
+         <dependency>
+             <groupId>javax.xml.bind</groupId>
+             <artifactId>jaxb-api</artifactId>
+             <version>${jaxb-version}</version>
+         </dependency>
+         <dependency>
+             <groupId>com.sun.xml.bind</groupId>
+             <artifactId>jaxb-xjc</artifactId>
+             <version>${jaxb-version}</version>
+         </dependency>
+         <dependency>
+             <groupId>com.sun.xml.bind</groupId>
+             <artifactId>jaxb-impl</artifactId>
+             <version>${jaxb-version}</version>
+         </dependency>	
 
 			<!-- testing -->
 			<dependency>
