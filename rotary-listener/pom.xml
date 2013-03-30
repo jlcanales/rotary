@@ -14,11 +14,23 @@
 	<description>Rotary CEP Event Driven Listener classes and utils</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- Proyect Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- ###################################### -->
+		<!-- Esper Cep Engine Dependencies -->
+		<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
 		</dependency>
- 
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
@@ -43,6 +55,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -85,7 +102,7 @@
 						<additionalClasspathElement>${basedir}/src/test/resources</additionalClasspathElement>
 					</additionalClasspathElements>
 					<includes>
-						<include>tst/**/*Test.java</include>
+						<include>**/*Test.java</include>
 					</includes>
 					<systemProperties>
 						<property>
@@ -101,15 +118,13 @@
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
 		</plugins>
-		
+
 		<testResources>
 			<testResource>
-				<targetPath>config</targetPath>
 				<filtering>false</filtering>
 				<directory>${basedir}/src/main/resources</directory>
 			</testResource>
 			<testResource>
-				<targetPath>config</targetPath>
 				<filtering>false</filtering>
 				<directory>${basedir}/src/test/resources</directory>
 			</testResource>

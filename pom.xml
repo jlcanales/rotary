@@ -36,8 +36,10 @@
 		<!-- Esper CEP Framework Version -->
 		<esper-version>4.6.0</esper-version>
 
-		<!-- Java libraries versions -->
+		<!-- Test libraries versions -->
 		<junit-version>4.10</junit-version>
+		<mockito-version>1.9.5</mockito-version>
+
 		<log4j-version>1.2.17</log4j-version>
 		<spring-version>3.0.7.RELEASE</spring-version>
 		<aspectj-version>1.6.11</aspectj-version> <!-- Must be compatible with spring-version -->
@@ -172,7 +174,14 @@
 
 	<dependencyManagement>
 		<dependencies>
-
+			<!-- ###################################### -->
+			<!-- Proyect Modules Dependencies -->
+			<!-- ###################################### -->
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
@@ -309,7 +318,7 @@
 				<artifactId>cglib</artifactId>
 				<version>2.2.2</version>
 			</dependency>
-			
+
 			<!-- logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -337,9 +346,9 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-test</artifactId>
-				<version>${camel-version}</version>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito-version}</version>				
 				<scope>test</scope>
 			</dependency>
 			<dependency>
