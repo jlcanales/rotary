@@ -37,7 +37,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
-			<artifactId>esperha-xsbdb</artifactId>
+			<artifactId>esperha-ehafile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
 
 

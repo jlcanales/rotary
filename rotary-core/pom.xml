@@ -18,14 +18,18 @@
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
 		</dependency>
- 
+
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
-			<artifactId>esperha-xsbdb</artifactId>
+			<artifactId>esperha-ehafile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
 
 
@@ -101,7 +105,7 @@
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
 		</plugins>
-		
+
 		<testResources>
 			<testResource>
 				<targetPath>config</targetPath>
