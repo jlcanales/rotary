@@ -174,7 +174,19 @@
 	<dependencyManagement>
 		<dependencies>
 
-
+			<!-- ###################################### -->
+			<!-- rotarysource Modules Dependencies -->
+			<!-- ###################################### -->
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-events</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->
@@ -310,7 +322,7 @@
 				<artifactId>cglib</artifactId>
 				<version>2.2.2</version>
 			</dependency>
-			
+
 			<!-- logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -323,24 +335,24 @@
 				<version>${slf4j-version}</version>
 			</dependency>
 
-		<!-- ###################################### -->
-		<!-- JAXB dependencies 	for XML marshall	-->
-		<!-- ###################################### -->		
-         <dependency>
-             <groupId>javax.xml.bind</groupId>
-             <artifactId>jaxb-api</artifactId>
-             <version>${jaxb-version}</version>
-         </dependency>
-         <dependency>
-             <groupId>com.sun.xml.bind</groupId>
-             <artifactId>jaxb-xjc</artifactId>
-             <version>${jaxb-version}</version>
-         </dependency>
-         <dependency>
-             <groupId>com.sun.xml.bind</groupId>
-             <artifactId>jaxb-impl</artifactId>
-             <version>${jaxb-version}</version>
-         </dependency>	
+			<!-- ###################################### -->
+			<!-- JAXB dependencies for XML marshall -->
+			<!-- ###################################### -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-xjc</artifactId>
+				<version>${jaxb-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${jaxb-version}</version>
+			</dependency>
 
 			<!-- testing -->
 			<dependency>

@@ -13,11 +13,26 @@
 	<description>Rotary Input Adapter Module</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<!-- ###################################### -->
+		<!-- Esper Framework Dependencies -->
+		<!-- ###################################### -->
+
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
 		</dependency>
- 
+
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
@@ -62,6 +77,29 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
+
+		<!-- ###################################### -->
+		<!-- ActiveMQ and JMS dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-pool</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+		</dependency>
+
+		<!-- for javax.jms 1.1 dependency -->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -100,7 +138,7 @@
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
 		</plugins>
-		
+
 		<testResources>
 			<testResource>
 				<targetPath>config</targetPath>
