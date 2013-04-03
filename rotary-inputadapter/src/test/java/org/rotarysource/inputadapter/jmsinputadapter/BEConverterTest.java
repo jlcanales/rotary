@@ -12,15 +12,19 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.*;
 import org.rotarysource.events.BasicEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.support.converter.MessageConversionException;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
 
-public class BEConverterTest{
+@RunWith(BlockJUnit4ClassRunner.class)
+public class BEConverterTest extends TestCase{
 
 	private static Logger log = LoggerFactory.getLogger(BEConverterTest.class);
 	
