@@ -122,7 +122,7 @@
 						<additionalClasspathElement>${basedir}/src/test/resources</additionalClasspathElement>
 					</additionalClasspathElements>
 					<includes>
-						<include>tst/**/*Test.java</include>
+						<include>**/*Test.java</include>
 					</includes>
 					<systemProperties>
 						<property>
