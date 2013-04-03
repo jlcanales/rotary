@@ -26,6 +26,7 @@
 		<module>rotary-events</module>
 		<module>rotary-core</module>
 		<module>rotary-listener</module>
+		<module>rotary-inputadapter</module>
 	</modules>
 
 	<properties>
@@ -44,7 +45,7 @@
 		<spring-version>3.0.7.RELEASE</spring-version>
 		<aspectj-version>1.6.11</aspectj-version> <!-- Must be compatible with spring-version -->
 		<slf4j-version>1.6.6</slf4j-version>
-		<xmlbeans-version>2.5.0</xmlbeans-version>
+		<jaxb-version>2.2</jaxb-version>
 		<activemq-version>5.5.1</activemq-version>
 		<!-- Java SDK version -->
 		<source-java-version>1.6</source-java-version>
@@ -182,7 +183,11 @@
 				<artifactId>rotary-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-events</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->
@@ -326,11 +331,23 @@
 				<version>${slf4j-version}</version>
 			</dependency>
 
-			<!-- xmlbeans -->
+			<!-- ###################################### -->
+			<!-- JAXB dependencies for XML marshall -->
+			<!-- ###################################### -->
 			<dependency>
-				<groupId>org.apache.xmlbeans</groupId>
-				<artifactId>xmlbeans</artifactId>
-				<version>${xmlbeans-version}</version>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-xjc</artifactId>
+				<version>${jaxb-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${jaxb-version}</version>
 			</dependency>
 
 			<!-- testing -->
