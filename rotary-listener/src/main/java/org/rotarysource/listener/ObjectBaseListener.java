@@ -68,6 +68,7 @@ public abstract class ObjectBaseListener<T> implements UpdateListener {
 			// Cast exceptions
 			if (getArgumentTypeClass().equals(
 					newEvents[i].getEventType().getUnderlyingType())) {
+				@SuppressWarnings("unchecked")
 				T event = (T) newEvents[i].getUnderlying();
 				processEvent(event);
 			} else {

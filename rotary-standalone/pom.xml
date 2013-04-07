@@ -1,0 +1,178 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.rotarysource</groupId>
+		<artifactId>rotary-parent</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+	</parent>
+
+
+	<name>Rotary Standalone</name>
+	<artifactId>rotary-standalone</artifactId>
+	<packaging>jar</packaging>
+	<description>Rotary StandAlone application launcher</description>
+
+	<dependencies>
+		<!-- ###################################### -->
+		<!-- Proyect Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-listener</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-inputadapter</artifactId>
+		</dependency>
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Built-By>J.L.Canales</Built-By>
+							<Build-version>${project.version}</Build-version>
+						</manifestEntries>
+						<manifest>
+							<addClasspath>false</addClasspath>
+							<mainClass>org.rotarysource.standalone.ServerShellMain</mainClass>
+						</manifest>
+					</archive>
+					<excludes>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.xsd</exclude>
+						<exclude>**/*.HTML</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Dlog4j.configuration=../config/log4j.xml</argLine>
+					<argLine>-Xms256m -Xmx256m</argLine>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${basedir}/src/test/resources</additionalClasspathElement>
+					</additionalClasspathElements>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<systemProperties>
+						<property>
+							<name>log4j.configuration</name>
+							<value>log4j.xml</value>
+						</property>
+					</systemProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<overWrite>true</overWrite>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<!-- other configurations here -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[2.0,)</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+
+			<resource>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>${basedir}/src/main/scripts</directory>
+				<includes>
+					<include>**.sh</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>etc</directory>
+			</testResource>
+			<testResource>
+				<targetPath>config</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+			</testResource>
+			<testResource>
+				<targetPath>config</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
+</project>

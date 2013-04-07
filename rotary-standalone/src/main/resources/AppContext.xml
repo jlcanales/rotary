@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2013 J. L. Canales Gasco This program is free software; 
+	you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation; either version 
+	2 of the License, or (at your option) any later version. This program is 
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU General Public License for more details. You should 
+	have received a copy of the GNU General Public License along with this program; 
+	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 
+	330, Boston, MA 02111-1307 USA}] -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/CepEngine-config.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<import resource="classpath:statements/Statements.xml" />
+
+
+	<bean id="contextApplicationContextProvider" class="org.rotarysource.standalone.ApplicationContextProvider"></bean>
+
+
+	<!-- *********************************************** -->
+	<!-- CEP engine bean creation -->
+	<!-- In this bean all the statements are injected -->
+	<!-- *********************************************** -->
+	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
+		<constructor-arg>
+			<set>
+
+				<ref bean="logAllStatement" />
+
+			</set>
+		</constructor-arg>
+		<constructor-arg value="0" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
+	</bean>
+
+
+	<!-- ********************************* -->
+	<!-- Listener Definition -->
+	<!-- To be injected in any statement -->
+	<!-- ********************************* -->
+	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
+
+
+	<!-- *********************************************** -->
+	<!-- JMS CONFIGURATION -->
+	<!-- JMS setup for input queues to be used by input -->
+	<!-- adaptors -->
+	<!-- *********************************************** -->
+	<!-- JMS ActiveMQ Connection Factory -->
+	<bean id="jmsActiveMQFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="${jmsinput-brokerurl}" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- ActiveMQ destinations -->
+	<bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${jmsinput-defaultdestination}" />
+	</bean>
+
+
+
+	<!-- *********************************************** -->
+	<!-- INPUT JMS QUEUES ADAPTAPTOR -->
+	<!-- Input Adaptor Setup -->
+	<!-- *********************************************** -->
+	<!-- XML Message converter -->
+	<bean id="messageConverter"
+		class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventXMLMessageConverter" />
+
+
+	<bean id="listenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsActiveMQFactory" />
+		<property name="destination" ref="defaultDestination" />
+		<property name="messageListener" ref="basicEventInputAdapter" />
+		<property name="concurrentConsumers" value="${jmsinput-concurrentconsumers}" />
+		<property name="autoStartup" value="false" />
+	</bean>
+
+	<bean id="basicEventInputAdapter" class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventIA">
+		<constructor-arg ref="cepEngine" />
+		<property name="msgConverter">
+			<ref bean="messageConverter" />
+		</property>
+	</bean>
+	<!-- END INPUT JMS QUEUES ADAPTAPTOR -->
+
+
+</beans>

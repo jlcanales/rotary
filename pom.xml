@@ -27,6 +27,7 @@
 		<module>rotary-core</module>
 		<module>rotary-listener</module>
 		<module>rotary-inputadapter</module>
+		<module>rotary-standalone</module>
 	</modules>
 
 	<properties>
@@ -186,6 +187,16 @@
 			<dependency>
 				<groupId>org.rotarysource</groupId>
 				<artifactId>rotary-events</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-listener</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+						<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-inputadapter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- ###################################### -->
