@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.rotarysource</groupId>
+		<artifactId>rotary-parent</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+	</parent>
+
+
+	<name>Rotary JMX</name>
+	<artifactId>rotary-jmx</artifactId>
+	<packaging>jar</packaging>
+	<description>Rotary JMX support for main components</description>
+
+	<dependencies>
+
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Built-By>J.L.Canales</Built-By>
+							<Build-version>${project.version}</Build-version>
+						</manifestEntries>
+					</archive>
+					<excludes>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.xsd</exclude>
+						<exclude>**/*.HTML</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Dlog4j.configuration=../config/log4j.xml</argLine>
+					<argLine>-Xms256m -Xmx256m</argLine>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${basedir}/src/test/resources</additionalClasspathElement>
+					</additionalClasspathElements>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<systemProperties>
+						<property>
+							<name>log4j.configuration</name>
+							<value>log4j.xml</value>
+						</property>
+					</systemProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>etc</directory>
+			</testResource>
+			<testResource>
+				<targetPath>config</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+			</testResource>
+			<testResource>
+				<targetPath>config</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
+</project>

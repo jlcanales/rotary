@@ -27,6 +27,7 @@
 		<module>rotary-core</module>
 		<module>rotary-listener</module>
 		<module>rotary-inputadapter</module>
+		<module>rotary-jmx</module>
 		<module>rotary-standalone</module>
 	</modules>
 
