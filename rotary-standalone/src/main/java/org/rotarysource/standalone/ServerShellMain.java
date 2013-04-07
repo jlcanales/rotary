@@ -60,9 +60,9 @@ public class ServerShellMain
     	
         // Initialize engine
         log.info("Getting Esper engine instance");
-        ApplicationContext springAppContext = new ClassPathXmlApplicationContext("StatementProcessor-config.xml");
+        ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
         
-        CepEngine statementEngine = (CepEngine) springAppContext.getBean("StatementProcessor");
+        CepEngine statementEngine = (CepEngine) springAppContext.getBean("cepEngine");
      
 		// Connect to JMS
 		log.info("Connecting to JMS server through a Listener Container");

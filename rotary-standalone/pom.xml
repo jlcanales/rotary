@@ -21,6 +21,18 @@
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-listener</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-inputadapter</artifactId>
+		</dependency>
 		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -133,6 +145,19 @@
 			</plugins>
 		</pluginManagement>
 		<resources>
+
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+
+			<resource>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>${basedir}/src/main/scripts</directory>
+				<includes>
+					<include>**.sh</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
 		</resources>
 		<testResources>
 			<testResource>

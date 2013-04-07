@@ -191,7 +191,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-events</artifactId>
+				<artifactId>rotary-listener</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+						<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-inputadapter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- ###################################### -->

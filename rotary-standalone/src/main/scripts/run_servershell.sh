@@ -3,6 +3,8 @@
 # Script to run CEP Server
 #
 
+JAVA_HOME=/usr
+
 #Only needed for EsperHA activation with Berkeley DB
 CEP_HOME=/apps/yell01_correlador
 ESPERHA_STORAGE=${CEP_HOME}/esperha-default-store
@@ -58,4 +60,4 @@ MEMORY_OPTIONS="-Xms256m -Xmx1024m -XX:+UseParNewGC -XX:MaxPermSize=128M"
 
 echo ${CLASSPATH}
 
-$JAVA_HOME/bin/java -classpath $CLASSPATH $MEMORY_OPTIONS -Dlog4j.configuration=./config/log4j.xml -Dfile.encoding=UTF-8 com.edcontrol.server.ServerShellMain
+$JAVA_HOME/bin/java -classpath $CLASSPATH $MEMORY_OPTIONS -Dlog4j.configuration=./log4j.xml -Dfile.encoding=UTF-8 org.rotarysource.standalone.ServerShellMain
