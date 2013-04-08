@@ -61,5 +61,23 @@ public class AbstractMessageListenerContainerJMX {
 		jmsListenerContainer.shutdown();
 	}
     
+    /**
+     * Return Listener Active Status
+     * @return Active status
+     */
+    @ManagedAttribute(description="Listener Active Status")
+    public boolean isActive(){
+		return jmsListenerContainer.isActive();
+    	
+    	
+    }
+    @ManagedAttribute(description="Listener Running Status")   
+    public boolean isRunning(){
+    	return jmsListenerContainer.isRunning();
+    }
+    @ManagedAttribute(description="Listener JMS Destination Name")   
+    public String getDestinationName(){
+    	return jmsListenerContainer.getDestination().toString();
+    }
 
 }
