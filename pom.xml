@@ -195,9 +195,14 @@
 				<artifactId>rotary-listener</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-						<dependency>
+			<dependency>
 				<groupId>org.rotarysource</groupId>
 				<artifactId>rotary-inputadapter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-jmx</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- ###################################### -->
@@ -224,8 +229,9 @@
 				<version>${esper-version}</version>
 			</dependency>
 
-
-			<!-- Spring dependencies -->
+			<!-- ###################################### -->
+			<!-- Spring Dependencies -->
+			<!-- ###################################### -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
@@ -372,7 +378,7 @@
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-all</artifactId>
-				<version>${mockito-version}</version>				
+				<version>${mockito-version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

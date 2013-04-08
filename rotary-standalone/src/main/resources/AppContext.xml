@@ -25,6 +25,7 @@
 	</bean>
 
 	<import resource="classpath:statements/Statements.xml" />
+	<import resource="classpath:jmx/jmx-MBeanExporter.xml" />
 
 
 	<bean id="contextApplicationContextProvider" class="org.rotarysource.standalone.ApplicationContextProvider"></bean>

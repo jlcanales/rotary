@@ -14,8 +14,9 @@
 	<description>Rotary JMX support for main components</description>
 
 	<dependencies>
-
-		<!-- Spring dependencies -->
+			<!-- ###################################### -->
+			<!-- Spring Dependencies -->
+			<!-- ###################################### -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -23,6 +24,25 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+			<!-- ###################################### -->
+			<!-- java.jms Dependencies -->
+			<!-- ###################################### -->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
 		</dependency>
 	</dependencies>
 
