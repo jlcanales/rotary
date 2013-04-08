@@ -27,6 +27,8 @@ import com.espertech.esperha.client.EPStatementExistsException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
  * Class to create and register a prepare EPL statement.
@@ -36,6 +38,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author J.L. Canales
  */
+@ManagedResource( objectName="org.rotarysource.mbean.core.statements:name=Statement", 
+				  description="EPL Statement", log=true,
+				  logFile="jmx.log", currencyTimeLimit=15, 
+				  persistPolicy="OnUpdate", persistPeriod=200,
+				  persistLocation="foo", persistName="bar")
 public class StatmntPrepare implements Statement {
 	private static Logger  log = LoggerFactory.getLogger(StatmntPrepare.class);
 
@@ -142,6 +149,7 @@ public class StatmntPrepare implements Statement {
 	 * Returns eplName for this object
 	 * @return EPL Statement name
 	 */
+    @ManagedAttribute(description="EPL Statement Name") 
 	public String getEplName() {
 		
 		if ( statementObj != null)
@@ -150,4 +158,24 @@ public class StatmntPrepare implements Statement {
 			return null;
 	}
 
+	/**
+	 * Returns epl Statement for this object
+	 * @return EPL Statement
+	 */
+    @ManagedAttribute(description="EPL Statement") 
+	public String getEplStatement() {
+		return eplStatement;
+	}
+
+	/**
+	 * Returns statement registering status in Cep Engine
+	 * @return registering status
+	 */
+    @ManagedAttribute(description="CEP Engine Registering Status") 
+	public boolean isRegistered() {
+		if( statementObj != null)
+			return true;
+		else
+			return false;
+	}
 }
