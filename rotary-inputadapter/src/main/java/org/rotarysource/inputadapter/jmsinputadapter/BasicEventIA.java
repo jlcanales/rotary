@@ -32,7 +32,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * Spring configuration for this class is definded in StatementProcessor-config.xml
  * @author J.L. Canales
  */ 
-@ManagedResource(objectName="org.rotarysource.mbean.inputadapters:name=XMLInputAdapter", description="XML Input Adapter managed counters", log=true,
+@ManagedResource(objectName="org.rotarysource.mbean.inputadapters:name=BasicEventInputAdapter", description="XML Input Adapter managed counters", log=true,
 	    logFile="jmx.log", currencyTimeLimit=15, persistPolicy="OnUpdate", persistPeriod=200,
 	    persistLocation="foo", persistName="bar")
 public class BasicEventIA implements MessageListener
