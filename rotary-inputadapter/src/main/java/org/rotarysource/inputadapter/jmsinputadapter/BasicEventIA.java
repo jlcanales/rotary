@@ -85,6 +85,10 @@ public class BasicEventIA implements MessageListener
     	
     	try {
     		basEvent = (BasicEvent) msgConverter.fromMessage(bytesMsg);
+
+            cepEngine.getCepEngine().getEPRuntime().sendEvent(basEvent);
+            countMessages++;
+            
 		} catch (MessageConversionException e) {
 			String 	  errorText  = "Msg Converter error. Bad Formed message";
 			BasicEvent errorEvent = new BasicEvent();
@@ -112,8 +116,6 @@ public class BasicEventIA implements MessageListener
 			log.error(errorText, e);
 		}
 
-        cepEngine.getCepEngine().getEPRuntime().sendEvent(basEvent);
-        countMessages++;
 	}
 
     

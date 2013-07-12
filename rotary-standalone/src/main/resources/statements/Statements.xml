@@ -9,7 +9,7 @@
 	<!-- START logAllStatement log all ProdEvent events received -->    
 	<bean id="logAllStatement"
 		class="org.rotarysource.core.statements.StatmntSingleQuery">
-		<property name="eplStatement" value="select istream * from BasicEvent" />
+		<property name="eplStatement" value="@Name('logAllStatement') select istream * from BasicEvent" />
 		<property name="listener" ref="logListener"/>
 	</bean>     
 	<!-- END logAllStatement--> 

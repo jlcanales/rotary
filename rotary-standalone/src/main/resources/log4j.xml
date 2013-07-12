@@ -33,8 +33,18 @@
 
 
 	<logger name="org.rotarysource.listener.common.LogListener">
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="LogListenerLogfile" />
+	</logger>
+		<logger name="org.rotarysource.listener.MapBaseListener">
+		<level value="DEBUG" />
+	</logger>
+
+	<!-- *********************************************** -->
+	<!-- Main class Log config -->
+	<!-- *********************************************** -->
+	<logger name="org.rotarysource.standalone">
+		<level value="INFO" />
 	</logger>
 
 	<!-- *********************************************** -->
