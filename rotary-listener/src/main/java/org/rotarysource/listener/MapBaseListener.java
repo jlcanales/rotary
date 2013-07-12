@@ -67,7 +67,13 @@ public abstract class MapBaseListener implements UpdateListener{
 	        Map<String, String> eventMap = new HashMap<String, String>();
 
         	for (int j = 0; j<propertyNames.length; j++){
-        		eventMap.put( propertyNames[j], newEvents[i].get(propertyNames[j]).toString());
+	        	log.debug("Mapping key {} to value  {}", propertyNames[j], newEvents[i].get(propertyNames[j]));
+	        	if( newEvents[i].get(propertyNames[j]) != null){
+        			eventMap.put( propertyNames[j], newEvents[i].get(propertyNames[j]).toString());
+        		}
+	        	else{
+	        		eventMap.put( propertyNames[j], "null");
+	        	}
         	}
 
         	

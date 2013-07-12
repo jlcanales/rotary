@@ -7,82 +7,42 @@
 		<version>0.2.0-RELEASE</version>
 	</parent>
 
-	<name>Rotary Listener</name>
 
-	<artifactId>rotary-listener</artifactId>
+	<name>Rotary JMX</name>
+	<artifactId>rotary-jmx</artifactId>
 	<packaging>jar</packaging>
-	<description>Rotary CEP Event Driven Listener classes and utils</description>
+	<description>Rotary JMX support for main components</description>
 
 	<dependencies>
-		<!-- ###################################### -->
-		<!-- Proyect Modules Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-
-		<!-- ###################################### -->
-		<!-- Esper Cep Engine Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esper</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esperha-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esperha-ehafile</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esperha-xsdboe</artifactId>
-		</dependency>
-
-
-		<!-- Logging dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Spring Dependencies -->
+			<!-- ###################################### -->
+			<!-- Spring Dependencies -->
+			<!-- ###################################### -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<artifactId>spring-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+			<!-- ###################################### -->
+			<!-- java.jms Dependencies -->
+			<!-- ###################################### -->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -91,6 +51,20 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Built-By>J.L.Canales</Built-By>
+							<Build-version>${project.version}</Build-version>
+						</manifestEntries>
+					</archive>
+					<excludes>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.xsd</exclude>
+						<exclude>**/*.HTML</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -122,13 +96,22 @@
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
 		</plugins>
-
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
 		<testResources>
 			<testResource>
+				<directory>etc</directory>
+			</testResource>
+			<testResource>
+				<targetPath>config</targetPath>
 				<filtering>false</filtering>
 				<directory>${basedir}/src/main/resources</directory>
 			</testResource>
 			<testResource>
+				<targetPath>config</targetPath>
 				<filtering>false</filtering>
 				<directory>${basedir}/src/test/resources</directory>
 			</testResource>

@@ -7,7 +7,7 @@
 	<groupId>org.rotarysource</groupId>
 	<artifactId>rotary-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.0-RELEASE</version>
+	<version>0.2.0-RELEASE</version>
 	<name>Rotary Source</name>
 	<description>Rotary Framework Main build file</description>
 
@@ -27,6 +27,8 @@
 		<module>rotary-core</module>
 		<module>rotary-listener</module>
 		<module>rotary-inputadapter</module>
+		<module>rotary-jmx</module>
+		<module>rotary-standalone</module>
 	</modules>
 
 	<properties>
@@ -188,6 +190,21 @@
 				<artifactId>rotary-events</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-listener</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-inputadapter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-jmx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->
@@ -212,8 +229,9 @@
 				<version>${esper-version}</version>
 			</dependency>
 
-
-			<!-- Spring dependencies -->
+			<!-- ###################################### -->
+			<!-- Spring Dependencies -->
+			<!-- ###################################### -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
@@ -360,7 +378,7 @@
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-all</artifactId>
-				<version>${mockito-version}</version>				
+				<version>${mockito-version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
