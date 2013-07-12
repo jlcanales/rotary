@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.2.0-SNAPSHOT</version>
+		<version>0.2.0-RELEASE</version>
 	</parent>
 
 
