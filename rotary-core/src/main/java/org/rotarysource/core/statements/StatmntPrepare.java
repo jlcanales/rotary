@@ -38,8 +38,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * 
  * @author J.L. Canales
  */
-@ManagedResource( objectName="org.rotarysource.mbean.core.statements:name=Statement", 
-				  description="EPL Statement", log=true,
+@ManagedResource( description="EPL Statement", log=true,
 				  logFile="jmx.log", currencyTimeLimit=15, 
 				  persistPolicy="OnUpdate", persistPeriod=200,
 				  persistLocation="foo", persistName="bar")
