@@ -13,5 +13,13 @@
 		<property name="listener" ref="logListener"/>
 	</bean>     
 	<!-- END logAllStatement--> 
+	
+	<!-- START countEventBySystemStatement  -->    
+	<bean id="countEventBySystemStatement"
+		class="org.rotarysource.core.statements.StatmntSingleQuery">
+		<property name="eplStatement" value="@Name('countEventBySystemStatement') select count(*) from BasicEvent.win:time_batch(5 sec) group by systemId" />
+		<property name="listener" ref="logListener"/>
+	</bean>     
+	<!-- END countEventBySystemStatement-->
 
 </beans>

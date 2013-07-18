@@ -40,6 +40,7 @@
 			<set>
 
 				<ref bean="logAllStatement" />
+				<ref bean="countEventBySystemStatement" />
 
 			</set>
 		</constructor-arg>
