@@ -37,7 +37,27 @@ public interface Statement {
 	 /** 
      * Method to Statement unregistering in a EventProcessor engine
      * when destoy is called, Event Processor Engine stops to use this statement
+     * and wipe it out from its statements register
      * 
      */
 	public void destroy();
+	
+	/**
+	 * Method to Start and statement that is registered but is non active 
+	 * because it is stopped
+	 * 
+	 */
+	public void stop();
+	
+	/**
+	 * Method to stop a registered statement and deactivate it. After stop is called
+	 * the statement will be still registered in the cep engine.
+	 * 
+	 */
+	public void start();
+	
+	/**
+	 * Checks the activation status.
+	 */
+	public boolean isStarted();
 }
