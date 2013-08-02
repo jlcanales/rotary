@@ -53,7 +53,7 @@ public class ServerShellMain
 
     public ServerShellMain() throws Exception
     {
-    	log.info("CEP System version: 0.2.0-RELEASE");
+    	log.info("CEP System version: 0.3.0-SNAPSHOT");
     	log.info("Starting server shell");
 
     	isShutdown = false;
