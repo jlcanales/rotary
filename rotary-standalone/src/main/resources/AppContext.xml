@@ -40,6 +40,7 @@
 			<set>
 
 				<ref bean="logAllStatement" />
+				<ref bean="basicEventLogStatement" />
 
 			</set>
 		</constructor-arg>
@@ -52,6 +53,7 @@
 	<!-- To be injected in any statement -->
 	<!-- ********************************* -->
 	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
+	<bean id="basicEventLogSubscriber" class="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber" />
 
 
 	<!-- *********************************************** -->
