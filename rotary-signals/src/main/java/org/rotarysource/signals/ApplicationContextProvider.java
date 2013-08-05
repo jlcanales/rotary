@@ -1,4 +1,4 @@
-package org.rotarysource.standalone;
+package org.rotarysource.signals;
 
 import org.springframework.beans.BeansException;  
 import org.springframework.context.ApplicationContext;  

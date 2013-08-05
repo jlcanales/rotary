@@ -28,6 +28,7 @@
 		<module>rotary-listener</module>
 		<module>rotary-inputadapter</module>
 		<module>rotary-jmx</module>
+		<module>rotary-signals</module>
 		<module>rotary-standalone</module>
 	</modules>
 
@@ -203,6 +204,11 @@
 			<dependency>
 				<groupId>org.rotarysource</groupId>
 				<artifactId>rotary-jmx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-signals</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- ###################################### -->
