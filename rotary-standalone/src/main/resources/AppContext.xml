@@ -29,7 +29,14 @@
 
 
 	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider"></bean>
-
+	<bean id="shutdownEventListener" class="org.rotarysource.signals.shutdown.ShutdownEventListener">
+		<constructor-arg>
+			<list>
+				<ref bean="listenerContainer" />
+				<ref bean="cepEngine" />
+			</list>
+		</constructor-arg>
+	</bean>
 
 	<!-- *********************************************** -->
 	<!-- CEP engine bean creation -->
