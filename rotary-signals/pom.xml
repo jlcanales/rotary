@@ -59,32 +59,9 @@
 
 
 		<!-- ###################################### -->
-		<!-- Proyect Modules Dependencies -->
+		<!-- Project Modules Dependencies -->
 		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-events</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-listener</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-inputadapter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-jmx</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 
 	</dependencies>
 

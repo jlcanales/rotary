@@ -15,40 +15,21 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
 */
-
 package org.rotarysource.signals;
 
-import org.springframework.context.ApplicationEvent;
-
-
 /**
- * Class to create shutdown type events in rotary core subsystem. 
- * This kind of events will trigger the graceful system shutdown 
- * procedure assuring correct ordering in components destroy.
+ * Interface to add capabilities to be managed by the internal 
+ * signal system. 
+ * Each method implements the component behavior to process the
+ * received signal.
  * 
  * @author J.L. Canales
  */
-public class ShutdownEvent extends ApplicationEvent {
-
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7389048391247591948L;
+public interface SignalCapable {
 	
-	private String message;
-	
-	public ShutdownEvent(Object source, String aiMessage) {
-		super(source);
-		this.message = aiMessage;
-	}
-
 	/**
-	 * Returns The message inserted when Event is created
-	 * @return Message text
+	 * Process Shutdown signal.
 	 */
-	public String getMessage() {
-		return message;
-	}
+	public void shutdown();
 
 }

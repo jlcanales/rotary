@@ -87,7 +87,7 @@
 
 
 	<bean id="listenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		class="org.rotarysource.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="jmsActiveMQFactory" />
 		<property name="destination" ref="defaultDestination" />
 		<property name="messageListener" ref="basicEventInputAdapter" />

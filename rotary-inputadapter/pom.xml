@@ -23,7 +23,12 @@
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-events</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
 		</dependency>
+		
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->

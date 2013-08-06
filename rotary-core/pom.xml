@@ -32,6 +32,13 @@
 			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
 
+		<!-- ###################################### -->
+		<!-- Project Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
 
 		<!-- Logging dependencies -->
 		<dependency>

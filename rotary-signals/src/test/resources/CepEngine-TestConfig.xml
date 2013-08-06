@@ -1,98 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
- 
- 
-	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider"/>
-	<bean id="shutdownEventListener" class="org.rotarysource.signals.ShutdownEventListener"/>
 
-	<!--  ############################################################################# -->
-	<!--  This test Aplication Context is parametriced to use Spy object instead      -->
-	<!--  ObjectBaseMock Object.														-->
-	<!--  ############################################################################# -->
-	
-	<bean id="shutdownEventListenerSpy" name="shutdownEventListenerSpy" class="org.mockito.Mockito" factory-method="spy">
+
+	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider" />
+
+			<bean id="shutdownEventListener"
+				class="org.rotarysource.signals.shutdown.ShutdownEventListener">
+				<constructor-arg>
+					<list>
+
+						<ref bean="signaledComponentMockSpy" />
+						<ref bean="signaledComponentMockSpy" />
+						<ref bean="signaledComponentMockSpy" />
+
+					</list>
+				</constructor-arg>
+				</bean>
+
+	<bean id="signaledComponentMock" class="org.rotarysource.signals.SignaledComponentMock" />
+
+	<!-- ############################################################################# -->
+	<!-- This test Aplication Context is parametriced to use Spy object instead -->
+	<!-- ObjectBaseMock Object. -->
+	<!-- ############################################################################# -->
+
+	<bean id="shutdownEventListenerSpy" name="shutdownEventListenerSpy"
+		class="org.mockito.Mockito" factory-method="spy">
 		<constructor-arg ref="shutdownEventListener"/>
 	</bean>
- 
-	
-    <!-- CEP engine structure definition                                    -->
-    <!-- In this bean all the statements are injected                       -->
-	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
-		<constructor-arg>
-			<set>
-				<ref bean="subscriberStatement"/>
-			</set>
-		</constructor-arg>
-		<constructor-arg value = "0"/> <!-- 0: STANDALONE_HA_MODE  1: FILESOUPORT_HA_MODE-->
-	</bean>
-	
-	<!-- Statements for Object Under Test  -->
 
-	
-	<bean id="subscriberStatement"
-		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
-		<property name="eplStatement" value="@Name('subscriberStatement') select istream * from IntegerEvent" />
-		<property name="subscriber" ref="subscriberMock"/>
-	</bean>  
-	
-	
-	<!-- ObjectBaseListner -->
-	<bean id="subscriberMock"
-		class="org.rotarysource.signals.SubscriberMock"/>
-			
-		
-		
-		
-	<!-- *********************************************** -->
-	<!-- JMS CONFIGURATION -->
-	<!-- JMS setup for input queues to be used by input -->
-	<!-- adaptors -->
-	<!-- *********************************************** -->
-	<!-- JMS ActiveMQ Connection Factory -->
-	<bean id="jmsActiveMQFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
-		<property name="connectionFactory">
-			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
-				<property name="brokerURL" value="vm://localhost?broker.persisten=false" />
-			</bean>
-		</property>
-	</bean>
-
-	<!-- ActiveMQ destinations -->
-	<bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="cep_in" />
+	<bean id="signaledComponentMockSpy" name="signaledComponentMockSpy"
+		class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="signaledComponentMock" />
 	</bean>
 
 
 
-	<!-- *********************************************** -->
-	<!-- INPUT JMS QUEUES ADAPTAPTOR -->
-	<!-- Input Adaptor Setup -->
-	<!-- *********************************************** -->
-	<!-- XML Message converter -->
-	<bean id="messageConverter"
-		class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventXMLMessageConverter" />
-
-
-	<bean id="listenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-		<property name="connectionFactory" ref="jmsActiveMQFactory" />
-		<property name="destination" ref="defaultDestination" />
-		<property name="messageListener" ref="basicEventInputAdapter" />
-		<property name="concurrentConsumers" value="1" />
-		<property name="autoStartup" value="false" />
-	</bean>
-
-	<bean id="basicEventInputAdapter" class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventIA">
-		<constructor-arg ref="cepEngine" />
-		<property name="msgConverter">
-			<ref bean="messageConverter" />
-		</property>
-	</bean>
-	<!-- END INPUT JMS QUEUES ADAPTAPTOR -->		
-		
-       
 </beans>
