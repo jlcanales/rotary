@@ -24,6 +24,7 @@ import org.rotarysource.core.CepEngine;
 import org.rotarysource.signals.shutdown.ShutdownEvent;
 import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
@@ -76,11 +77,11 @@ public class ServerShellMain
         		new Thread(){
 		            public void run()
 		            {
-		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
+/*		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
 
 		            	ShutdownEvent event = new ShutdownEvent(this, "Shutdown Event triggered by main shutdownHook");
 		            	springAppContext.publishEvent( event);
-		        	
+*/		        	
 		            }
 		         }
          );
@@ -96,7 +97,8 @@ public class ServerShellMain
 
         }
         while (!shutdownEventListener.isShudownExecuted());
-
+        
+        ((ConfigurableApplicationContext)springAppContext).close();
     	log.info("EVENT DRIVEN CONTROL SYSTEM: Finished");
 
         System.exit(-1);
