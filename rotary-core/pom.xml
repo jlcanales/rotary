@@ -14,6 +14,16 @@
 	<description>CEP Evend Driven Processor core module</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>	
+			<!-- ###################################### -->
+			<!-- Esper Framework Dependencies -->
+			<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
@@ -32,6 +42,13 @@
 			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
 
+			<!-- ###################################### -->
+			<!-- Quartz Framework Dependencies -->
+			<!-- ###################################### -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
 
 		<!-- Logging dependencies -->
 		<dependency>
