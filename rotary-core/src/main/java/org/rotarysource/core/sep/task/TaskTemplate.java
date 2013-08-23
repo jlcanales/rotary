@@ -54,5 +54,4 @@ public abstract class TaskTemplate implements SepTask {
         log.debug("Sending event to CEP: {}", event);
         cepEngine.getCepEngine().getEPRuntime().sendEvent(event);
 	}
-
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+
+	<!-- SEP engine structure definition -->
+	<!-- In this bean all the statements are injected -->
+	<bean id="sepEngine" class="org.rotarysource.core.sep.SepEngine">
+		<constructor-arg ref="scheduler" />
+		<constructor-arg>
+			<map>
+				<entry key="taskMockJob" value-ref="mockTaskJobFactory" />
+			</map>
+		</constructor-arg>
+		<constructor-arg ref="jobTriggerFactory" />
+	</bean>
+
+
+	<!-- Objects Factories for SEP engine -->
+	<bean id="mockTaskJobFactory" name="mockTaskJobFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName">
+			<idref local="mockTaskJobDetail" />
+		</property>
+	</bean>
+
+
+	<bean id="jobTriggerFactory" name="jobTriggerFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName">
+			<idref local="jobTrigger" />
+		</property>
+	</bean>
+
+	<!-- Scheduler configuration -->
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		destroy-method="destroy">
+		<property name="autoStartup" value="false" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<property name="overwriteExistingJobs" value="true" />
+		<!-- <property name="dataSource" ref="quartzDataSource" /> <property name="transactionManager" 
+			ref="quartzTxManager" /> -->
+		<property name="jobFactory">
+			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+		</property>
+		<property name="configLocation" value="classpath:quartz.properties" />
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- *** Trigger Prototype *** -->
+	<!-- **************************************************************** -->
+	<bean id="jobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		scope="prototype">
+		<property name="volatility" value="false" />
+		<property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_FIRE_NOW" />
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- *** TASKS *** -->
+	<!-- **************************************************************** -->
+	<bean id="taskMock" class="org.rotarysource.core.sep.task.TaskMock"
+		scope="prototype">
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- *** JOBS *** -->
+	<!-- **************************************************************** -->
+	<bean id="mockTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean"
+		scope="prototype">
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="task" value-ref="taskMock" />
+			</map>
+		</property>
+		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />
+		<!-- Volatility - if a job is volatile, it is not persisted between re-starts 
+			of the Quartz scheduler. Triggers must be volatility also. -->
+		<property name="volatility" value="false" />
+		<!-- Durability - if a job is non-durable, it is automatically deleted 
+			from the scheduler once there are no longer any active triggers associated 
+			with it. -->
+		<property name="durability" value="true" />
+		<!-- RequestsRecovery - if a job "requests recovery", and it is executing 
+			during the time of a 'hard shutdown' of the scheduler (i.e. the process it 
+			is running within crashes, or the machine is shut off), then it is re-executed 
+			when the scheduler is started again. -->
+		<property name="requestsRecovery" value="true" />
+	</bean>
+
+
+</beans>
