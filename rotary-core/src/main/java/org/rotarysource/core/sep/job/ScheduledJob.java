@@ -6,7 +6,6 @@ import java.util.Map;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.rotarysource.core.sep.task.SepTask;
-import org.rotarysource.core.sep.task.TaskMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.task.TaskExecutor;
