@@ -70,8 +70,13 @@ public class SepEngine{
 		
 		//Start Scheduler
 		log.info("Starting scheduler Quarth Engine");
-		this.scheduler.start();
-		log.info("Quarth Engine Started;");		
+		if(!this.scheduler.isStarted()){
+			this.scheduler.start();
+			log.info("Quarth Engine Started;");	
+		}
+		else{
+			log.info("Quarth Engine Already Started; ");				
+		}
 	}
 
 

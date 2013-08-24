@@ -17,6 +17,7 @@
 		<constructor-arg>
 			<map>
 				<entry key="taskMockJob" value-ref="mockTaskJobFactory" />
+				<entry key="taskMockJobPair" value-ref="mockTaskJobFactoryPair" />
 			</map>
 		</constructor-arg>
 		<constructor-arg ref="jobTriggerFactory" />
@@ -76,6 +77,13 @@
 
 	<!-- Objects Factories for SEP engine -->
 	<bean id="mockTaskJobFactory" name="mockTaskJobFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName">
+			<idref local="mockTaskJobDetail" />
+		</property>
+	</bean>
+	
+	<bean id="mockTaskJobFactoryPair" name="mockTaskJobFactoryPair"
 		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
 		<property name="targetBeanName">
 			<idref local="mockTaskJobDetail" />

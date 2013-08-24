@@ -2,20 +2,19 @@ package org.rotarysource.core.sep.task;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.annotation.Resource;
 import static org.mockito.Mockito.*;
 
-import oracle.sql.DATE;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.quartz.SchedulerException;
 import org.rotarysource.core.sep.SepEngine;
 import org.rotarysource.core.sep.job.JobDescription;
-import org.rotarysource.core.statements.SubscriberMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,7 +35,7 @@ public class EngineTest extends TestCase {
      */	
 	private static Logger log = LoggerFactory.getLogger(EngineTest.class);	
 	/**
-	 * Cep Engine to support listener execution
+	 * Sep Engine to support listener execution
 	 */
 	@Resource
 	SepEngine sepEngine;
@@ -44,6 +43,12 @@ public class EngineTest extends TestCase {
 	@Resource
 	TaskMock taskMockSpy;
 
+	
+	@Before
+	public void setup(){
+	    Mockito.reset(taskMockSpy);
+	}	
+	
 	
 	/**
 	 * Test AppContext Loading to assure all needed beans
@@ -101,5 +106,53 @@ public class EngineTest extends TestCase {
 
 		
 	}
-	
+
+	/**
+	 * Test normal task scheduling
+	 *    This test show how to use sepEngine to schedule tasks in fixed
+	 * dates.
+	 *    It assure scheduling works fine.
+	 */
+	@Test
+	public void scheduleJobMultipleTest(){
+		
+		log.info("================================");
+		log.info("Schedule Multiple Job Type Test ");
+		log.info("================================");
+
+		
+		//Given
+		JobDescription jobDesk = new JobDescription("MultipleJob1", "TestGroup", "taskMockJob");
+		JobDescription jobDesk2 = new JobDescription("MultipleJob2", "TestGroup", "taskMockJobPair");
+		
+		Calendar scheduleCal = Calendar.getInstance();
+
+		scheduleCal.add(Calendar.SECOND, 5);		
+		jobDesk.setFireDate(scheduleCal.getTime());
+
+		scheduleCal.add(Calendar.SECOND, 2);		
+		jobDesk2.setFireDate(scheduleCal.getTime());		
+		
+		//No params set yet
+		//jobDesk.setTaskParams(aiTaskParams);
+		
+
+		try {
+			
+			//When
+			//Scheduled job
+			sepEngine.scheduleJob(jobDesk);
+			sepEngine.scheduleJob(jobDesk2);
+
+			//Then
+			//After 10 seconds Task will run
+
+			verify(taskMockSpy,timeout(9000).times(2)).run();
+
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
