@@ -89,7 +89,9 @@
 		scope="prototype">
 		<property name="jobDataAsMap">
 			<map>
-				<entry key="task" value-ref="taskMock" />
+				<!-- <entry key="task" value-ref="taskMock" /> -->
+				<entry key="task" value-ref="taskMockSpy" />
+				
 			</map>
 		</property>
 		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />
@@ -114,10 +116,18 @@
 		 each job type -->
 	<!-- **************************************************************** -->
 	
+	<!-- TaskMock will be spy by mockito in the test cases.
+	     To be correctly cuantified by mockito, we defined TaskMock as singleton instead
+	     prototype.
+	     Nevertheless, task beans MUST BE always prototype because each task execution have
+	     its own parameters and must be diferent task class instances. -->
 	<bean id="taskMock" class="org.rotarysource.core.sep.task.TaskMock"
-		scope="prototype">
+		scope="singleton">
 	</bean>
 
+	<bean id="taskMockSpy" name="taskMockSpy" class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="taskMock"/>
+	</bean>
 
 
 

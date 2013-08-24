@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.quartz.SchedulerException;
 import org.rotarysource.core.sep.SepEngine;
 import org.rotarysource.core.sep.job.JobDescription;
+import org.rotarysource.core.statements.SubscriberMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -40,7 +41,8 @@ public class EngineTest extends TestCase {
 	@Resource
 	SepEngine sepEngine;
 	
-
+	@Resource
+	TaskMock taskMockSpy;
 
 	
 	/**
@@ -88,13 +90,10 @@ public class EngineTest extends TestCase {
 			//Then
 			//After 10 seconds Task will run
 			
-			  Thread.currentThread().sleep(11000); //sleep for 11 Secconds
-			  //do what you want to do after sleeptig
+			//Then
+			verify(taskMockSpy,timeout(7000)).run();
 
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
