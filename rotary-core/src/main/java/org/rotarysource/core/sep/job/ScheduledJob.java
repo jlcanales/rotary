@@ -6,6 +6,9 @@ import java.util.Map;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.rotarysource.core.sep.task.SepTask;
+import org.rotarysource.core.sep.task.TaskMock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
@@ -22,7 +25,12 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * @see org.springframework.scheduling.quartz.QuartzJobBean.
  */
 public class ScheduledJob extends QuartzJobBean {
-   
+
+    /** 
+     * Apache commons login logger instance
+     */	
+	private static Logger log = LoggerFactory.getLogger(ScheduledJob.class);	
+	
 	/** 
 	 * Job params to be passed to the task execution. 
 	 * */
@@ -46,6 +54,8 @@ public class ScheduledJob extends QuartzJobBean {
 	 */
 	@Override
 	protected void executeInternal(final JobExecutionContext context) throws JobExecutionException {
+
+		log.info("Received call to execute job {}.{}", context.getTrigger().getJobGroup(), context.getTrigger().getJobName());
 		
 		if( taskParams != null)
 			task.setTaskParams(taskParams);

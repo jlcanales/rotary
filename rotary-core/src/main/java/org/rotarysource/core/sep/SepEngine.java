@@ -1,5 +1,6 @@
 package org.rotarysource.core.sep;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.quartz.JobDetail;
@@ -53,10 +54,11 @@ public class SepEngine{
 	 * 		Job detail factory.
 	 * @param jobTriggerFactory
 	 * 		Trigger factory.
+	 * @throws SchedulerException 
 	 */
 	public SepEngine( final Scheduler aiScheduler,
 					  final HashMap<String,ObjectFactory<JobDetail>> aiJobDetailFactoryMap,
-					  final ObjectFactory<SimpleTrigger> aiJobTriggerFactory) {
+					  final ObjectFactory<SimpleTrigger> aiJobTriggerFactory) throws SchedulerException {
 				
 		Assert.notNull(aiScheduler, "An scheduler is needed to create SepEngine");
 		Assert.notNull(aiJobDetailFactoryMap, "Job Factory Map cannot be null!");
@@ -65,6 +67,11 @@ public class SepEngine{
 		this.scheduler = aiScheduler;
 		this.jobDetailFactoryMap = aiJobDetailFactoryMap;
 		this.jobTriggerFactory = aiJobTriggerFactory;
+		
+		//Start Scheduler
+		log.info("Starting scheduler Quarth Engine");
+		this.scheduler.start();
+		log.info("Quarth Engine Started;");		
 	}
 
 
@@ -87,7 +94,8 @@ public class SepEngine{
 		final JobDetail jobDetail = jobDetailFactoryMap.get(job.getJobFactoryId()).getObject();
 		jobDetail.setName(job.getName());
 		jobDetail.setGroup(job.getGroup());
-		jobDetail.getJobDataMap().put("taskParams", job.getTaskParams());
+		if(job.getTaskParams() != null)
+			jobDetail.getJobDataMap().put("taskParams", job.getTaskParams());
 
 		final SimpleTrigger trigger = jobTriggerFactory.getObject();
 		trigger.setRepeatCount(0);
@@ -109,14 +117,23 @@ public class SepEngine{
 	 * @throws SchedulerException
 	 */
 	private void innerScheduleJob(final JobDetail jobDetail, final Trigger trigger) throws SchedulerException {	
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		scheduler.addJob(jobDetail, true);
 
 		trigger.setJobName(jobDetail.getName());
 		trigger.setJobGroup(jobDetail.getGroup());		
 		
-		if (null == scheduler.getTrigger(trigger.getName(), trigger.getGroup()))
+		if (null == scheduler.getTrigger(trigger.getName(), trigger.getGroup())){
+			log.info("Scheduling New Job {}  at date: {}", jobDetail.getFullName(), df.format(trigger.getStartTime()));
+			
 			scheduler.scheduleJob(trigger);
-		else
+		}
+		else{
+			log.info("Rescheduling Existing Job {}  at date: {}", jobDetail.getFullName(), df.format(trigger.getStartTime()));
+			
 			scheduler.rescheduleJob(trigger.getName(), trigger.getGroup(), trigger);
+		}
 	}
 }

@@ -58,7 +58,7 @@ public class JobDescription implements Serializable {
 	 * @param taskBeanName
 	 * @param group
 	 */
-	protected JobDescription(final String aiName, final String aiGroup, final String aiJobFactoryId) {
+	public JobDescription(final String aiName, final String aiGroup, final String aiJobFactoryId) {
 		this.name = aiName;
 		this.group = aiGroup;
 		this.jobFactoryId = aiJobFactoryId;
