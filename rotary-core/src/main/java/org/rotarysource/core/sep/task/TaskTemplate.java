@@ -51,7 +51,12 @@ public abstract class TaskTemplate implements SepTask {
         
         event.setCompData( compDataMap);
 		
-        log.debug("Sending event to CEP: {}", event);
-        cepEngine.getCepEngine().getEPRuntime().sendEvent(event);
+        if(cepEngine != null){
+	        log.debug("Sending event to CEP: {}", event);
+	        cepEngine.getCepEngine().getEPRuntime().sendEvent(event);
+        }
+        else{
+        	log.warn("Event could not be sended to CEP; cause: null CepEngine. Event: {}", event.toString());
+        }
 	}
 }
