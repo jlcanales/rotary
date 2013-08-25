@@ -72,7 +72,7 @@ public class SepEngine {
 
 		if (log.isInfoEnabled()) {
 			log.info("==============================================");
-			log.info("Initialicing Scheduled Events Processor Engine");
+			log.info("Initializing Scheduled Events Processor Engine");
 			log.info("==============================================");
 
 			Set<String>    jobKeys = this.jobDetailFactoryMap.keySet();
