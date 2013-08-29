@@ -20,12 +20,11 @@
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-core</artifactId>
-			<scope>test</scope>
 		</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-events</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
 
 		<!-- ###################################### -->
 		<!-- Esper Cep Engine Dependencies -->
@@ -59,7 +58,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 
-	<!-- Testing dependencies -->
+		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

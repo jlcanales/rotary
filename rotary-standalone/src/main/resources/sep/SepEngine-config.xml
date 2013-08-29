@@ -121,7 +121,7 @@
 	<!-- Basic LogTask.
 	     ask beans MUST BE always prototype because each task execution have
 	     its own parameters and must be diferent task class instances. -->
-	<bean id="taskMock" class="org.rotarysource.core.sep.task.TaskMock"
+	<bean id="logTask" class="org.rotarysource.core.sep.task.common.LogTask"
 		scope="prototype">
 		<property name="cepEngine" ref="cepEngine"/>
 	</bean>
