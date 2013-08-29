@@ -20,13 +20,11 @@
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-core</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-events</artifactId>
 		</dependency>
-
 
 		<!-- ###################################### -->
 		<!-- Esper Cep Engine Dependencies -->

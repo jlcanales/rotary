@@ -14,6 +14,16 @@
 	<description>CEP Evend Driven Processor core module</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<!-- ###################################### -->
+		<!-- Esper Framework Dependencies -->
+		<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
@@ -39,6 +49,14 @@
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-signals</artifactId>
 		</dependency>
+		
+		<!-- ###################################### -->
+		<!-- Quartz Framework Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
 
 		<!-- Logging dependencies -->
 		<dependency>
@@ -51,7 +69,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 
-	<!-- Testing dependencies -->
+		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

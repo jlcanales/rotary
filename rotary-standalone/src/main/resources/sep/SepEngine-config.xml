@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- This Spring XML config file contains all elements needed to setup correctly
+		 the Scheduled Events Processor engine.
+		 It contains some example for job and trigger factories needed to start SepEngine
+		 -->
+
+	<!-- **************************************************************** -->
+	<!-- This Section contains the SEP engine structure definition -->
+	<!-- In this bean all the available job Factories are injected in engine -->
+	<!-- **************************************************************** -->
+	<bean id="sepEngine" class="org.rotarysource.core.sep.SepEngine">
+		<constructor-arg ref="scheduler" />
+		<constructor-arg>
+			<map>
+				<entry key="logTaskJob" value-ref="logTaskJobFactory" />
+			</map>
+		</constructor-arg>
+		<constructor-arg ref="jobTriggerFactory" />
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- This Section contains the Quartz Scheduler configuration         -->
+	<!-- Quarth Scheduler is the main component of sepEngine to date jobs -->
+	<!-- **************************************************************** -->
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		destroy-method="destroy">
+		<property name="autoStartup" value="false" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<property name="overwriteExistingJobs" value="true" />
+		<!-- <property name="dataSource" ref="quartzDataSource" /> <property name="transactionManager" 
+			ref="quartzTxManager" /> -->
+		<property name="jobFactory">
+			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+		</property>
+		<property name="configLocation" value="classpath:sep/quartz.properties" />
+	</bean>
+	
+
+	<!-- **************************************************************** -->
+	<!-- Trigger Configuration Section
+		 This section setup the trigger Prototype to schedule jobs. It
+		 define the Trigger Factory needed by sepEngine for triggers generation
+		 when a job will be scheduled -->
+	<!-- **************************************************************** -->
+
+	<bean id="jobTriggerFactory" name="jobTriggerFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName">
+			<idref local="jobTrigger" />
+		</property>
+	</bean>
+
+
+	<!-- *** Trigger Prototype; Setup common trigger parameters *** -->
+
+	<bean id="jobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		scope="prototype">
+		<property name="volatility" value="false" />
+		<property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_FIRE_NOW" />
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- JOB Configuration Section
+		 This section setup each kind of job. There must be a job definition for
+		 each Task to be executed (defined in property jobDataAsMap as an entry in
+		 the param map to inject the Task bean). 
+		 For each job type, a job factory bean must be declared to be injected
+		 in sepEngine -->
+	<!-- **************************************************************** -->
+
+	<!-- Objects Factories for SEP engine -->
+	<bean id="logTaskJobFactory" name="logTaskJobFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName">
+			<idref local="logTaskJobDetail" />
+		</property>
+	</bean>
+	
+
+
+	<!-- **************************************************************** -->
+	<!-- *** JOBS *** -->
+	<!-- **************************************************************** -->
+	<bean id="logTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean"
+		scope="prototype">
+		<property name="jobDataAsMap">
+			<map>
+				<!-- <entry key="task" value-ref="taskMock" /> -->
+				<entry key="task" value-ref="logTask" />
+				
+			</map>
+		</property>
+		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />
+		<!-- Volatility - if a job is volatile, it is not persisted between re-starts 
+			of the Quartz scheduler. Triggers must be volatility also. -->
+		<property name="volatility" value="false" />
+		<!-- Durability - if a job is non-durable, it is automatically deleted 
+			from the scheduler once there are no longer any active triggers associated 
+			with it. -->
+		<property name="durability" value="true" />
+		<!-- RequestsRecovery - if a job "requests recovery", and it is executing 
+			during the time of a 'hard shutdown' of the scheduler (i.e. the process it 
+			is running within crashes, or the machine is shut off), then it is re-executed 
+			when the scheduler is started again. -->
+		<property name="requestsRecovery" value="true" />
+	</bean>
+
+
+	<!-- **************************************************************** -->
+	<!-- Task Configuration Section
+		 This section setup each available Task bean to be injected in
+		 each job type -->
+	<!-- **************************************************************** -->
+	
+	<!-- Basic LogTask.
+	     ask beans MUST BE always prototype because each task execution have
+	     its own parameters and must be diferent task class instances. -->
+	<bean id="logTask" class="org.rotarysource.core.sep.task.common.LogTask"
+		scope="prototype">
+		<property name="cepEngine" ref="cepEngine"/>
+	</bean>
+
+</beans>

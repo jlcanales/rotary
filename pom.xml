@@ -40,6 +40,9 @@
 		<!-- Esper CEP Framework Version -->
 		<esper-version>4.9.0</esper-version>
 
+		<!-- Quartz SEP Framework Version -->
+		<quartz-version>1.8.6</quartz-version>
+		
 		<!-- Test libraries versions -->
 		<junit-version>4.10</junit-version>
 		<mockito-version>1.9.5</mockito-version>
@@ -234,6 +237,15 @@
 				<artifactId>esperha-xsdboe</artifactId>
 				<version>${esper-version}</version>
 			</dependency>
+
+			<!-- ###################################### -->
+			<!-- Quartz Framework Dependencies -->
+			<!-- ###################################### -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+							<version>${quartz-version}</version>
+		</dependency>
 
 			<!-- ###################################### -->
 			<!-- Spring Dependencies -->

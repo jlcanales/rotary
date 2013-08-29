@@ -22,4 +22,15 @@
 	</bean>     
 	<!-- END logAllStatement--> 
 
+	<!-- START ScheduleEventStatement Schedule in SEP events with operation 'schedule' -->    
+	<bean id="scheduleEventStatement"
+		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
+		<property name="eplStatement" value="@Name('scheduleEventStatement') select istream * from BasicEvent 
+											  where compData('IdOperation')='Schedule' 
+											  and eventType='INFO'" />
+		<property name="subscriber" ref="schedulerSubscriber"/>
+	</bean>     
+	<!-- END logAllStatement--> 
+
+
 </beans>
