@@ -36,7 +36,11 @@
 		<level value="DEBUG" />
 		<appender-ref ref="LogListenerLogfile" />
 	</logger>
-		<logger name="org.rotarysource.listener.MapBaseListener">
+	<logger name="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber">
+		<level value="DEBUG" />
+		<appender-ref ref="LogListenerLogfile" />
+	</logger>
+	<logger name="org.rotarysource.listener.MapBaseListener">
 		<level value="DEBUG" />
 	</logger>
 

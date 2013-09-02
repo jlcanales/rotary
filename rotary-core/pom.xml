@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>0.3.0-RELEASE</version>
 	</parent>
 
 	<name>Rotary CEP Event Driven Processor</name>
@@ -14,6 +14,16 @@
 	<description>CEP Evend Driven Processor core module</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<!-- ###################################### -->
+		<!-- Esper Framework Dependencies -->
+		<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
@@ -32,6 +42,21 @@
 			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
 
+		<!-- ###################################### -->
+		<!-- Project Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+		
+		<!-- ###################################### -->
+		<!-- Quartz Framework Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
 
 		<!-- Logging dependencies -->
 		<dependency>
@@ -44,9 +69,15 @@
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 
+		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -89,7 +120,7 @@
 						<additionalClasspathElement>${basedir}/src/test/resources</additionalClasspathElement>
 					</additionalClasspathElements>
 					<includes>
-						<include>tst/**/*Test.java</include>
+						<include>**/*Test.java</include>
 					</includes>
 					<systemProperties>
 						<property>

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>0.3.0-RELEASE</version>
 	</parent>
 
 
@@ -14,6 +14,14 @@
 	<description>Rotary JMX support for main components</description>
 
 	<dependencies>
+		<!-- ###################################### -->
+		<!-- Project Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+		
 			<!-- ###################################### -->
 			<!-- Spring Dependencies -->
 			<!-- ###################################### -->

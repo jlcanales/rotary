@@ -11,6 +11,7 @@ import javax.jms.TextMessage;
 
 import org.rotarysource.core.CepEngine;
 import org.rotarysource.events.BasicEvent;
+import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.support.converter.MessageConversionException;
@@ -163,7 +164,5 @@ public class BasicEventIA implements MessageListener
         this.countMessages  = 0;
         this.countBadFormed = 0;	
 	}
-
-	
 
 }

@@ -13,5 +13,24 @@
 		<property name="listener" ref="logListener"/>
 	</bean>     
 	<!-- END logAllStatement--> 
+	
+	<!-- START logAllStatement log all ProdEvent events received -->    
+	<bean id="basicEventLogStatement"
+		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
+		<property name="eplStatement" value="@Name('basicEventLogStatement') select istream * from BasicEvent" />
+		<property name="subscriber" ref="basicEventLogSubscriber"/>
+	</bean>     
+	<!-- END logAllStatement--> 
+
+	<!-- START ScheduleEventStatement Schedule in SEP events with operation 'schedule' -->    
+	<bean id="scheduleEventStatement"
+		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
+		<property name="eplStatement" value="@Name('scheduleEventStatement') select istream * from BasicEvent 
+											  where compData('IdOperation')='Schedule' 
+											  and eventType='INFO'" />
+		<property name="subscriber" ref="schedulerSubscriber"/>
+	</bean>     
+	<!-- END logAllStatement--> 
+
 
 </beans>

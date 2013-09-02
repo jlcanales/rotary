@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>0.3.0-RELEASE</version>
 	</parent>
 	<name>Rotary Input Adapter</name>
 
@@ -23,7 +23,12 @@
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-events</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
 		</dependency>
+		
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->

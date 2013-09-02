@@ -24,12 +24,20 @@
 		</property>
 	</bean>
 
+	<import resource="classpath:sep/SepEngine-config.xml" />
 	<import resource="classpath:statements/Statements.xml" />
 	<import resource="classpath:jmx/jmx-MBeanExporter.xml" />
 
 
-	<bean id="contextApplicationContextProvider" class="org.rotarysource.standalone.ApplicationContextProvider"></bean>
-
+	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider"></bean>
+	<bean id="shutdownEventListener" class="org.rotarysource.signals.shutdown.ShutdownEventListener">
+		<constructor-arg>
+			<list>
+				<ref bean="listenerContainer" />
+				<ref bean="cepEngine" />
+			</list>
+		</constructor-arg>
+	</bean>
 
 	<!-- *********************************************** -->
 	<!-- CEP engine bean creation -->
@@ -40,6 +48,8 @@
 			<set>
 
 				<ref bean="logAllStatement" />
+				<ref bean="basicEventLogStatement" />
+				<ref bean="scheduleEventStatement" />
 
 			</set>
 		</constructor-arg>
@@ -52,6 +62,17 @@
 	<!-- To be injected in any statement -->
 	<!-- ********************************* -->
 	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
+	<bean id="basicEventLogSubscriber"
+		class="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber" />
+
+	<!-- Scheduling Subscriber -->
+	<!-- To use this Subscriber, <import resource="classpath:sep/SepEngine-config.xml" 
+		/> must be included in header of this xml file -->
+
+	<bean id="schedulerSubscriber"
+		class="org.rotarysource.subscriber.basicevent.SchedulerSubscriber">
+		<constructor-arg ref="sepEngine" />
+	</bean>
 
 
 	<!-- *********************************************** -->
@@ -85,7 +106,7 @@
 
 
 	<bean id="listenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		class="org.rotarysource.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="jmsActiveMQFactory" />
 		<property name="destination" ref="defaultDestination" />
 		<property name="messageListener" ref="basicEventInputAdapter" />
@@ -93,7 +114,8 @@
 		<property name="autoStartup" value="false" />
 	</bean>
 
-	<bean id="basicEventInputAdapter" class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventIA">
+	<bean id="basicEventInputAdapter"
+		class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventIA">
 		<constructor-arg ref="cepEngine" />
 		<property name="msgConverter">
 			<ref bean="messageConverter" />

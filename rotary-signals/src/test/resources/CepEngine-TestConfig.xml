@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+
+	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider" />
+
+			<bean id="shutdownEventListener"
+				class="org.rotarysource.signals.shutdown.ShutdownEventListener">
+				<constructor-arg>
+					<list>
+
+						<ref bean="signaledComponentMockSpy" />
+						<ref bean="signaledComponentMockSpy" />
+						<ref bean="signaledComponentMockSpy" />
+
+					</list>
+				</constructor-arg>
+				</bean>
+
+	<bean id="signaledComponentMock" class="org.rotarysource.signals.SignaledComponentMock" />
+
+	<!-- ############################################################################# -->
+	<!-- This test Aplication Context is parametriced to use Spy object instead -->
+	<!-- ObjectBaseMock Object. -->
+	<!-- ############################################################################# -->
+
+	<bean id="shutdownEventListenerSpy" name="shutdownEventListenerSpy"
+		class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="shutdownEventListener"/>
+	</bean>
+
+	<bean id="signaledComponentMockSpy" name="signaledComponentMockSpy"
+		class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="signaledComponentMock" />
+	</bean>
+
+
+
+</beans>

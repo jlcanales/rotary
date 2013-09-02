@@ -21,7 +21,10 @@ package org.rotarysource.standalone;
 import java.nio.charset.Charset;
 
 import org.rotarysource.core.CepEngine;
+import org.rotarysource.signals.shutdown.ShutdownEvent;
+import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
@@ -35,7 +38,6 @@ public class ServerShellMain
 {
     private static Log log = LogFactory.getLog(ServerShellMain.class);
 
-    private boolean isShutdown;
 
     public static void main(String[] args) throws Exception
     {
@@ -53,10 +55,9 @@ public class ServerShellMain
 
     public ServerShellMain() throws Exception
     {
-    	log.info("CEP System version: 0.2.0-RELEASE");
+    	log.info("CEP System version: 0.3.0-RELEASE");
     	log.info("Starting server shell");
 
-    	isShutdown = false;
     	
         // Initialize engine
         log.info("Getting Esper engine instance");
@@ -72,15 +73,22 @@ public class ServerShellMain
 
 
         // Register shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread()
-        {
-            public void run()
-            {
-                isShutdown = true;
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(
+        		new Thread(){
+		            public void run()
+		            {
+/*		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
+
+		            	ShutdownEvent event = new ShutdownEvent(this, "Shutdown Event triggered by main shutdownHook");
+		            	springAppContext.publishEvent( event);
+*/		        	
+		            }
+		         }
+         );
 
 		log.info("Statements Processor started.");
+		ShutdownEventListener shutdownEventListener = (ShutdownEventListener) springAppContext.getBean("shutdownEventListener");
+		
 
         do
         {
@@ -88,15 +96,11 @@ public class ServerShellMain
             Thread.sleep(1000);
 
         }
-        while (!isShutdown);
+        while (!shutdownEventListener.isShudownExecuted());
+        
+        ((ConfigurableApplicationContext)springAppContext).close();
+    	log.info("EVENT DRIVEN CONTROL SYSTEM: Finished");
 
-    	log.info("EVENT DRIVEN CONTROL SYSTEM: Starting Shutdown server process");
-    	log.info("Disconecting Input queues"); 
-    	jmsListenerContainer.shutdown();
-    	log.info("Shutting down CEP Engine"); 
-    	statementEngine.shutdown();
-
-        log.info("Exiting");
         System.exit(-1);
     }
 

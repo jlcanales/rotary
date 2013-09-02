@@ -28,6 +28,7 @@ import com.espertech.esperha.client.EPStatementExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
@@ -38,8 +39,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * 
  * @author J.L. Canales
  */
-@ManagedResource( objectName="org.rotarysource.mbean.core.statements:name=Statement", 
-				  description="EPL Statement", log=true,
+@ManagedResource( description="EPL Statement", log=true,
 				  logFile="jmx.log", currencyTimeLimit=15, 
 				  persistPolicy="OnUpdate", persistPeriod=200,
 				  persistLocation="foo", persistName="bar")
@@ -178,4 +178,35 @@ public class StatmntPrepare implements Statement {
 		else
 			return false;
 	}
+
+    @ManagedAttribute(description="Statement Activation Status") 
+	@Override
+	public boolean isStarted() {
+		if( statementObj != null)
+			return statementObj.isStarted();
+		else
+			return false;
+	}
+    
+    
+    @ManagedOperation(description="Deactive Statement")
+	@Override
+	public void stop() {
+		if( statementObj != null){
+			log.warn("Proceding to STOP Statement: {}", getEplName());
+			statementObj.stop();
+		}
+		
+	}
+
+    @ManagedOperation(description="Active Statement")
+	@Override
+	public void start() {
+		if( statementObj != null){
+			log.warn("Proceding to START Statement: {}", getEplName());
+			statementObj.start();
+		}
+		
+	}
+    
 }

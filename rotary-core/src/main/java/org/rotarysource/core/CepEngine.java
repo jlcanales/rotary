@@ -29,6 +29,7 @@ import com.espertech.esperha.client.ConfigurationHA;
 import java.util.List;
 
 import org.rotarysource.core.statements.Statement;
+import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author J.L. Canales
  *
  */
-public class CepEngine {
+public class CepEngine implements SignalCapable{
 	
 	private static Logger  log = LoggerFactory.getLogger(CepEngine.class);
 	
@@ -160,6 +161,7 @@ public class CepEngine {
 	 * This is the recommended shutdown method in order to assure
 	 * the correct HA storage
 	 */	
+	@Override
 	public void shutdown(){
 		log.info("Starting CEP Engine graceful SHUTDOWN");
 		cepEngine.destroy();
