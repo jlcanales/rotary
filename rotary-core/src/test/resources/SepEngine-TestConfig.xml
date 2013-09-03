@@ -12,7 +12,7 @@
 	<!-- This Section contains the SEP engine structure definition -->
 	<!-- In this bean all the available job Factories are injected in engine -->
 	<!-- **************************************************************** -->
-	<bean id="sepEngine" class="org.rotarysource.core.sep.SepEngine">
+	<bean id="sepEngine" class="org.rotarysource.core.sep.SepEngineQuartzImpl">
 		<constructor-arg ref="scheduler" />
 		<constructor-arg>
 			<map>
