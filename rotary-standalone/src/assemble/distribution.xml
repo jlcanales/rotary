@@ -14,6 +14,7 @@
 
 			<!-- Now, select which projects to include in this module-set. -->
 			<includes>
+				<include>org.rotarysource:rotary-core</include>
 				<include>org.rotarysource:rotary-standalone</include>
 			</includes>
 			<binaries>
@@ -44,6 +45,15 @@
 							<include>**/*.vm</include>
 							<include>**/*.pdf</include>
 						</includes>
+					</fileSet>
+					<fileSet>
+						<directory>${basedir}/target/data</directory>
+						<outputDirectory>/data</outputDirectory>
+						<directoryMode>0755</directoryMode>
+ 						<includes>
+							<include>**/*</include>
+						</includes>
+						
 					</fileSet>
 
 				</fileSets>
