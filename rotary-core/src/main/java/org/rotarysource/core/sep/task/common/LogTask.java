@@ -12,6 +12,11 @@ import org.slf4j.LoggerFactory;
 public class LogTask extends TaskTemplate {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -813422059424661749L;
+
+	/**
 	 * Apache commons login logger instance
 	 */
 	private static Logger log = LoggerFactory.getLogger(LogTask.class);

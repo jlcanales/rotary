@@ -42,6 +42,7 @@
 
 		<!-- Quartz SEP Framework Version -->
 		<quartz-version>1.8.6</quartz-version>
+		<derby.version>10.9.1.0</derby.version>
 		
 		<!-- Test libraries versions -->
 		<junit-version>4.10</junit-version>
@@ -241,11 +242,16 @@
 			<!-- ###################################### -->
 			<!-- Quartz Framework Dependencies -->
 			<!-- ###################################### -->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-							<version>${quartz-version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.derby</groupId>
+				<artifactId>derby</artifactId>
+				<version>${derby.version}</version>
+			</dependency>
 
 			<!-- ###################################### -->
 			<!-- Spring Dependencies -->

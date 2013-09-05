@@ -1,5 +1,6 @@
 package org.rotarysource.core.sep.task;
 
+import java.io.Serializable;
 import java.util.Map;
 
 
@@ -16,7 +17,7 @@ import java.util.Map;
  * 
  * @see org.rotarysource.core.sep.job.ScheduledJob
  */
-public interface SepTask extends Runnable {
+public interface SepTask extends Runnable,Serializable {
 	
 	/**
 	 * Set the task params

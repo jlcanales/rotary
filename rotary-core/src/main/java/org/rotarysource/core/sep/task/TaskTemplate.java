@@ -11,7 +11,12 @@ import org.slf4j.LoggerFactory;
 public abstract class TaskTemplate implements SepTask {
 
 
-    /** 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 940937369402286384L;
+
+	/** 
      * Apache commons login logger instance
      */	
 	private static Logger log = LoggerFactory.getLogger(TaskTemplate.class);
