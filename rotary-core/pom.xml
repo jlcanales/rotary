@@ -100,6 +100,55 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+		<id>derby-generate-database</id>
+		<build>
+		<plugins>
+				<!-- Creation database for quartz --> 	
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-derby-database</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-Dfile.encoding=UTF-8</argument>
+						<argument>-Duser.country=US</argument>
+						<argument>-Duser.language=en</argument>
+						<argument>-Dderby.system.home=${basedir}/target</argument>
+						<argument>-Dderby.stream.error.file=${basedir}/target/derby.log</argument>
+						<argument>-jar</argument>
+						<argument>${basedir}/src/main/lib/derbyrun.jar</argument>
+						<argument>ij</argument>
+						<argument>${basedir}/src/main/resources/sql/tables_derby.sql</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		
+		</plugins>
+		</build>
+		
+		
+		
+		</profile>
+	
+	
+	
+	
+	
+	</profiles>
+
+
+
 	<build>
 		<plugins>
 			<plugin>
