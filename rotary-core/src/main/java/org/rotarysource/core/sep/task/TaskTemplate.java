@@ -5,8 +5,11 @@ import java.util.HashMap;
 
 import org.rotarysource.core.CepEngine;
 import org.rotarysource.events.BasicEvent;
+import org.rotarysource.signals.AppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
 
 public abstract class TaskTemplate implements SepTask {
 
@@ -24,14 +27,14 @@ public abstract class TaskTemplate implements SepTask {
     /** 
      * Reference to Cep Engine that events will be sent
      */ 
-    private CepEngine cepEngine;
+    private String cepEngineBeanName;
 
     /**
      * Sets CEP Engine to be able to send events to it
      * @param cepEngine
      */
-	public void setCepEngine(CepEngine cepEngine) {
-		this.cepEngine = cepEngine;
+	public void setCepEngineBeanName(String aiCepEngineBeanName) {
+		this.cepEngineBeanName = aiCepEngineBeanName;
 	}
  
 	/**
@@ -55,13 +58,29 @@ public abstract class TaskTemplate implements SepTask {
         event.setSystemId("sepTask");
         
         event.setCompData( compDataMap);
-		
-        if(cepEngine != null){
+        
+        
+        /*
+         * Get the cepEngine instance from the application context.
+         *   Cep engine cannot be injected by IOC because a task and all
+         *   its elements must be Serializable to be launched correctly by
+         *   Quartz.
+         *   cepEngine is a singleton in spring and cannot be serialized so,
+         *   when the task is recovered from serialization, its necessary to
+         *   get cepEngine reference from AppContext
+         */
+        ApplicationContext ctx = AppContext.getApplicationContext(); 
+        
+        try{
+	        CepEngine cepEngine = (CepEngine) ctx.getBean(cepEngineBeanName);
+	        
 	        log.debug("Sending event to CEP: {}", event);
 	        cepEngine.getCepEngine().getEPRuntime().sendEvent(event);
         }
-        else{
-        	log.warn("Event could not be sended to CEP; cause: null CepEngine. Event: {}", event.toString());
+        catch( NoSuchBeanDefinitionException exception){
+        	log.warn("Event could not be sended to CEP; cause: NOT EXISTING CepEngine ({}); Event: {}", cepEngineBeanName, event.toString());
+       	
         }
+
 	}
 }

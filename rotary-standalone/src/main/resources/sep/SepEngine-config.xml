@@ -123,7 +123,7 @@
 	     its own parameters and must be diferent task class instances. -->
 	<bean id="logTask" class="org.rotarysource.core.sep.task.common.LogTask"
 		scope="prototype">
-		<property name="cepEngine" ref="cepEngine"/>
+		<property name="cepEngineBeanName" value="cepEngine"/>
 	</bean>
 
 </beans>
