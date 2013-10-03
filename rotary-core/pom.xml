@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.3.0-RELEASE</version>
+		<version>0.4.0-RELEASE</version>
 	</parent>
 
 	<name>Rotary CEP Event Driven Processor</name>
@@ -20,6 +20,10 @@
 		<dependency>
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
 		</dependency>
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
@@ -41,14 +45,6 @@
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-xsdboe</artifactId>
 		</dependency>
-
-		<!-- ###################################### -->
-		<!-- Project Modules Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-signals</artifactId>
-		</dependency>
 		
 		<!-- ###################################### -->
 		<!-- Quartz Framework Dependencies -->
@@ -57,7 +53,10 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+		</dependency>
 		<!-- Logging dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -98,7 +97,60 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+		<id>derby-generate-database</id>
+		<build>
+		<plugins>
+				<!-- Creation database for quartz --> 	
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-derby-database</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-Dfile.encoding=UTF-8</argument>
+						<argument>-Duser.country=US</argument>
+						<argument>-Duser.language=en</argument>
+						<argument>-Dderby.system.home=${basedir}/target</argument>
+						<argument>-Dderby.stream.error.file=${basedir}/target/derby.log</argument>
+						<argument>-jar</argument>
+						<argument>${basedir}/src/main/lib/derbyrun.jar</argument>
+						<argument>ij</argument>
+						<argument>${basedir}/src/main/resources/sql/tables_derby.sql</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		
+		</plugins>
+		</build>
+		
+		
+		
+		</profile>
+	
+	
+	
+	
+	
+	</profiles>
+
+
 
 	<build>
 		<plugins>
