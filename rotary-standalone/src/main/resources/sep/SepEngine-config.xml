@@ -91,9 +91,23 @@
 		scope="prototype">
 		<property name="jobDataAsMap">
 			<map>
-				<!-- <entry key="task" value-ref="taskMock" /> -->
-				<entry key="task" value-ref="logTask" />
-				
+				<!-- Preconfigured ScheduledJob Properties -->
+				<!--
+				<entry key="taskParams">
+					<map>
+						<entry>
+							<key></key>
+							<value></value>
+						</entry>
+						<entry>
+							<key></key>
+							<value></value>
+						</entry>
+					</map>
+				</entry>
+				<entry key="taskExecutorPool" value-ref="thePool" />
+				-->						
+				<entry key="task" value-ref="logTask" />			
 			</map>
 		</property>
 		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />

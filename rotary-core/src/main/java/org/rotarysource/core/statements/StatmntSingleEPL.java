@@ -78,7 +78,7 @@ public class StatmntSingleEPL extends StatmntPrepare {
 			this.statementObj.addListener(listeners.get(i));
 		}
 		
-		log.info("Successfull listener registration for: {}", this.getEplName());
+		log.info("Successfull {} listeners registration for: {}", listeners.size(), this.getEplName());
 	}
 
 

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
 import javax.xml.bind.DatatypeConverter;
 
 import org.quartz.SchedulerException;
@@ -38,15 +37,12 @@ import org.springframework.util.Assert;
  */
 public class SchedulerSubscriber
 {
-
-
-
 	private static Logger log = LoggerFactory.getLogger(SchedulerSubscriber.class);
 
-	private static final String JOBNAME_PARAM_KEY = "jobName";
-	private static final String JOBGROUP_PARAM_KEY = "jobGroup";
-	private static final String TASKTYPE_PARAM_KEY = "taskType";
-	private static final String STARTDATE_PARAM_KEY = "startDate";
+	protected static final String JOBNAME_PARAM_KEY   = "jobName";
+	protected static final String JOBGROUP_PARAM_KEY  = "jobGroup";
+	protected static final String TASKTYPE_PARAM_KEY  = "taskType";
+	protected static final String STARTDATE_PARAM_KEY = "startDate";
 	
 	/**
 	 * Sep Engine to support scheduled execution
@@ -113,8 +109,7 @@ public class SchedulerSubscriber
 		jobDesk.setTaskParams(taskParams);
 		
 		//Scheduled job
-		try {
-			
+		try {			
 			sepEngine.scheduleJob(jobDesk);
 			
 		} catch (SchedulerException e) {
