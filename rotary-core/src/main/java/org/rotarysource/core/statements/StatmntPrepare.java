@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPStatement;
+import com.espertech.esper.client.EPStatementException;
+import com.espertech.esper.client.EPStatementSyntaxException;
 import com.espertech.esperha.client.EPStatementExistsException;
 
 import org.slf4j.Logger;
@@ -114,7 +116,18 @@ public class StatmntPrepare implements Statement {
 			statementObj = cepEngine.getEPAdministrator().getStatement( eplName);
 			log.warn("Recovered EplName={}", eplName);
 
+		}catch (EPStatementSyntaxException exception) {
+			
+			
+			log.error("Syntax error exception registering EPL; nested Message {}",exception.getMessage());
+			throw exception;
+
+		}catch (EPStatementException exception) {						
+			log.error("Error registering EPL; nested Message {}",exception.getMessage());
+			throw exception;
+
 		}
+		
 		
 		log.info("Successfull registered Statement: {}", getEplName());
 	}

@@ -18,7 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
 
 package org.rotarysource.core.statements;
 
+import com.espertech.esper.client.EPException;
 import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,15 +67,25 @@ public class StatmntEPLSubscriber extends StatmntPrepare {
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {
-		super.register(cepEngine);
-
-		log.info("Adding Subscriber to : {}", this.getEplName());
-		
-		// Joining subscriber to EPL object
-		if(subscriber != null)
-			this.statementObj.setSubscriber(subscriber);
-		
-		log.info("Successfull subscriber registration for: {}", this.getEplName());
+		try{		
+			super.register(cepEngine);
+	
+			log.info("Adding Subscriber to : {}", this.getEplName());
+			
+			// Joining subscriber to EPL object
+			if(subscriber != null)
+				this.statementObj.setSubscriber(subscriber);
+			
+			log.info("Successfull subscriber registration for: {}", this.getEplName());
+		}catch (EPStatementException exception){
+			log.error("Failure registering EPL for: {}", this.getEplName());
+			throw exception;
+			
+		}catch (EPException exception){
+			log.error("Failure subscriber registration for: {}", this.getEplName());
+			throw exception;
+			
+		}
 	}
 
 

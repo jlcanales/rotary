@@ -20,6 +20,7 @@ package org.rotarysource.core;
 
 
 import com.espertech.esper.client.Configuration;
+import com.espertech.esper.client.EPException;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esperha.client.ConfigurationHA;
@@ -107,7 +108,12 @@ public class CepEngine implements SignalCapable{
 			
 		cepEngine = initCepEngine();
 		for (int i = 0; i < statements.size(); i++){
-			statements.get(i).register(cepEngine);
+			
+			try{
+				statements.get(i).register(cepEngine);
+			}catch (EPException exception){
+					log.error("Failure registering statement {}, This statement will be avoided. ", i);		
+			}
 		}
 	}
 	

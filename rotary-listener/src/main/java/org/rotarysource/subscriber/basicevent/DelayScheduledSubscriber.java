@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 
 public class DelayScheduledSubscriber extends SchedulerSubscriber {
 
-	private static final String DELAY_PARAM_KEY = "delay";	
+	protected static final String DELAY_PARAM_KEY = "delay";	
 	
 	public DelayScheduledSubscriber(SepEngine aiSepEngine) {
 		super(aiSepEngine);

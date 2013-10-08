@@ -50,7 +50,7 @@ public class SchedulerSubscriber
 	private SepEngine sepEngine;
 	
 	/**
-	 * SechedulerSubscriber constructor.
+	 * SchedulerSubscriber constructor.
 	 * 
 	 * @param aiSepEngine SepEngine used by this object
 	 */
