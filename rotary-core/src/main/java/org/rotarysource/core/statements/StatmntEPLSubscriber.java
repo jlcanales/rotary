@@ -82,7 +82,7 @@ public class StatmntEPLSubscriber extends StatmntPrepare {
 			throw exception;
 			
 		}catch (EPException exception){
-			log.error("Failure subscriber registration for: {}", this.getEplName());
+			log.error("Failure subscriber registration for: {} ; Nexted Exception: {}", this.getEplName(), exception.getMessage());
 			throw exception;
 			
 		}
