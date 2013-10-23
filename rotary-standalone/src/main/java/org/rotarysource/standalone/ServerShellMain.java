@@ -21,7 +21,6 @@ package org.rotarysource.standalone;
 import java.nio.charset.Charset;
 
 import org.rotarysource.core.CepEngine;
-import org.rotarysource.signals.shutdown.ShutdownEvent;
 import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;

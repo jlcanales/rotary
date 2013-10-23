@@ -1,6 +1,5 @@
 package org.rotarysource.listener.mail;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
