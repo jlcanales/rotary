@@ -21,7 +21,6 @@ package org.rotarysource.standalone;
 import java.nio.charset.Charset;
 
 import org.rotarysource.core.CepEngine;
-import org.rotarysource.signals.shutdown.ShutdownEvent;
 import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -55,7 +54,7 @@ public class ServerShellMain
 
     public ServerShellMain() throws Exception
     {
-    	log.info("CEP System version: 0.4.0-RELEASE");
+    	log.info("CEP System version: 0.5.0-RELEASE");
     	log.info("Starting server shell");
 
     	

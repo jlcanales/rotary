@@ -21,7 +21,9 @@ package org.rotarysource.core.statements;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.espertech.esper.client.EPException;
 import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatementException;
 import com.espertech.esper.client.UpdateListener;
 
 import org.slf4j.Logger;
@@ -69,16 +71,28 @@ public class StatmntSingleEPL extends StatmntPrepare {
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {
-		super.register(cepEngine);
-
-		log.info("Adding Listeners to : {}", this.getEplName());
 		
-		// Joining listeners to EPL object
-		for (int i = 0; i < listeners.size(); i++){
-			this.statementObj.addListener(listeners.get(i));
+		try{
+			super.register(cepEngine);
+	
+			log.info("Adding Listeners to : {}", this.getEplName());
+			
+			// Joining listeners to EPL object
+			for (int i = 0; i < listeners.size(); i++){
+				this.statementObj.addListener(listeners.get(i));
+			}
+			
+			log.info("Successfull {} listeners registration for: {}", listeners.size(), this.getEplName());
+		
+		}catch (EPStatementException exception){
+			log.error("Failure registering EPL for: {}", this.getEplName());
+			throw exception;
+			
+		}catch (EPException exception){
+			log.error("Failure {} listeners registration for: {}", listeners.size(), this.getEplName());
+			throw exception;
+			
 		}
-		
-		log.info("Successfull listener registration for: {}", this.getEplName());
 	}
 
 

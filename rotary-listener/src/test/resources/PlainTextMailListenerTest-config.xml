@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	
+	<!--  ############################################################################# -->
+	<!--  Object Under Test      														-->
+	<!--  VelocityHTMLMailSender.														-->
+	<!--  ############################################################################# -->
+
+	
+	<bean id="plainTextMailSender"
+		class="org.rotarysource.listener.mail.plaintext.PlainTextMailSender">
+		<property name="mailSender" ref="javaMailSenderMock"/>
+		<property name="templateMessage" ref="templateMessage"/>
+		
+		<property name="templateMailText">
+			<value>Message test:			
+			Contrato: @{idContract};
+			Item: @{idItem};
+			</value>
+		</property>
+	
+	</bean>  
+
+	<!--  ############################################################################# -->
+	<!--  Other suport beans     														-->
+	<!--  VelocityHTMLMailSender.														-->
+	<!--  ############################################################################# -->
+	<!-- this is a template message that we can pre-load with default state -->
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="to" value="aaa@gmail.com" />
+		<property name="from" value="bbb@gmail.com" />
+		<property name="subject" value="Example Mail" />
+	</bean>
+
+	
+	<!--  ############################################################################# -->
+	<!--  Needed Mocks for Unit Texting												    -->
+	<!--  ############################################################################# -->
+	
+	<bean id="javaMailSenderMock" name="javaMailSenderMock" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="org.springframework.mail.javamail.JavaMailSenderImpl"/>
+	</bean>
+
+
+<!-- 	
+	<bean id="objectBaseListenerSpy" name="objectBaseListenerSpy" class="org.mockito.Mockito" factory-method="spy">
+		<constructor-arg ref="objectBaseListenerMock"/>
+	</bean>
+	
+	ObjectBaseListner 
+	<bean id="objectBaseListenerMock"
+		class="org.rotarysource.listener.ObjectBaseMock"/>
+  -->     
+</beans>

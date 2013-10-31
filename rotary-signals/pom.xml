@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.4.0-RELEASE</version>
+		<version>0.5.0-RELEASE</version>
 	</parent>
 
 	<name>Rotary Internal signals management</name>
