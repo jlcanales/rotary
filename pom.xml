@@ -30,6 +30,7 @@
 		<module>rotary-jmx</module>
 		<module>rotary-signals</module>
 		<module>rotary-standalone</module>
+		<module>rotary-war</module>
 	</modules>
 
 	<properties>
