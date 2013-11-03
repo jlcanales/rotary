@@ -111,12 +111,13 @@
 
 
 	<bean id="listenerContainer"
-		class="org.rotarysource.jms.listener.DefaultMessageListenerContainer">
+		class="org.rotarysource.jms.listener.DefaultMessageListenerContainer"
+		init-method="startConnection">
 		<property name="connectionFactory" ref="jmsActiveMQFactory" />
 		<property name="destination" ref="defaultDestination" />
 		<property name="messageListener" ref="basicEventInputAdapter" />
 		<property name="concurrentConsumers" value="${jmsinput-concurrentconsumers}" />
-		<property name="autoStartup" value="true" />
+		<property name="autoStartup" value="false" />
 	</bean>
 
 	<bean id="basicEventInputAdapter"
