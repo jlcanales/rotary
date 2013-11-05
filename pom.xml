@@ -22,16 +22,55 @@
 		</developer>
 	</developers>
 
-	<modules>
-		<module>rotary-events</module>
-		<module>rotary-core</module>
-		<module>rotary-listener</module>
-		<module>rotary-inputadapter</module>
-		<module>rotary-jmx</module>
-		<module>rotary-signals</module>
-		<module>rotary-standalone</module>
-		<module>rotary-war</module>
-	</modules>
+
+	<profiles>
+		<!-- ###################################### -->
+		<!-- Specific profile to build OSGI bundles -->
+		<!-- ###################################### -->
+		<profile>
+			<id>OSGI-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>OSGI</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+			</modules>
+		</profile>
+
+
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+				<module>rotary-standalone</module>
+				<module>rotary-war</module>
+			</modules>
+		</profile>
+	</profiles>
+
 
 	<properties>
 		<!-- Project properties -->
@@ -44,7 +83,7 @@
 		<!-- Quartz SEP Framework Version -->
 		<quartz-version>1.8.6</quartz-version>
 		<derby.version>10.9.1.0</derby.version>
-		
+
 		<!-- Test libraries versions -->
 		<junit-version>4.10</junit-version>
 		<mockito-version>1.9.5</mockito-version>

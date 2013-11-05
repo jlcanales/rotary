@@ -19,6 +19,7 @@
 	<!-- ###################################### -->
 	<profiles>
 		<profile>
+			<id>OSGI-Platform</id>
 			<activation>
 				<property>
 					<name>platform</name>
@@ -41,7 +42,7 @@
 								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Name>${project.artifactId}</Bundle-Name>
 								<Bundle-Version>${project.version}</Bundle-Version>
-								<Export-Package>org.rotarysource.signals</Export-Package>
+								<Export-Package>org.rotarysource.signals.*</Export-Package>
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->
@@ -54,15 +55,25 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
-
-	<!-- ###################################### -->
-	<!-- Default profile -->
-	<!-- ###################################### -->
-	<properties>
-		<packaging-mode>jar</packaging-mode>
-	</properties>
-	
+		
+		
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<properties>
+				<packaging-mode>jar</packaging-mode>
+			</properties>
+		</profile>
+	</profiles>	
 	
 	<dependencies>
 
