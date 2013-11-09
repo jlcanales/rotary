@@ -43,6 +43,45 @@
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
 			</modules>
+
+			<dependencyManagement>
+				<dependencies>
+					<!-- ###################################### -->
+					<!-- Proyect Modules Dependencies -->
+					<!-- ###################################### -->
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.core</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.events</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.listener</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.inputadapter</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.jmx</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+
 		</profile>
 
 
@@ -68,6 +107,44 @@
 				<module>rotary-standalone</module>
 				<module>rotary-war</module>
 			</modules>
+
+			<dependencyManagement>
+				<dependencies>
+					<!-- ###################################### -->
+					<!-- Proyect Modules Dependencies -->
+					<!-- ###################################### -->
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-core</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-events</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-listener</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-inputadapter</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-jmx</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.rotarysource</groupId>
+						<artifactId>rotary-signals</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
 		</profile>
 	</profiles>
 
@@ -222,39 +299,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- ###################################### -->
-			<!-- Proyect Modules Dependencies -->
-			<!-- ###################################### -->
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-events</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-listener</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-inputadapter</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-jmx</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.rotarysource</groupId>
-				<artifactId>rotary-signals</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->

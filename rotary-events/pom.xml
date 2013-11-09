@@ -8,11 +8,14 @@
 		<artifactId>rotary-parent</artifactId>
 		<version>0.6.0.SNAPSHOT</version>
 	</parent>
-	<artifactId>rotary-events</artifactId>
+
 
 	<name>Rotary Events</name>
 	<description>Rotary Managed Events definition and Utils</description>
+
+	<artifactId>${artifactId-name}</artifactId>
 	<packaging>${packaging-mode}</packaging>
+
 
 	<!-- ###################################### -->
 	<!-- Specific profile to build OSGI bundles -->
@@ -27,6 +30,7 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.events</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
@@ -69,6 +73,7 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>rotary-events</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>

@@ -8,10 +8,9 @@
 	</parent>
 
 	<name>Rotary Internal signals management</name>
-
-	<artifactId>rotary-signals</artifactId>
 	<description>Rotary Internal signals management</description>
 
+	<artifactId>${artifactId-name}</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -28,6 +27,8 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.signals</artifactId-name>
+
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
@@ -71,6 +72,7 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>rotary-signals</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>

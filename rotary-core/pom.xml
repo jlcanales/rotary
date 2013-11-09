@@ -8,10 +8,9 @@
 	</parent>
 
 	<name>Rotary CEP Event Driven Processor</name>
-
-	<artifactId>rotary-core</artifactId>
 	<description>CEP Evend Driven Processor core module</description>
 
+	<artifactId>${artifactId-name}</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -28,8 +27,23 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.core</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
+
+			<dependencies>
+				<!-- ###################################### -->
+				<!-- rotarysource Modules Dependencies -->
+				<!-- ###################################### -->
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>org.rotary.servicemix.bundles.events</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
+				</dependency>
+			</dependencies>
 
 			<build>
 				<plugins>
@@ -71,12 +85,29 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>rotary-core</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
+
+			<dependencies>
+				<!-- ###################################### -->
+				<!-- rotarysource Modules Dependencies -->
+				<!-- ###################################### -->
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>rotary-events</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>rotary-signals</artifactId>
+				</dependency>
+			</dependencies>
+
 		</profile>
 
 		<profile>
 			<id>derby-generate-database</id>
+
 			<build>
 				<plugins>
 					<!-- Creation database for quartz -->
@@ -115,17 +146,7 @@
 
 
 	<dependencies>
-		<!-- ###################################### -->
-		<!-- rotarysource Modules Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-events</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-signals</artifactId>
-		</dependency>
+
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->

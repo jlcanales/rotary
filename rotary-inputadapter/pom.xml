@@ -8,15 +8,16 @@
 	</parent>
 	<name>Rotary Input Adapter</name>
 
-	<artifactId>rotary-inputadapter</artifactId>
 	<description>Rotary Input Adapter Module</description>
+
+	<artifactId>${artifactId-name}</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
 	<profiles>
 		<!-- ###################################### -->
-	<!-- Specific profile to build OSGI bundles -->
-	<!-- ###################################### -->
+		<!-- Specific profile to build OSGI bundles -->
+		<!-- ###################################### -->
 		<profile>
 			<id>OSGI-Platform</id>
 			<activation>
@@ -26,8 +27,27 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.inputadapter</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
+
+			<dependencies>
+				<!-- ###################################### -->
+				<!-- rotarysource Modules Dependencies -->
+				<!-- ###################################### -->
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>org.rotary.servicemix.bundles.core</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>org.rotary.servicemix.bundles.events</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
+				</dependency>
+			</dependencies>
 
 			<build>
 				<plugins>
@@ -69,8 +89,27 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>rotary-inputadapter</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
+
+			<dependencies>
+				<!-- ###################################### -->
+				<!-- rotarysource Modules Dependencies -->
+				<!-- ###################################### -->
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>rotary-core</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>rotary-events</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.rotarysource</groupId>
+					<artifactId>rotary-signals</artifactId>
+				</dependency>
+			</dependencies>
 		</profile>
 
 	</profiles>
@@ -80,41 +119,26 @@
 
 
 	<dependencies>
-		<!-- ###################################### -->
-		<!-- rotarysource Modules Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-events</artifactId>
-		</dependency>		
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-signals</artifactId>
-		</dependency>
-		
+
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->
-			<dependency>
-				<groupId>com.espertech</groupId>
-				<artifactId>esper</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.espertech</groupId>
-				<artifactId>esperha-core</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.espertech</groupId>
-				<artifactId>esperha-ehafile</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.espertech</groupId>
-				<artifactId>esperha-xsdboe</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-ehafile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-xsdboe</artifactId>
+		</dependency>
 
 
 		<!-- Logging dependencies -->

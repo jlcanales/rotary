@@ -9,8 +9,9 @@
 
 
 	<name>Rotary JMX</name>
-	<artifactId>rotary-jmx</artifactId>
 	<description>Rotary JMX support for main components</description>
+	
+	<artifactId>${artifactId-name}</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -28,9 +29,19 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.jmx</artifactId-name>			
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
+				<dependencies>
+		<!-- ###################################### -->
+		<!-- Project Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
+		</dependency>
+	</dependencies>
 			<build>
 				<plugins>
 					<plugin>
@@ -70,8 +81,19 @@
 				</property>
 			</activation>
 			<properties>
+				<artifactId-name>rotary-jmx</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
+			
+				<dependencies>
+		<!-- ###################################### -->
+		<!-- Project Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+	</dependencies>
 		</profile>
 
 	</profiles>
@@ -80,13 +102,7 @@
 
 
 	<dependencies>
-		<!-- ###################################### -->
-		<!-- Project Modules Dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.rotarysource</groupId>
-			<artifactId>rotary-signals</artifactId>
-		</dependency>
+
 
 		<!-- ###################################### -->
 		<!-- Spring Dependencies -->
