@@ -4,14 +4,79 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.6.0-SNAPSHOT</version>
+		<version>0.6.0.SNAPSHOT</version>
 	</parent>
 
 	<name>Rotary Internal signals management</name>
-
-	<artifactId>rotary-signals</artifactId>
-	<packaging>jar</packaging>
 	<description>Rotary Internal signals management</description>
+
+	<artifactId>${artifactId-name}</artifactId>
+	<packaging>${packaging-mode}</packaging>
+
+
+	<profiles>
+		<!-- ###################################### -->
+		<!-- Specific profile to build OSGI bundles -->
+		<!-- ###################################### -->
+		<profile>
+			<id>OSGI-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>OSGI</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.signals</artifactId-name>
+
+				<packaging-mode>bundle</packaging-mode>
+			</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<version>2.4.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<instructions>
+								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+								<Bundle-Name>${project.artifactId}</Bundle-Name>
+								<Bundle-Version>${project.version}</Bundle-Version>
+								<Export-Package>org.rotarysource.signals.*</Export-Package>
+								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
+								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
+								<!-- <Import-Package> -->
+								<!-- org.osgi.framework, -->
+								<!-- *;resolution:=optional -->
+								<!-- </Import-Package> -->
+							</instructions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>rotary-signals</artifactId-name>
+				<packaging-mode>jar</packaging-mode>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 
