@@ -42,45 +42,13 @@
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
+				<module>rotary-3party-bundles/rotary-esperbundle</module>
+				<module>rotary-3party-bundles/rotary-esperhabundle</module>
+				<module>rotary-3party-bundles/rotary-esperhafile-bundle</module>
+				<module>rotary-3party-bundles/rotary-esperhaxsdboe-bundle</module>
 			</modules>
 
-			<dependencyManagement>
-				<dependencies>
-					<!-- ###################################### -->
-					<!-- Proyect Modules Dependencies -->
-					<!-- ###################################### -->
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.core</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.events</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.listener</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.inputadapter</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.jmx</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
+
 
 		</profile>
 
@@ -108,43 +76,6 @@
 				<module>rotary-war</module>
 			</modules>
 
-			<dependencyManagement>
-				<dependencies>
-					<!-- ###################################### -->
-					<!-- Proyect Modules Dependencies -->
-					<!-- ###################################### -->
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-core</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-events</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-listener</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-inputadapter</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-jmx</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.rotarysource</groupId>
-						<artifactId>rotary-signals</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
 		</profile>
 	</profiles>
 
@@ -166,7 +97,7 @@
 		<mockito-version>1.9.5</mockito-version>
 
 		<log4j-version>1.2.17</log4j-version>
-		<spring-version>3.2.3.RELEASE</spring-version>
+		<spring-version>3.1.3.RELEASE</spring-version>
 		<aspectj-version>1.7.1</aspectj-version> <!-- Must be compatible with spring-version -->
 		<slf4j-version>1.6.6</slf4j-version>
 		<jaxb-version>2.2</jaxb-version>
@@ -299,6 +230,41 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+
+			<!-- ###################################### -->
+			<!-- Proyect Modules Dependencies -->
+			<!-- ###################################### -->
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-events</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-listener</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-inputadapter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-jmx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>rotary-signals</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->

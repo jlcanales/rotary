@@ -33,21 +33,6 @@
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- Proyect Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.core</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.events</artifactId>
-				</dependency>
-			</dependencies>
-
-
 			<build>
 				<plugins>
 					<plugin>
@@ -92,25 +77,25 @@
 				<artifactId-name>rotary-listener</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
-
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- Proyect Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-core</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-events</artifactId>
-				</dependency>
-			</dependencies>
 		</profile>
 	</profiles>
 
 
 	<dependencies>
+
+		<!-- ###################################### -->
+		<!-- Proyect Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+
+
 		<!-- ###################################### -->
 		<!-- Esper Cep Engine Dependencies -->
 		<!-- ###################################### -->

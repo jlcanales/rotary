@@ -31,24 +31,6 @@
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- rotarysource Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.core</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.events</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
-				</dependency>
-			</dependencies>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -61,8 +43,7 @@
 								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Name>${project.artifactId}</Bundle-Name>
 								<Bundle-Version>${project.version}</Bundle-Version>
-								<Export-Package>org.rotarysource.jms.*</Export-Package>
-								<Export-Package>org.rotarysource.inputadapter.*</Export-Package>
+								<Export-Package>org.rotarysource.jms.listener.*,org.rotarysource.inputadapter.*</Export-Package>
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->
@@ -93,23 +74,6 @@
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- rotarysource Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-core</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-events</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-signals</artifactId>
-				</dependency>
-			</dependencies>
 		</profile>
 
 	</profiles>
@@ -119,6 +83,24 @@
 
 
 	<dependencies>
+
+
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+
 
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->

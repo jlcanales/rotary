@@ -31,20 +31,6 @@
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- rotarysource Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.events</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>org.rotary.servicemix.bundles.signals</artifactId>
-				</dependency>
-			</dependencies>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -57,7 +43,8 @@
 								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Name>${project.artifactId}</Bundle-Name>
 								<Bundle-Version>${project.version}</Bundle-Version>
-								<Export-Package>org.rotarysource.core.*</Export-Package>
+								<Export-Package>org.rotarysource.core.*,!com.esperterch.*</Export-Package>
+								<Import-Package>com.espertech.esper.client,com.espertech.esper.client.annotation, *</Import-Package> 
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->
@@ -88,20 +75,6 @@
 				<artifactId-name>rotary-core</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
-
-			<dependencies>
-				<!-- ###################################### -->
-				<!-- rotarysource Modules Dependencies -->
-				<!-- ###################################### -->
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-events</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.rotarysource</groupId>
-					<artifactId>rotary-signals</artifactId>
-				</dependency>
-			</dependencies>
 
 		</profile>
 
@@ -147,25 +120,43 @@
 
 	<dependencies>
 
+
+		<!-- ###################################### -->
+		<!-- rotarysource Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+
+
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-ehafile</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-xsdboe</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- ###################################### -->
