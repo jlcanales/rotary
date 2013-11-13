@@ -76,18 +76,27 @@
 								<Import-Package>org.rotarysource.events,
 								org.rotarysource.core,
 								org.rotarysource.core.sep,
+								org.rotarysource.core.sep.task.common,
 								org.rotarysource.core.statements,
 								org.rotarysource.listener,
 								org.rotarysource.listener.common,
 								org.rotarysource.listener.mail.*,
 								org.rotarysource.subscriber.*,
+								org.rotarysource.jmx.core,
+								org.rotarysource.jmx.jmsinputadapter,
 								com.espertech.esper.client,
 								com.espertech.esper.client.annotation,
 								net.sf.cglib.reflect,
+								net.sf.cglib.proxy,
+								net.sf.cglib.core,
 								org.springframework.scheduling.quartz,
 								org.quartz.simpl,
 								org.springframework.remoting.rmi,
-								org.springframework.jmx.support,*</Import-Package>
+								org.springframework.jmx.support,
+								org.springframework.scheduling.annotation,
+								org.springframework.aop,
+								org.springframework.aop.framework,
+								org.aopalliance.aop,*</Import-Package>
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->

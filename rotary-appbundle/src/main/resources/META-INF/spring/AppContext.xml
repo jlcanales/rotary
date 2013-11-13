@@ -33,7 +33,7 @@
 	<import resource="classpath:META-INF/spring/sep/SepEngine-config.xml" />
 	
 	<import resource="classpath:META-INF/spring/statements/Statements.xml" />
-<!-- 	<import resource="classpath:META-INF/spring/jmx/jmx-MBeanExporter.xml" /> -->
+	<import resource="classpath:META-INF/spring/jmx/jmx-MBeanExporter.xml"/>
 
 
 	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider"></bean>
