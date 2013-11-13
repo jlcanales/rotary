@@ -73,7 +73,21 @@
 								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Name>${project.artifactId}</Bundle-Name>
 								<Bundle-Version>${project.version}</Bundle-Version>
-								<Import-Package>org.rotarysource.events,com.espertech.esper.client,com.espertech.esper.client.annotation,*</Import-Package>
+								<Import-Package>org.rotarysource.events,
+								org.rotarysource.core,
+								org.rotarysource.core.sep,
+								org.rotarysource.core.statements,
+								org.rotarysource.listener,
+								org.rotarysource.listener.common,
+								org.rotarysource.listener.mail.*,
+								org.rotarysource.subscriber.*,
+								com.espertech.esper.client,
+								com.espertech.esper.client.annotation,
+								net.sf.cglib.reflect,
+								org.springframework.scheduling.quartz,
+								org.quartz.simpl,
+								org.springframework.remoting.rmi,
+								org.springframework.jmx.support,*</Import-Package>
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->

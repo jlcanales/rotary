@@ -38,7 +38,7 @@
 		<property name="jobFactory">
 			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
 		</property>
-		<property name="configLocation" value="classpath:spring/sep/quartz.properties" />
+		<property name="configLocation" value="classpath:META-INF/spring/sep/quartz.properties" />
 	</bean>
 	
 

@@ -45,8 +45,7 @@
 								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Name>${project.artifactId}</Bundle-Name>
 								<Bundle-Version>${project.version}</Bundle-Version>
-								<Export-Package>org.rotarysource.listener.*</Export-Package>
-								<Export-Package>org.rotarysource.subscriber.*</Export-Package>
+								<Export-Package>org.rotarysource.listener.*,org.rotarysource.subscriber.*</Export-Package>
 								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
 								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
 								<!-- <Import-Package> -->

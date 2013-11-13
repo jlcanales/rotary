@@ -60,7 +60,7 @@
 		<property name="jobFactory">
 			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
 		</property>
-		<property name="configLocation" value="classpath:sep/quartz-derby.properties" />
+		<property name="configLocation" value="classpath:META-INF/sep/quartz-derby.properties" />
 	</bean>
 	
 

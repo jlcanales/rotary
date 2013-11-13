@@ -26,11 +26,30 @@
 	</bean>
 
 
+	<!-- Apply this xml file for Quartz derby persistence  availability
+	   <import resource="classpath:sep/SepEngine-derby-config.xml" />
+	-->
+	<!-- Apply this xml file for Quartz RAM persistence  availability-->
+	<import resource="classpath:META-INF/spring/sep/SepEngine-config.xml" />
+	
+	<import resource="classpath:META-INF/spring/statements/Statements.xml" />
+<!-- 	<import resource="classpath:META-INF/spring/jmx/jmx-MBeanExporter.xml" /> -->
+
+
+	<bean id="contextApplicationContextProvider" class="org.rotarysource.signals.ApplicationContextProvider"></bean>
+	<bean id="shutdownEventListener" class="org.rotarysource.signals.shutdown.ShutdownEventListener">
+		<constructor-arg>
+			<list>
+				<ref bean="listenerContainer" />
+				<ref bean="cepEngine" />
+			</list>
+		</constructor-arg>
+	</bean>
 	<!-- START logAllStatement log all ProdEvent events received -->    
-	<bean id="logAllStatement"
-		class="org.rotarysource.core.statements.StatmntSingleQuery">
-		<property name="eplStatement" value="@Name('logAllStatement') select istream * from BasicEvent" />
-	</bean>     
+<!-- 	<bean id="logAllStatement" -->
+<!-- 		class="org.rotarysource.core.statements.StatmntSingleQuery"> -->
+<!-- 		<property name="eplStatement" value="@Name('logAllStatement') select istream * from BasicEvent" /> -->
+<!-- 	</bean>      -->
 	<!-- END logAllStatement--> 
 
 	<!-- *********************************************** -->
@@ -45,6 +64,26 @@
 		</constructor-arg>
 		<constructor-arg index="1" value="0" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
 	</bean>
+	
+	
+	<!-- ********************************* -->
+	<!-- Listener Definition -->
+	<!-- To be injected in any statement -->
+	<!-- ********************************* -->
+	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
+	<bean id="basicEventLogSubscriber"
+		class="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber" />
+
+	<!-- Scheduling Subscriber -->
+	<!-- To use this Subscriber, <import resource="classpath:sep/SepEngine-config.xml" 
+		/> must be included in header of this xml file -->
+
+	<bean id="schedulerSubscriber"
+		class="org.rotarysource.subscriber.basicevent.SchedulerSubscriber">
+		<constructor-arg ref="sepEngine" />
+	</bean>
+	
+	
 
 	<!-- *********************************************** -->
 	<!-- JMS CONFIGURATION -->
