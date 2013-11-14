@@ -7,7 +7,7 @@
 	<groupId>org.rotarysource</groupId>
 	<artifactId>rotary-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.5.0-RELEASE</version>
+	<version>1.0.0.RELEASE</version>
 	<name>Rotary Source</name>
 	<description>Rotary Framework Main build file</description>
 
@@ -22,15 +22,64 @@
 		</developer>
 	</developers>
 
-	<modules>
-		<module>rotary-events</module>
-		<module>rotary-core</module>
-		<module>rotary-listener</module>
-		<module>rotary-inputadapter</module>
-		<module>rotary-jmx</module>
-		<module>rotary-signals</module>
-		<module>rotary-standalone</module>
-	</modules>
+
+	<profiles>
+		<!-- ###################################### -->
+		<!-- Specific profile to build OSGI bundles -->
+		<!-- ###################################### -->
+		<profile>
+			<id>OSGI-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>OSGI</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+				<module>rotary-appbundle</module>
+				<module>rotary-3party-bundles/rotary-esperbundle</module>
+				<module>rotary-3party-bundles/rotary-esperhabundle</module>
+				<module>rotary-3party-bundles/rotary-esperhafile-bundle</module>
+				<module>rotary-3party-bundles/rotary-esperhaxsdboe-bundle</module>
+			</modules>
+
+
+
+		</profile>
+
+
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+				<module>rotary-standalone</module>
+				<module>rotary-war</module>
+			</modules>
+
+		</profile>
+	</profiles>
+
 
 	<properties>
 		<!-- Project properties -->
@@ -43,13 +92,13 @@
 		<!-- Quartz SEP Framework Version -->
 		<quartz-version>1.8.6</quartz-version>
 		<derby.version>10.9.1.0</derby.version>
-		
+
 		<!-- Test libraries versions -->
 		<junit-version>4.10</junit-version>
 		<mockito-version>1.9.5</mockito-version>
 
 		<log4j-version>1.2.17</log4j-version>
-		<spring-version>3.2.3.RELEASE</spring-version>
+		<spring-version>3.1.3.RELEASE</spring-version>
 		<aspectj-version>1.7.1</aspectj-version> <!-- Must be compatible with spring-version -->
 		<slf4j-version>1.6.6</slf4j-version>
 		<jaxb-version>2.2</jaxb-version>
@@ -182,6 +231,8 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+
 			<!-- ###################################### -->
 			<!-- Proyect Modules Dependencies -->
 			<!-- ###################################### -->
@@ -215,6 +266,7 @@
 				<artifactId>rotary-signals</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->

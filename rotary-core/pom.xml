@@ -4,16 +4,123 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.5.0-RELEASE</version>
+		<version>1.0.0.RELEASE</version>
 	</parent>
 
 	<name>Rotary CEP Event Driven Processor</name>
-
-	<artifactId>rotary-core</artifactId>
-	<packaging>jar</packaging>
 	<description>CEP Evend Driven Processor core module</description>
 
+	<artifactId>${artifactId-name}</artifactId>
+	<packaging>${packaging-mode}</packaging>
+
+
+	<profiles>
+		<!-- ###################################### -->
+		<!-- Specific profile to build OSGI bundles -->
+		<!-- ###################################### -->
+		<profile>
+			<id>OSGI-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>OSGI</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.core</artifactId-name>
+				<packaging-mode>bundle</packaging-mode>
+			</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<version>2.4.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<instructions>
+								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+								<Bundle-Name>${project.artifactId}</Bundle-Name>
+								<Bundle-Version>${project.version}</Bundle-Version>
+								<Export-Package>org.rotarysource.core.*,!com.esperterch.*</Export-Package>
+								<Import-Package>com.espertech.esper.client,com.espertech.esper.client.annotation, *</Import-Package> 
+								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
+								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
+								<!-- <Import-Package> -->
+								<!-- org.osgi.framework, -->
+								<!-- *;resolution:=optional -->
+								<!-- </Import-Package> -->
+							</instructions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>rotary-core</artifactId-name>
+				<packaging-mode>jar</packaging-mode>
+			</properties>
+
+		</profile>
+
+		<profile>
+			<id>derby-generate-database</id>
+
+			<build>
+				<plugins>
+					<!-- Creation database for quartz -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>make-derby-database</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-Dfile.encoding=UTF-8</argument>
+								<argument>-Duser.country=US</argument>
+								<argument>-Duser.language=en</argument>
+								<argument>-Dderby.system.home=${basedir}/target</argument>
+								<argument>-Dderby.stream.error.file=${basedir}/target/derby.log</argument>
+								<argument>-jar</argument>
+								<argument>${basedir}/src/main/lib/derbyrun.jar</argument>
+								<argument>ij</argument>
+								<argument>${basedir}/src/main/resources/sql/tables_derby.sql</argument>
+							</arguments>
+						</configuration>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
 	<dependencies>
+
+
 		<!-- ###################################### -->
 		<!-- rotarysource Modules Dependencies -->
 		<!-- ###################################### -->
@@ -25,27 +132,33 @@
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-signals</artifactId>
 		</dependency>
+
+
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
 		<!-- ###################################### -->
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-ehafile</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-xsdboe</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- ###################################### -->
 		<!-- Quartz Framework Dependencies -->
 		<!-- ###################################### -->
@@ -102,55 +215,6 @@
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-		<id>derby-generate-database</id>
-		<build>
-		<plugins>
-				<!-- Creation database for quartz --> 	
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>make-derby-database</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<argument>-Dfile.encoding=UTF-8</argument>
-						<argument>-Duser.country=US</argument>
-						<argument>-Duser.language=en</argument>
-						<argument>-Dderby.system.home=${basedir}/target</argument>
-						<argument>-Dderby.stream.error.file=${basedir}/target/derby.log</argument>
-						<argument>-jar</argument>
-						<argument>${basedir}/src/main/lib/derbyrun.jar</argument>
-						<argument>ij</argument>
-						<argument>${basedir}/src/main/resources/sql/tables_derby.sql</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-		
-		</plugins>
-		</build>
-		
-		
-		
-		</profile>
-	
-	
-	
-	
-	
-	</profiles>
-
-
 
 	<build>
 		<plugins>

@@ -50,6 +50,7 @@ public class StatmntSingleEPL extends StatmntPrepare {
 	 */
 	public StatmntSingleEPL() {
 		super();
+    	this.listeners = new ArrayList<UpdateListener>();
 	}
 
 	/**
@@ -102,7 +103,12 @@ public class StatmntSingleEPL extends StatmntPrepare {
 	* @param aiListeners Listeners List to initialize this item
 	*/
 	public void setListeners(List<UpdateListener> aiListeners) {
-		this.listeners = aiListeners;
+		if(aiListeners != null){
+			this.listeners = aiListeners;
+		}
+		else{
+			this.listeners = new ArrayList<UpdateListener>();
+		}
 	}
 
 }

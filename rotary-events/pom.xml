@@ -6,14 +6,80 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>0.5.0-RELEASE</version>
+		<version>1.0.0.RELEASE</version>
 	</parent>
 
-	<artifactId>rotary-events</artifactId>
 
 	<name>Rotary Events</name>
-	<description>CEP Event Driven Managed Events definition and Utils</description>
-	<packaging>jar</packaging>
+	<description>Rotary Managed Events definition and Utils</description>
+
+	<artifactId>${artifactId-name}</artifactId>
+	<packaging>${packaging-mode}</packaging>
+
+
+	<!-- ###################################### -->
+	<!-- Specific profile to build OSGI bundles -->
+	<!-- ###################################### -->
+	<profiles>
+		<profile>
+			<id>OSGI-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>OSGI</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>org.rotary.servicemix.bundles.events</artifactId-name>
+				<packaging-mode>bundle</packaging-mode>
+			</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<version>2.4.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<instructions>
+								<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+								<Bundle-Name>${project.artifactId}</Bundle-Name>
+								<Bundle-Version>${project.version}</Bundle-Version>
+								<Export-Package>org.rotarysource.events.*</Export-Package>
+								<!-- <Private-Package>org.wso2.mbp.helloworld</Private-Package> -->
+								<!-- <Bundle-Activator>org.wso2.mbp.helloworld.Activator</Bundle-Activator> -->
+								<!-- <Import-Package> -->
+								<!-- org.osgi.framework, -->
+								<!-- *;resolution:=optional -->
+								<!-- </Import-Package> -->
+							</instructions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- ###################################### -->
+		<!-- Default profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>JAVA-Platform</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>platform</name>
+					<value>JAVA</value>
+				</property>
+			</activation>
+			<properties>
+				<artifactId-name>rotary-events</artifactId-name>
+				<packaging-mode>jar</packaging-mode>
+			</properties>
+		</profile>
+
+	</profiles>
+
 
 	<dependencies>
 
@@ -93,8 +159,9 @@
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
-
 		</plugins>
+
+
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 

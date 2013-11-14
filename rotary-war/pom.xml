@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.rotarysource</groupId>
+		<artifactId>rotary-parent</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+
+	<groupId>org.rotarysource</groupId>
+	<artifactId>rotary-war</artifactId>
+	<packaging>war</packaging>
+
+	<name>rotary-war Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- ###################################### -->
+		<!-- Proyect Modules Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-listener</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-inputadapter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-jmx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-signals</artifactId>
+		</dependency>
+		<!-- ###################################### -->
+		<!-- Spring Dependencies -->
+		<!-- ###################################### -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>rotary-war</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<warName>${project.artifactId}</warName>
+					<!-- <webXml>${basedir}/conf/web.xml</webXml> -->
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<manifestEntries>
+							<Build-Date>${buildNumber}</Build-Date>
+						</manifestEntries>
+					</archive>
+					<webResources>
+						<!-- Integración de componentes no-axis -->
+						<resource>
+							<directory>${basedir}/src/main/resources/</directory>
+							<targetPath>WEB-INF/classes</targetPath>
+						</resource>
+
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
