@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
-*/
+ */
 package org.rotarysource.core.sep;
 
 import java.text.SimpleDateFormat;
@@ -31,18 +31,20 @@ import org.rotarysource.core.sep.job.JobDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.context.Lifecycle;
 import org.springframework.util.Assert;
 
 /**
  * Scheduled Event Processor engine. This class Manage the job scheduling
  * 
  */
-public class SepEngineQuartzImpl implements SepEngine {
+public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 
 	/**
 	 * Apache commons login logger instance
 	 */
-	private static Logger log = LoggerFactory.getLogger(SepEngineQuartzImpl.class);
+	private static Logger log = LoggerFactory
+			.getLogger(SepEngineQuartzImpl.class);
 
 	/**
 	 * Quartz scheduler wrapper
@@ -69,13 +71,13 @@ public class SepEngineQuartzImpl implements SepEngine {
 	 *            Job detail factory.
 	 * @param jobTriggerFactory
 	 *            Trigger factory.
-	 * @throws SchedulerException Returned exception when a Quartz initialization error happens
+	 * @throws SchedulerException
+	 *             Returned exception when a Quartz initialization error happens
 	 */
 	public SepEngineQuartzImpl(
 			final Scheduler aiScheduler,
 			final HashMap<String, ObjectFactory<JobDetail>> aiJobDetailFactoryMap,
-			final ObjectFactory<SimpleTrigger> aiJobTriggerFactory)
-			throws SchedulerException {
+			final ObjectFactory<SimpleTrigger> aiJobTriggerFactory) {
 
 		Assert.notNull(aiScheduler,
 				"An scheduler is needed to create SepEngine");
@@ -92,7 +94,7 @@ public class SepEngineQuartzImpl implements SepEngine {
 			log.info("Initializing Scheduled Events Processor Engine");
 			log.info("==============================================");
 
-			Set<String>    jobKeys = this.jobDetailFactoryMap.keySet();
+			Set<String> jobKeys = this.jobDetailFactoryMap.keySet();
 			Iterator<String> keyIt = jobKeys.iterator();
 			while (keyIt.hasNext()) {
 				String key = (String) keyIt.next();
@@ -100,20 +102,15 @@ public class SepEngineQuartzImpl implements SepEngine {
 			}
 		}
 
-		// Start Scheduler
-		log.info("Starting scheduler Quarth Engine");
-		if (!this.scheduler.isStarted()) {
-			this.scheduler.start();
-			log.info("Quarth Engine Started;");
-		} else {
-			log.info("Quarth Engine Already Started; ");
-		}
-
 	}
 
-    /* (non-Javadoc)
-	 * @see org.rotarysource.core.sep.SepEngineIntrf#scheduleJob(org.rotarysource.core.sep.job.JobDescription)
-	 */	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.rotarysource.core.sep.SepEngineIntrf#scheduleJob(org.rotarysource
+	 * .core.sep.job.JobDescription)
+	 */
 	@Override
 	public final void scheduleJob(final JobDescription job)
 			throws SchedulerException {
@@ -179,5 +176,67 @@ public class SepEngineQuartzImpl implements SepEngine {
 			scheduler.rescheduleJob(trigger.getName(), trigger.getGroup(),
 					trigger);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.context.Lifecycle#isRunning()
+	 */
+	@Override
+	public boolean isRunning() {
+		boolean status = false;
+		try {
+			status = this.scheduler.isStarted();
+		} catch (SchedulerException e) {
+			log.error(
+					"ERROR accessing scheduler Quarth Engine. Nested exception: {}",
+					e.getMessage());
+			status = false;
+		}
+		return status;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.context.Lifecycle#start()
+	 */
+	@Override
+	public void start() {
+
+		// Start Scheduler
+		log.info("Starting scheduler Quarth Engine");
+		try {
+			if (!this.scheduler.isStarted()) {
+				this.scheduler.startDelayed(15);
+				log.info("Quarth Engine will be Started in 15 seconds;");
+			} else {
+				log.info("Quarth Engine Already Started; ");
+			}
+		} catch (SchedulerException e) {
+			log.error(
+					"ERROR starting scheduler Quarth Engine. Nested exception: {}",
+					e.getMessage());
+		}
+
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.context.Lifecycle#stop()
+	 */
+	@Override
+	public void stop() {
+		// Stop Scheduler
+		log.info("Stoping scheduler Quarth Engine");
+		try {
+			if (this.scheduler.isStarted()) {
+				this.scheduler.shutdown();
+				log.info("Quarth Engine Stopped;");
+			} else {
+				log.info("Quarth Engine Already Stopped; ");
+			}
+		} catch (SchedulerException e) {
+			log.error(
+					"ERROR stopping scheduler Quarth Engine. Nested exception: {}",
+					e.getMessage());
+		}
+
 	}
 }

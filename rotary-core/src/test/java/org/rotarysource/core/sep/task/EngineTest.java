@@ -4,21 +4,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.annotation.Resource;
-import static org.mockito.Mockito.*;
 
+import static org.mockito.Mockito.*;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.quartz.SchedulerException;
 import org.rotarysource.core.sep.SepEngine;
+import org.rotarysource.core.sep.SepEngineQuartzImpl;
 import org.rotarysource.core.sep.job.JobDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+
+
+
+
 
 
 import junit.framework.TestCase;
@@ -38,14 +45,14 @@ public class EngineTest extends TestCase {
 	 * Sep Engine to support listener execution
 	 */
 	@Resource
-	SepEngine sepEngine;
+	SepEngineQuartzImpl sepEngine;
 	
 	@Resource
 	TaskMock taskMockSpy;
-
 	
 	@Before
 	public void setup(){
+		
 	    Mockito.reset(taskMockSpy);
 	}	
 	
@@ -64,14 +71,19 @@ public class EngineTest extends TestCase {
 	 *    This test show how to use sepEngine to schedule tasks in fixed
 	 * dates.
 	 *    It assure scheduling works fine.
+	 * @throws InterruptedException 
 	 */
 	@Test
-	public void scheduleJobNormalCaseTest(){
+	public void scheduleJobNormalCaseTest() throws InterruptedException{
 		
 		log.info("==============================");
 		log.info("Schedule Job Normal Case Test ");
 		log.info("==============================");
-
+		
+		while(!sepEngine.isRunning()){
+			log.info("Waiting for Scheduler Startup");
+			Thread.sleep(2000);
+		}
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		//Given
@@ -112,14 +124,19 @@ public class EngineTest extends TestCase {
 	 *    This test show how to use sepEngine to schedule tasks in fixed
 	 * dates.
 	 *    It assure scheduling works fine.
+	 * @throws InterruptedException 
 	 */
 	@Test
-	public void scheduleJobMultipleTest(){
+	public void scheduleJobMultipleTest() throws InterruptedException{
 		
 		log.info("================================");
 		log.info("Schedule Multiple Job Type Test ");
 		log.info("================================");
 
+		while(!sepEngine.isRunning()){
+			log.info("Waiting for Scheduler Startup");
+			Thread.sleep(2000);
+		}
 		
 		//Given
 		JobDescription jobDesk = new JobDescription("MultipleJob1", "TestGroup", "taskMockJob");
