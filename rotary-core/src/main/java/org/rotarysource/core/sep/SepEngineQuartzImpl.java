@@ -22,11 +22,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
+import static org.quartz.TriggerBuilder.*;
+import static org.quartz.SimpleScheduleBuilder.*;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.rotarysource.core.sep.job.JobDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,10 +54,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 * Quartz scheduler wrapper
 	 */
 	private transient final Scheduler scheduler;
-	/**
-	 * Quartz triggers factory
-	 */
-	private transient final ObjectFactory<SimpleTrigger> jobTriggerFactory;
+
 	/**
 	 * Quartz jobDetail factory Map This Map include the different object
 	 * factories to create all job types available
@@ -76,18 +77,15 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 */
 	public SepEngineQuartzImpl(
 			final Scheduler aiScheduler,
-			final HashMap<String, ObjectFactory<JobDetail>> aiJobDetailFactoryMap,
-			final ObjectFactory<SimpleTrigger> aiJobTriggerFactory) {
+			final HashMap<String, ObjectFactory<JobDetail>> aiJobDetailFactoryMap) {
 
 		Assert.notNull(aiScheduler,
 				"An scheduler is needed to create SepEngine");
 		Assert.notNull(aiJobDetailFactoryMap, "Job Factory Map cannot be null!");
-		Assert.notNull(aiJobTriggerFactory,
-				"Trigger Factory to scheduler cannot be null!");
+
 
 		this.scheduler = aiScheduler;
 		this.jobDetailFactoryMap = aiJobDetailFactoryMap;
-		this.jobTriggerFactory = aiJobTriggerFactory;
 
 		if (log.isInfoEnabled()) {
 			log.info("==============================================");
@@ -112,33 +110,43 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 * .core.sep.job.JobDescription)
 	 */
 	@Override
-	public final void scheduleJob(final JobDescription job)
+	public final void scheduleJob(final JobDescription jobDescription)
 			throws SchedulerException {
-		Assert.notNull(job, "Job to scheduler cannot be null!");
+		Assert.notNull(jobDescription, "Job to scheduler cannot be null!");
 
-		if (jobDetailFactoryMap.containsKey(job.getJobFactoryId()) == false) {
+		if (jobDetailFactoryMap.containsKey(jobDescription.getJobFactoryId()) == false) {
 			// Manage exception
 			StringBuffer errorTxt = new StringBuffer("Job Type not found for: ");
-			errorTxt.append(job.toString());
+			errorTxt.append(jobDescription.toString());
 
 			log.error(errorTxt.toString());
 			throw (new IllegalArgumentException(errorTxt.toString()));
 
 		}
 
-		final JobDetail jobDetail = jobDetailFactoryMap.get(
-				job.getJobFactoryId()).getObject();
-		jobDetail.setName(job.getName());
-		jobDetail.setGroup(job.getGroup());
-		if (job.getTaskParams() != null)
-			jobDetail.getJobDataMap().put("taskParams", job.getTaskParams());
+		JobDetail jobDetail = jobDetailFactoryMap.get(jobDescription.getJobFactoryId())
+												 .getObject();
+		
+		if (jobDescription.getTaskParams() != null)
+			jobDetail.getJobDataMap().put("taskParams", jobDescription.getTaskParams());
+		
+		final JobBuilder jobBuilder = jobDetail.getJobBuilder();
+		jobBuilder.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+		.requestRecovery(true);
+		jobDetail = jobBuilder.build();
 
-		final SimpleTrigger trigger = jobTriggerFactory.getObject();
-		trigger.setRepeatCount(0);
-		trigger.setStartTime(job.getFireDate());
-		trigger.setName(job.getName());
-		trigger.setGroup(job.getGroup());
-
+		
+		
+	    // Trigger the job to run now, and then repeat every 40 seconds
+	    Trigger trigger = newTrigger()
+	    		.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+		.withSchedule(simpleSchedule()
+						.withRepeatCount(0)
+						.withMisfireHandlingInstructionFireNow())
+		.startAt(jobDescription.getFireDate())
+		.build();
+		
+		
 		innerScheduleJob(jobDetail, trigger);
 	}
 
@@ -159,21 +167,19 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		scheduler.addJob(jobDetail, true);
-
-		trigger.setJobName(jobDetail.getName());
-		trigger.setJobGroup(jobDetail.getGroup());
-
-		if (null == scheduler.getTrigger(trigger.getName(), trigger.getGroup())) {
+		if (null == scheduler.getTrigger(trigger.getKey())) {
 			log.info("Scheduling New Job {}  at date: {}",
-					jobDetail.getFullName(), df.format(trigger.getStartTime()));
+					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
+					df.format(trigger.getStartTime()));
 
-			scheduler.scheduleJob(trigger);
+			scheduler.scheduleJob(jobDetail, trigger);
 		} else {
 			log.info("Rescheduling Existing Job {}  at date: {}",
-					jobDetail.getFullName(), df.format(trigger.getStartTime()));
-
-			scheduler.rescheduleJob(trigger.getName(), trigger.getGroup(),
+					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
+					df.format(trigger.getStartTime()));
+			
+			scheduler.addJob(jobDetail, true);
+			scheduler.rescheduleJob(trigger.getKey(),
 					trigger);
 		}
 	}

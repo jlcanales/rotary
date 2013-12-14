@@ -71,8 +71,7 @@ public class ScheduledJob extends QuartzJobBean {
 	@Override
 	protected void executeInternal(final JobExecutionContext context) throws JobExecutionException {
 
-		log.info("Received call to execute job {}.{}", context.getTrigger().getJobGroup(), context.getTrigger().getJobName());
-		
+		log.info("Received call to execute job {}.{}", context.getTrigger().getJobKey().getGroup(), context.getTrigger().getJobKey().getName());
 		if( taskParams != null)
 			task.setTaskParams(taskParams);
 		
