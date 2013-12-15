@@ -129,22 +129,21 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 		
 		if (jobDescription.getTaskParams() != null)
 			jobDetail.getJobDataMap().put("taskParams", jobDescription.getTaskParams());
-		
-		final JobBuilder jobBuilder = jobDetail.getJobBuilder();
-		jobBuilder.withIdentity(jobDescription.getName(), jobDescription.getGroup())
-		.requestRecovery(true);
-		jobDetail = jobBuilder.build();
 
+		jobDetail = jobDetail.getJobBuilder()
+							.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+							.requestRecovery(true)
+							.build();
 		
 		
 	    // Trigger the job to run now, and then repeat every 40 seconds
 	    Trigger trigger = newTrigger()
-	    		.withIdentity(jobDescription.getName(), jobDescription.getGroup())
-		.withSchedule(simpleSchedule()
-						.withRepeatCount(0)
-						.withMisfireHandlingInstructionFireNow())
-		.startAt(jobDescription.getFireDate())
-		.build();
+	    					.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+							.withSchedule(simpleSchedule()
+											.withRepeatCount(0)
+											.withMisfireHandlingInstructionFireNow())
+							.startAt(jobDescription.getFireDate())
+							.build();
 		
 		
 		innerScheduleJob(jobDetail, trigger);
