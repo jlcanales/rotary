@@ -142,6 +142,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 							.withSchedule(simpleSchedule()
 											.withRepeatCount(0)
 											.withMisfireHandlingInstructionFireNow())
+							.forJob(jobDetail)
 							.startAt(jobDescription.getFireDate())
 							.build();
 		
@@ -166,7 +167,8 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		if (null == scheduler.getTrigger(trigger.getKey())) {
+		if (( null == scheduler.getTrigger(trigger.getKey())) &&
+			( null == scheduler.getJobDetail(jobDetail.getKey()))) {
 			log.info("Scheduling New Job {}  at date: {}",
 					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
 					df.format(trigger.getStartTime()));
@@ -178,8 +180,13 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 					df.format(trigger.getStartTime()));
 			
 			scheduler.addJob(jobDetail, true);
-			scheduler.rescheduleJob(trigger.getKey(),
-					trigger);
+			
+			if(( null == scheduler.getTrigger(trigger.getKey()))){
+				
+				scheduler.scheduleJob(trigger);
+			}else {
+				scheduler.rescheduleJob(trigger.getKey(),trigger);
+			}
 		}
 	}
 

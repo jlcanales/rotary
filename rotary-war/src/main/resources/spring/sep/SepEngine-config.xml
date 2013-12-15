@@ -19,7 +19,6 @@
 				<entry key="logTaskJob" value-ref="logTaskJobFactory" />
 			</map>
 		</constructor-arg>
-		<constructor-arg ref="jobTriggerFactory" />
 	</bean>
 
 	<!-- **************************************************************** -->
@@ -38,32 +37,10 @@
 		<property name="jobFactory">
 			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
 		</property>
-		<property name="configLocation" value="classpath:spring/sep/quartz.properties" />
+		<property name="configLocation" value="classpath:sep/quartz.properties" />
 	</bean>
 	
 
-	<!-- **************************************************************** -->
-	<!-- Trigger Configuration Section
-		 This section setup the trigger Prototype to schedule jobs. It
-		 define the Trigger Factory needed by sepEngine for triggers generation
-		 when a job will be scheduled -->
-	<!-- **************************************************************** -->
-
-	<bean id="jobTriggerFactory" name="jobTriggerFactory"
-		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
-		<property name="targetBeanName">
-			<idref local="jobTrigger" />
-		</property>
-	</bean>
-
-
-	<!-- *** Trigger Prototype; Setup common trigger parameters *** -->
-
-	<bean id="jobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
-		scope="prototype">
-		<property name="volatility" value="false" />
-		<property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_FIRE_NOW" />
-	</bean>
 
 	<!-- **************************************************************** -->
 	<!-- JOB Configuration Section
@@ -87,7 +64,7 @@
 	<!-- **************************************************************** -->
 	<!-- *** JOBS *** -->
 	<!-- **************************************************************** -->
-	<bean id="logTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean"
+	<bean id="logTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
 		scope="prototype">
 		<property name="jobDataAsMap">
 			<map>
@@ -111,18 +88,10 @@
 			</map>
 		</property>
 		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />
-		<!-- Volatility - if a job is volatile, it is not persisted between re-starts 
-			of the Quartz scheduler. Triggers must be volatility also. -->
-		<property name="volatility" value="false" />
 		<!-- Durability - if a job is non-durable, it is automatically deleted 
 			from the scheduler once there are no longer any active triggers associated 
 			with it. -->
-		<property name="durability" value="true" />
-		<!-- RequestsRecovery - if a job "requests recovery", and it is executing 
-			during the time of a 'hard shutdown' of the scheduler (i.e. the process it 
-			is running within crashes, or the machine is shut off), then it is re-executed 
-			when the scheduler is started again. -->
-		<property name="requestsRecovery" value="true" />
+		<property name="durability" value="false" />
 	</bean>
 
 
