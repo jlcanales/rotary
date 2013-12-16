@@ -16,7 +16,7 @@
 		<constructor-arg ref="scheduler" />
 		<constructor-arg>
 			<map>
-				<entry key="logTaskJob" value-ref="logTaskJobFactory" />
+				<entry key="logTaskJob" value-ref="logTask" />
 			</map>
 		</constructor-arg>
 	</bean>
@@ -39,61 +39,6 @@
 		</property>
 		<property name="configLocation" value="classpath:sep/quartz.properties" />
 	</bean>
-	
-
-
-	<!-- **************************************************************** -->
-	<!-- JOB Configuration Section
-		 This section setup each kind of job. There must be a job definition for
-		 each Task to be executed (defined in property jobDataAsMap as an entry in
-		 the param map to inject the Task bean). 
-		 For each job type, a job factory bean must be declared to be injected
-		 in sepEngine -->
-	<!-- **************************************************************** -->
-
-	<!-- Objects Factories for SEP engine -->
-	<bean id="logTaskJobFactory" name="logTaskJobFactory"
-		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
-		<property name="targetBeanName">
-			<idref local="logTaskJobDetail" />
-		</property>
-	</bean>
-	
-
-
-	<!-- **************************************************************** -->
-	<!-- *** JOBS *** -->
-	<!-- **************************************************************** -->
-	<bean id="logTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
-		scope="prototype">
-		<property name="jobDataAsMap">
-			<map>
-				<!-- Preconfigured ScheduledJob Properties -->
-				<!--
-				<entry key="taskParams">
-					<map>
-						<entry>
-							<key></key>
-							<value></value>
-						</entry>
-						<entry>
-							<key></key>
-							<value></value>
-						</entry>
-					</map>
-				</entry>
-				<entry key="taskExecutorPool" value-ref="thePool" />
-				-->						
-				<entry key="task" value-ref="logTask" />			
-			</map>
-		</property>
-		<property name="jobClass" value="org.rotarysource.core.sep.job.ScheduledJob" />
-		<!-- Durability - if a job is non-durable, it is automatically deleted 
-			from the scheduler once there are no longer any active triggers associated 
-			with it. -->
-		<property name="durability" value="false" />
-	</bean>
-
 
 	<!-- **************************************************************** -->
 	<!-- Task Configuration Section

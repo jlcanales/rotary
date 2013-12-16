@@ -23,15 +23,21 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
+
+import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
+
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.rotarysource.core.sep.job.JobDescription;
+import org.rotarysource.core.sep.job.ScheduledJob;
+import org.rotarysource.core.sep.task.SepTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -59,7 +65,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 * Quartz jobDetail factory Map This Map include the different object
 	 * factories to create all job types available
 	 */
-	private transient final HashMap<String, ObjectFactory<JobDetail>> jobDetailFactoryMap;
+	private transient final HashMap<String, SepTask> jobTaskMap;
 
 	/**
 	 * Constructor of the <code>PEMScheduler</code> object.
@@ -77,26 +83,25 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 */
 	public SepEngineQuartzImpl(
 			final Scheduler aiScheduler,
-			final HashMap<String, ObjectFactory<JobDetail>> aiJobDetailFactoryMap) {
+			final HashMap<String, SepTask> aiJobTaskMap) {
 
-		Assert.notNull(aiScheduler,
-				"An scheduler is needed to create SepEngine");
-		Assert.notNull(aiJobDetailFactoryMap, "Job Factory Map cannot be null!");
+		Assert.notNull(aiScheduler, "An scheduler is needed to create SepEngine");
+		Assert.notNull(aiJobTaskMap, "Job Task Map cannot be null!");
 
 
 		this.scheduler = aiScheduler;
-		this.jobDetailFactoryMap = aiJobDetailFactoryMap;
+		this.jobTaskMap = aiJobTaskMap;
 
 		if (log.isInfoEnabled()) {
 			log.info("==============================================");
 			log.info("Initializing Scheduled Events Processor Engine");
 			log.info("==============================================");
 
-			Set<String> jobKeys = this.jobDetailFactoryMap.keySet();
+			Set<String> jobKeys = this.jobTaskMap.keySet();
 			Iterator<String> keyIt = jobKeys.iterator();
 			while (keyIt.hasNext()) {
 				String key = (String) keyIt.next();
-				log.info("Registered jobDetailFactory for job type: {}", key);
+				log.info("Registered jobTask for task type: {}", key);
 			}
 		}
 
@@ -114,7 +119,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 			throws SchedulerException {
 		Assert.notNull(jobDescription, "Job to scheduler cannot be null!");
 
-		if (jobDetailFactoryMap.containsKey(jobDescription.getJobFactoryId()) == false) {
+		if (jobTaskMap.containsKey(jobDescription.getJobFactoryId()) == false) {
 			// Manage exception
 			StringBuffer errorTxt = new StringBuffer("Job Type not found for: ");
 			errorTxt.append(jobDescription.toString());
@@ -124,15 +129,19 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 
 		}
 
-		JobDetail jobDetail = jobDetailFactoryMap.get(jobDescription.getJobFactoryId())
-												 .getObject();
+		SepTask jobTask = jobTaskMap.get(jobDescription.getJobFactoryId());
 		
+		final JobDataMap jobData = new JobDataMap();
+		jobData.put("task", jobTask);
 		if (jobDescription.getTaskParams() != null)
-			jobDetail.getJobDataMap().put("taskParams", jobDescription.getTaskParams());
+			jobData.put("taskParams", jobDescription.getTaskParams());
 
-		jobDetail = jobDetail.getJobBuilder()
+		JobDetail jobDetail = newJob()
+							.ofType(ScheduledJob.class)
 							.withIdentity(jobDescription.getName(), jobDescription.getGroup())
 							.requestRecovery(true)
+							.storeDurably(false)
+							.usingJobData(jobData)
 							.build();
 		
 		
