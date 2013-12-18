@@ -28,13 +28,13 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
 import org.rotarysource.core.sep.job.JobDescription;
 import org.rotarysource.core.sep.job.ScheduledJob;
 import org.rotarysource.core.sep.task.SepTask;

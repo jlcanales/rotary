@@ -58,9 +58,11 @@
 	<!-- *********************************************** -->
 	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
 		<constructor-arg index="0">
-		<set>
-		<ref bean="logAllStatement" />
-		</set>
+			<set>
+				<ref bean="logAllStatement" />
+				<ref bean="basicEventLogStatement" />
+				<ref bean="scheduleEventStatement" />
+			</set>
 		</constructor-arg>
 		<constructor-arg index="1" value="0" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
 	</bean>
