@@ -22,12 +22,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+
+import static org.quartz.JobBuilder.*;
+import static org.quartz.TriggerBuilder.*;
+import static org.quartz.SimpleScheduleBuilder.*;
+
 import org.rotarysource.core.sep.job.JobDescription;
+import org.rotarysource.core.sep.job.ScheduledJob;
+import org.rotarysource.core.sep.task.SepTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -50,15 +60,12 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 * Quartz scheduler wrapper
 	 */
 	private transient final Scheduler scheduler;
-	/**
-	 * Quartz triggers factory
-	 */
-	private transient final ObjectFactory<SimpleTrigger> jobTriggerFactory;
+
 	/**
 	 * Quartz jobDetail factory Map This Map include the different object
 	 * factories to create all job types available
 	 */
-	private transient final HashMap<String, ObjectFactory<JobDetail>> jobDetailFactoryMap;
+	private transient final HashMap<String, SepTask> jobTaskMap;
 
 	/**
 	 * Constructor of the <code>PEMScheduler</code> object.
@@ -76,29 +83,25 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 */
 	public SepEngineQuartzImpl(
 			final Scheduler aiScheduler,
-			final HashMap<String, ObjectFactory<JobDetail>> aiJobDetailFactoryMap,
-			final ObjectFactory<SimpleTrigger> aiJobTriggerFactory) {
+			final HashMap<String, SepTask> aiJobTaskMap) {
 
-		Assert.notNull(aiScheduler,
-				"An scheduler is needed to create SepEngine");
-		Assert.notNull(aiJobDetailFactoryMap, "Job Factory Map cannot be null!");
-		Assert.notNull(aiJobTriggerFactory,
-				"Trigger Factory to scheduler cannot be null!");
+		Assert.notNull(aiScheduler, "An scheduler is needed to create SepEngine");
+		Assert.notNull(aiJobTaskMap, "Job Task Map cannot be null!");
+
 
 		this.scheduler = aiScheduler;
-		this.jobDetailFactoryMap = aiJobDetailFactoryMap;
-		this.jobTriggerFactory = aiJobTriggerFactory;
+		this.jobTaskMap = aiJobTaskMap;
 
 		if (log.isInfoEnabled()) {
 			log.info("==============================================");
 			log.info("Initializing Scheduled Events Processor Engine");
 			log.info("==============================================");
 
-			Set<String> jobKeys = this.jobDetailFactoryMap.keySet();
+			Set<String> jobKeys = this.jobTaskMap.keySet();
 			Iterator<String> keyIt = jobKeys.iterator();
 			while (keyIt.hasNext()) {
 				String key = (String) keyIt.next();
-				log.info("Registered jobDetailFactory for job type: {}", key);
+				log.info("Registered jobTask for task type: {}", key);
 			}
 		}
 
@@ -112,33 +115,47 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	 * .core.sep.job.JobDescription)
 	 */
 	@Override
-	public final void scheduleJob(final JobDescription job)
+	public final void scheduleJob(final JobDescription jobDescription)
 			throws SchedulerException {
-		Assert.notNull(job, "Job to scheduler cannot be null!");
+		Assert.notNull(jobDescription, "Job to scheduler cannot be null!");
 
-		if (jobDetailFactoryMap.containsKey(job.getJobFactoryId()) == false) {
+		if (jobTaskMap.containsKey(jobDescription.getJobFactoryId()) == false) {
 			// Manage exception
 			StringBuffer errorTxt = new StringBuffer("Job Type not found for: ");
-			errorTxt.append(job.toString());
+			errorTxt.append(jobDescription.toString());
 
 			log.error(errorTxt.toString());
 			throw (new IllegalArgumentException(errorTxt.toString()));
 
 		}
 
-		final JobDetail jobDetail = jobDetailFactoryMap.get(
-				job.getJobFactoryId()).getObject();
-		jobDetail.setName(job.getName());
-		jobDetail.setGroup(job.getGroup());
-		if (job.getTaskParams() != null)
-			jobDetail.getJobDataMap().put("taskParams", job.getTaskParams());
+		SepTask jobTask = jobTaskMap.get(jobDescription.getJobFactoryId());
+		
+		final JobDataMap jobData = new JobDataMap();
+		jobData.put("task", jobTask);
+		if (jobDescription.getTaskParams() != null)
+			jobData.put("taskParams", jobDescription.getTaskParams());
 
-		final SimpleTrigger trigger = jobTriggerFactory.getObject();
-		trigger.setRepeatCount(0);
-		trigger.setStartTime(job.getFireDate());
-		trigger.setName(job.getName());
-		trigger.setGroup(job.getGroup());
-
+		JobDetail jobDetail = newJob()
+							.ofType(ScheduledJob.class)
+							.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+							.requestRecovery(true)
+							.storeDurably(false)
+							.usingJobData(jobData)
+							.build();
+		
+		
+	    // Trigger the job to run now, and then repeat every 40 seconds
+	    Trigger trigger = newTrigger()
+	    					.withIdentity(jobDescription.getName(), jobDescription.getGroup())
+							.withSchedule(simpleSchedule()
+											.withRepeatCount(0)
+											.withMisfireHandlingInstructionFireNow())
+							.forJob(jobDetail)
+							.startAt(jobDescription.getFireDate())
+							.build();
+		
+		
 		innerScheduleJob(jobDetail, trigger);
 	}
 
@@ -159,22 +176,26 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		scheduler.addJob(jobDetail, true);
-
-		trigger.setJobName(jobDetail.getName());
-		trigger.setJobGroup(jobDetail.getGroup());
-
-		if (null == scheduler.getTrigger(trigger.getName(), trigger.getGroup())) {
+		if (( null == scheduler.getTrigger(trigger.getKey())) &&
+			( null == scheduler.getJobDetail(jobDetail.getKey()))) {
 			log.info("Scheduling New Job {}  at date: {}",
-					jobDetail.getFullName(), df.format(trigger.getStartTime()));
+					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
+					df.format(trigger.getStartTime()));
 
-			scheduler.scheduleJob(trigger);
+			scheduler.scheduleJob(jobDetail, trigger);
 		} else {
 			log.info("Rescheduling Existing Job {}  at date: {}",
-					jobDetail.getFullName(), df.format(trigger.getStartTime()));
-
-			scheduler.rescheduleJob(trigger.getName(), trigger.getGroup(),
-					trigger);
+					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
+					df.format(trigger.getStartTime()));
+			
+			scheduler.addJob(jobDetail, true);
+			
+			if(( null == scheduler.getTrigger(trigger.getKey()))){
+				
+				scheduler.scheduleJob(trigger);
+			}else {
+				scheduler.rescheduleJob(trigger.getKey(),trigger);
+			}
 		}
 	}
 

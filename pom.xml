@@ -90,7 +90,7 @@
 		<esper-version>4.9.0</esper-version>
 
 		<!-- Quartz SEP Framework Version -->
-		<quartz-version>1.8.6</quartz-version>
+		<quartz-version>2.2.0</quartz-version>
 		<derby.version>10.9.1.0</derby.version>
 
 		<!-- Test libraries versions -->
