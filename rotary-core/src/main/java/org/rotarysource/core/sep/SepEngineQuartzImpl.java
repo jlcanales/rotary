@@ -188,7 +188,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
 					df.format(trigger.getStartTime()));
 			
-			scheduler.addJob(jobDetail, true);
+			scheduler.addJob(jobDetail, true, true);
 			
 			if(( null == scheduler.getTrigger(trigger.getKey()))){
 				
