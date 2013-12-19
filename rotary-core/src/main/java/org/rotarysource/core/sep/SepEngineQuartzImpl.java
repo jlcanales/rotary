@@ -22,14 +22,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
@@ -40,15 +37,13 @@ import org.rotarysource.core.sep.job.ScheduledJob;
 import org.rotarysource.core.sep.task.SepTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.context.Lifecycle;
 import org.springframework.util.Assert;
 
 /**
  * Scheduled Event Processor engine. This class Manage the job scheduling
  * 
  */
-public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
+public class SepEngineQuartzImpl implements SepEngine {
 
 	/**
 	 * Apache commons login logger instance
@@ -188,7 +183,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 					(jobDetail.getKey().getGroup() +":"+jobDetail.getKey().getName()), 
 					df.format(trigger.getStartTime()));
 			
-			scheduler.addJob(jobDetail, true);
+			scheduler.addJob(jobDetail, true, true);
 			
 			if(( null == scheduler.getTrigger(trigger.getKey()))){
 				
@@ -206,7 +201,9 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 	public boolean isRunning() {
 		boolean status = false;
 		try {
-			status = this.scheduler.isStarted();
+			status = this.scheduler.isStarted() 
+					 && !this.scheduler.isShutdown()
+					 && !this.scheduler.isInStandbyMode();
 		} catch (SchedulerException e) {
 			log.error(
 					"ERROR accessing scheduler Quarth Engine. Nested exception: {}",
@@ -225,7 +222,7 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 		// Start Scheduler
 		log.info("Starting scheduler Quarth Engine");
 		try {
-			if (!this.scheduler.isStarted()) {
+			if ( !isRunning()) {
 				this.scheduler.startDelayed(15);
 				log.info("Quarth Engine will be Started in 15 seconds;");
 			} else {
@@ -247,8 +244,8 @@ public class SepEngineQuartzImpl implements SepEngine, Lifecycle {
 		// Stop Scheduler
 		log.info("Stoping scheduler Quarth Engine");
 		try {
-			if (this.scheduler.isStarted()) {
-				this.scheduler.shutdown();
+			if (isRunning()) {
+				this.scheduler.standby();
 				log.info("Quarth Engine Stopped;");
 			} else {
 				log.info("Quarth Engine Already Stopped; ");
