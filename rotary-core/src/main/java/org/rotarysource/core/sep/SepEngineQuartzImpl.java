@@ -201,7 +201,9 @@ public class SepEngineQuartzImpl implements SepEngine {
 	public boolean isRunning() {
 		boolean status = false;
 		try {
-			status = this.scheduler.isStarted();
+			status = this.scheduler.isStarted() 
+					 && !this.scheduler.isShutdown()
+					 && !this.scheduler.isInStandbyMode();
 		} catch (SchedulerException e) {
 			log.error(
 					"ERROR accessing scheduler Quarth Engine. Nested exception: {}",
@@ -220,9 +222,7 @@ public class SepEngineQuartzImpl implements SepEngine {
 		// Start Scheduler
 		log.info("Starting scheduler Quarth Engine");
 		try {
-			if ( !this.scheduler.isStarted() 
-				 || this.scheduler.isShutdown()
-				 || this.scheduler.isInStandbyMode()) {
+			if ( !isRunning()) {
 				this.scheduler.startDelayed(15);
 				log.info("Quarth Engine will be Started in 15 seconds;");
 			} else {
@@ -244,7 +244,7 @@ public class SepEngineQuartzImpl implements SepEngine {
 		// Stop Scheduler
 		log.info("Stoping scheduler Quarth Engine");
 		try {
-			if (this.scheduler.isStarted()) {
+			if (isRunning()) {
 				this.scheduler.standby();
 				log.info("Quarth Engine Stopped;");
 			} else {

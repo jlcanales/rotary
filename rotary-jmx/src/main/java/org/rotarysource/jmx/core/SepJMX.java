@@ -1,10 +1,22 @@
 package org.rotarysource.jmx.core;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+import javax.xml.bind.DatatypeConverter;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.SchedulerException;
 import org.rotarysource.core.sep.SepEngine;
+import org.rotarysource.core.sep.job.JobDescription;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.util.Assert;
 
 /**
  * MBean responsible for the general system management. It controls the
@@ -49,7 +61,7 @@ public class SepJMX {
 	}
     
 	/**
-	 * System Start
+	 * System Stop
 	 */
     @ManagedOperation(description="Stop system")
 	public void stop() {
@@ -58,6 +70,39 @@ public class SepJMX {
 
 		sepEngine.stop();
 
-	}    
+	}  
+
+    @ManagedOperation(description="schedule a simple event")
+    public void scheduleJob(String jobName, String jobGroup, String taskType, String dateTimeString){
+
+		Assert.notNull(jobName, "Call must contain a 'jobName' entry to schedule event in SEP!");
+		Assert.notNull(jobGroup, "Call must contain a 'jobGroup' entry to schedule event in SEP!");
+		Assert.notNull(taskType, "Call must contain a 'taskType' entry to schedule event in SEP!");
+		Assert.notNull(dateTimeString, "Call must contain a 'dateTimeString' entry to schedule event in SEP!");
+    	
+    	
+       	logger.info("Scheduling a new event in SEP using JMX interface");
+
+       	
+		JobDescription jobDesk = new JobDescription(jobName, jobGroup,taskType);
+ 
+		Calendar scheduleCal = DatatypeConverter.parseDateTime(dateTimeString);
+		
+		jobDesk.setFireDate(scheduleCal.getTime());
+		
+		
+		//Attach Task Params
+
+		
+		//Scheduled job
+		try {			
+			sepEngine.scheduleJob(jobDesk);
+			
+		} catch (SchedulerException e) {
+			StringBuffer errorText  = new StringBuffer( "Event could not be scheduled. ");
+
+			logger.error(errorText.toString(), e);
+		}		
+  	}
     
 }
