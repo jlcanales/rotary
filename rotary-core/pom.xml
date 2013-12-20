@@ -80,7 +80,11 @@
 
 		<profile>
 			<id>derby-generate-database</id>
-
+			<properties>
+				<artifactId-name>rotary-core</artifactId-name>
+				<packaging-mode>jar</packaging-mode>
+			</properties>
+			
 			<build>
 				<plugins>
 					<!-- Creation database for quartz -->
@@ -140,23 +144,19 @@
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-core</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-ehafile</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-xsdboe</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- ###################################### -->
