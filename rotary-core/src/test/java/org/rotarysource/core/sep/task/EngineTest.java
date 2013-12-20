@@ -196,7 +196,7 @@ public class EngineTest extends TestCase {
 		
 		Calendar scheduleCal = Calendar.getInstance();
 
-		scheduleCal.add(Calendar.SECOND, 5);		
+		scheduleCal.add(Calendar.SECOND, 3);		
 		jobDesk.setFireDate(scheduleCal.getTime());		
 		
 		//No params set yet
