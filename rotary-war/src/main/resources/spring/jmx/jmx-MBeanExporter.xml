@@ -47,4 +47,10 @@
 
 	  <bean id="systemSignalsJMX" class="org.rotarysource.jmx.core.SystemSignalsJMX"/>
 
+	  <bean id="sepJMX" class="org.rotarysource.jmx.core.SepJMX" >
+	  	<constructor-arg>
+	  		<ref bean="sepEngine"/>	
+	  	</constructor-arg>	  
+	  </bean>
+
 </beans>
