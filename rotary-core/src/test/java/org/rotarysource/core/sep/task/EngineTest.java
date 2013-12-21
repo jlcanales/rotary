@@ -169,6 +169,59 @@ public class EngineTest extends TestCase {
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+	}
+	/**
+	 * Test normal task scheduling
+	 *    This test show how to use sepEngine to schedule tasks in fixed
+	 * dates.
+	 *    It assure scheduling works fine.
+	 * @throws InterruptedException 
+	 */
+	@Test
+	public void scheduleReschedulingTest() throws InterruptedException{
+		
+		log.info("================================");
+		log.info("ReSchedule a Job Test ");
+		log.info("================================");
+
+		while(!sepEngine.isRunning()){
+			log.info("Waiting for Scheduler Startup");
+			Thread.sleep(2000);
+		}
+		
+		//Given
+		JobDescription jobDesk = new JobDescription("RescheduledJob", "TestGroup", "taskMockJob");
+		
+		Calendar scheduleCal = Calendar.getInstance();
+
+		scheduleCal.add(Calendar.SECOND, 3);		
+		jobDesk.setFireDate(scheduleCal.getTime());		
+		
+		//No params set yet
+		//jobDesk.setTaskParams(aiTaskParams);
+		
+
+		try {
+			
+			//When
+			//Scheduled job
+			sepEngine.scheduleJob(jobDesk);
+			
+			scheduleCal.add(Calendar.SECOND, 2);		
+			jobDesk.setFireDate(scheduleCal.getTime());
+			sepEngine.scheduleJob(jobDesk);
+
+			//Then
+			//After 10 seconds Task will run
+
+			verify(taskMockSpy,timeout(6000).times(1)).run();
+
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Assert.assertTrue(false);
 		}
 
 	}

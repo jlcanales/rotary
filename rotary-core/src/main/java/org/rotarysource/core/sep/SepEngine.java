@@ -20,8 +20,9 @@ package org.rotarysource.core.sep;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.rotarysource.core.sep.job.JobDescription;
+import org.springframework.context.Lifecycle;
 
-public interface SepEngine {
+public interface SepEngine extends Lifecycle{
 
 	/**
 	 * <p>
