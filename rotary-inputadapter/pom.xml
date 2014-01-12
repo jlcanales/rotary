@@ -10,7 +10,7 @@
 
 	<description>Rotary Input Adapter Module</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-inputadapter</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -27,11 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.inputadapter</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<build>
+			<build>			
+				<finalName>org.rotary.servicemix.bundles.inputadapter-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -70,7 +70,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-inputadapter</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 

@@ -7,11 +7,10 @@
 		<version>1.1.0.RELEASE</version>
 	</parent>
 
-
 	<name>Rotary JMX</name>
 	<description>Rotary JMX support for main components</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-jmx</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -29,12 +28,12 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.jmx</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 
 			<build>
+				<finalName>org.rotary.servicemix.bundles.jmx-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -73,7 +72,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-jmx</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>

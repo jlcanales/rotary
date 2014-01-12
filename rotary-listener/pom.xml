@@ -8,11 +8,9 @@
 	</parent>
 
 	<name>Rotary Listener</name>
-
-
 	<description>Rotary CEP Event Driven Listener classes and utils</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-listener</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -29,11 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.listener</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<build>
+			<build>			
+				<finalName>org.rotary.servicemix.bundles.listener-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -73,7 +71,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-listener</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>

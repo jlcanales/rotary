@@ -10,7 +10,7 @@
 	<name>Rotary CEP Event Driven Processor</name>
 	<description>CEP Evend Driven Processor core module</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-core</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -27,11 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.core</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 			<build>
+				<finalName>org.rotary.servicemix.bundles.core-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -72,7 +72,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-core</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 

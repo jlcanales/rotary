@@ -13,7 +13,7 @@
 	<name>Rotary Events</name>
 	<description>Rotary Managed Events definition and Utils</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-events</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -30,11 +30,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.events</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 			<build>
+				 <finalName>org.rotary.servicemix.bundles.events-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -73,7 +73,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-events</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>
@@ -127,7 +126,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 
-
+<!--
 			<plugin>
 				<groupId>com.sun.tools.jxc.maven2</groupId>
 				<artifactId>maven-jaxb-schemagen-plugin</artifactId>
@@ -159,6 +158,8 @@
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
+-->			
+
 		</plugins>
 
 

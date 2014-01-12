@@ -10,7 +10,7 @@
 	<name>Rotary Internal signals management</name>
 	<description>Rotary Internal signals management</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-signals</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -27,12 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.signals</artifactId-name>
-
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 			<build>
+				<finalName>org.rotary.servicemix.bundles.signals-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
