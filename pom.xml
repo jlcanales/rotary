@@ -39,6 +39,7 @@
 				<module>rotary-events</module>
 				<module>rotary-core</module>
 				<module>rotary-listener</module>
+				<module>rotary-connectors/mqtt</module>
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
@@ -70,6 +71,7 @@
 				<module>rotary-events</module>
 				<module>rotary-core</module>
 				<module>rotary-listener</module>
+				<module>rotary-connectors/mqtt</module>
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
