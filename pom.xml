@@ -268,7 +268,11 @@
 				<artifactId>rotary-signals</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>mqtt-connector</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->

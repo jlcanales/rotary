@@ -63,78 +63,17 @@ public class SimpleMqttMessageListenerContainer implements MqttCallback{
 	private int concurrentConsumers = 1;
 
 	private TaskExecutor taskExecutor;
+	
+	private MessageListener messageListener;
 
 	private Set<MqttClient> consumers;
 
 	private final Object consumersMonitor = new Object();
 	
+
 	
-	/**
-	 * Specify the number of concurrent consumers to create. Default is 1.
-	 * <p>Raising the number of concurrent consumers is recommendable in order
-	 * to scale the consumption of messages coming in from a queue. However,
-	 * note that any ordering guarantees are lost once multiple consumers are
-	 * registered. In general, stick with 1 consumer for low-volume queues.
-	 * <p><b>Do not raise the number of concurrent consumers for a topic.</b>
-	 * This would lead to concurrent consumption of the same message,
-	 * which is hardly ever desirable.
-	 */
-	public void setConcurrentConsumers(int concurrentConsumers) {
-		Assert.isTrue(concurrentConsumers > 0, "'concurrentConsumers' value must be at least 1 (one)");
-		this.concurrentConsumers = concurrentConsumers;
-	}
 	
-	/**
-	 * Set the Spring TaskExecutor to use for executing the listener once
-	 * a message has been received by the provider.
-	 * <p>Default is none, that is, to run in the Mqtt provider's own receive thread,
-	 * blocking the provider's receive endpoint while executing the listener.
-	 * <p>Specify a TaskExecutor for executing the listener in a different thread,
-	 * rather than blocking the Mqtt provider, usually integrating with an existing
-	 * thread pool. This allows to keep the number of concurrent consumers low (1)
-	 * while still processing messages concurrently (decoupled from receiving!).
-	 * <p><b>NOTE: Specifying a TaskExecutor for listener execution affects
-	 * acknowledgement semantics.</b> Messages will then always get acknowledged
-	 * before listener execution, with the underlying Session immediately reused
-	 * for receiving the next message. Using this in combination with a transacted
-	 * session or with client acknowledgement will lead to unspecified results!
-	 * @see http://www.infoq.com/articles/practical-mqtt-with-paho
-	 */
-	public void setTaskExecutor(TaskExecutor taskExecutor) {
-		this.taskExecutor = taskExecutor;
-	}
-
-	/**
-	 * Gets the Mqtt broker Url configured for this object
-	 * @return brokerUrl
-	 */
-	public String getBrokerUrl() {
-		return brokerUrl;
-	}
-
-	/**
-	 * Sets the broker Url where all consumers will be connected
-	 * @param brokerUrl Mqtt access Url
-	 */
-	public void setBrokerUrl(String aiBrokerUrl) {
-		this.brokerUrl = aiBrokerUrl;
-	}
-
-	/**
-	 * Gets the topic name configured for this object
-	 * @return destination
-	 */
-	public String getDestination() {
-		return destination;
-	}
-
-	/**
-	 * Sets the topic name where all consumers will listen
-	 * @param aiDestination Mqtt topic to listen
-	 */
-	public void setDestination(String aiDestination) {
-		this.destination = aiDestination;
-	}
+	
 	/**
 	 * Simple Listener dont send any message to Mqtt server. This method is not
 	 * implemented.
@@ -185,9 +124,12 @@ public class SimpleMqttMessageListenerContainer implements MqttCallback{
 	 */
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// TODO Auto-generated method stub
-		log.info("Received menssage form {}",topic);
-		
+		log.debug("Received menssage form {}",topic);		
 		log.debug("Payload: {}", message.toString());
+		
+		if(messageListener != null){
+			messageListener.onMessage(message);
+		}
 		
 	}
 	
@@ -257,4 +199,89 @@ public class SimpleMqttMessageListenerContainer implements MqttCallback{
 			consumer.subscribe(destination);
 		}
 	}
+
+	
+	/**
+	 * Specify the number of concurrent consumers to create. Default is 1.
+	 * <p>Raising the number of concurrent consumers is recommendable in order
+	 * to scale the consumption of messages coming in from a queue. However,
+	 * note that any ordering guarantees are lost once multiple consumers are
+	 * registered. In general, stick with 1 consumer for low-volume queues.
+	 * <p><b>Do not raise the number of concurrent consumers for a topic.</b>
+	 * This would lead to concurrent consumption of the same message,
+	 * which is hardly ever desirable.
+	 */
+	public void setConcurrentConsumers(int concurrentConsumers) {
+		Assert.isTrue(concurrentConsumers > 0, "'concurrentConsumers' value must be at least 1 (one)");
+		this.concurrentConsumers = concurrentConsumers;
+	}
+	
+	/**
+	 * Set the Spring TaskExecutor to use for executing the listener once
+	 * a message has been received by the provider.
+	 * <p>Default is none, that is, to run in the Mqtt provider's own receive thread,
+	 * blocking the provider's receive endpoint while executing the listener.
+	 * <p>Specify a TaskExecutor for executing the listener in a different thread,
+	 * rather than blocking the Mqtt provider, usually integrating with an existing
+	 * thread pool. This allows to keep the number of concurrent consumers low (1)
+	 * while still processing messages concurrently (decoupled from receiving!).
+	 * <p><b>NOTE: Specifying a TaskExecutor for listener execution affects
+	 * acknowledgement semantics.</b> Messages will then always get acknowledged
+	 * before listener execution, with the underlying Session immediately reused
+	 * for receiving the next message. Using this in combination with a transacted
+	 * session or with client acknowledgement will lead to unspecified results!
+	 * @see http://www.infoq.com/articles/practical-mqtt-with-paho
+	 */
+	public void setTaskExecutor(TaskExecutor taskExecutor) {
+		this.taskExecutor = taskExecutor;
+	}
+
+	/**
+	 * Gets the Mqtt broker Url configured for this object
+	 * @return brokerUrl
+	 */
+	public String getBrokerUrl() {
+		return brokerUrl;
+	}
+
+	/**
+	 * Sets the broker Url where all consumers will be connected
+	 * @param brokerUrl Mqtt access Url
+	 */
+	public void setBrokerUrl(String aiBrokerUrl) {
+		this.brokerUrl = aiBrokerUrl;
+	}
+
+	/**
+	 * Gets the topic name configured for this object
+	 * @return destination
+	 */
+	public String getDestination() {
+		return destination;
+	}
+
+	/**
+	 * Sets the topic name where all consumers will listen
+	 * @param aiDestination Mqtt topic to listen
+	 */
+	public void setDestination(String aiDestination) {
+		this.destination = aiDestination;
+	}
+	
+	/**
+	 * @return the messageListener
+	 */
+	public MessageListener getMessageListener() {
+		return messageListener;
+	}
+
+	/**
+	 * @param messageListener the messageListener to set
+	 */
+	public void setMessageListener(MessageListener messageListener) {
+		this.messageListener = messageListener;
+	}
+	
+	
+
 }
