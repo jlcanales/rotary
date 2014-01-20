@@ -33,10 +33,9 @@ public class MqttInputAdapter implements MessageListener {
 	private static Logger  log = LoggerFactory.getLogger(MqttInputAdapter.class);
 	
 	@Override
-	public void onMessage(MqttMessage message) {
+	public void onMessage(String topic, MqttMessage message) {
 		// TODO Auto-generated method stub
-		String payloadText = new String(message.getPayload());
-		log.info("Payload: {}", payloadText);
+		log.debug("Received message from topic : {}", topic);
 
 	}
 

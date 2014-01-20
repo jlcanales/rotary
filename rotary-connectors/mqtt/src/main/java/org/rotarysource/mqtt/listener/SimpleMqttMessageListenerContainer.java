@@ -128,7 +128,7 @@ public class SimpleMqttMessageListenerContainer implements MqttCallback{
 		log.debug("Payload: {}", message.toString());
 		
 		if(messageListener != null){
-			messageListener.onMessage(message);
+			messageListener.onMessage(topic, message);
 		}
 		
 	}
