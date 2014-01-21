@@ -21,18 +21,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 
 /**
- * Strategy interface that specifies a converter between Java objects and JMS messages.
+ * Strategy interface that specifies a converter between Java objects and MQTT messages.
  *
- * <p>Check out {@link SimpleMessageConverter} for a default implementation,
- * converting between the 'standard' message payloads and JMS Message types.
- *
- * @author Mark Pollack
- * @author Juergen Hoeller
- * @since 1.1
- * @see org.springframework.jms.core.JmsTemplate#setMessageConverter
- * @see org.springframework.jms.listener.adapter.MessageListenerAdapter#setMessageConverter
- * @see org.springframework.jms.remoting.JmsInvokerClientInterceptor#setMessageConverter
- * @see org.springframework.jms.remoting.JmsInvokerServiceExporter#setMessageConverter
+ * @author J. L. Canales
+ * @since 1.1..1
  */
 public interface MessageConverter {
 

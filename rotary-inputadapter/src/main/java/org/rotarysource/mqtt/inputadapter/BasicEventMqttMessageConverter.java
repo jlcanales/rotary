@@ -19,15 +19,18 @@ package org.rotarysource.mqtt.inputadapter;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.rotarysource.events.BasicEvent;
 import org.rotarysource.mqtt.support.converter.MessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 public class BasicEventMqttMessageConverter implements MessageConverter {
 
@@ -41,10 +44,40 @@ public class BasicEventMqttMessageConverter implements MessageConverter {
 		 
 	 }
 	 
+	/**
+	 * Convert a BasicEvent object to a MQTT Message.
+	 * 
+	 * @param object the BasicEvent object to convert
+	 * @return the MQTT Message
+	 * @throws MqttException in case of conversion failure
+	 * 
+	 * @see org.rotarysource.mqtt.support.converter.MessageConverter#toMessage(java.lang.Object)
+	 */
 	@Override
 	public MqttMessage toMessage(Object object) throws MqttException {
-		//TODO: Implement this method
-	    throw new NotImplementedException("TODO: This method is not implemented yet");
+
+		Assert.notNull(object);
+		Assert.isInstanceOf(BasicEvent.class, object, "The input object must be a BasicEvent object");
+		
+		HashMap<String, String> payload = ((BasicEvent) object).getCompData();
+		
+		Set<Entry<String, String>> entryValues = payload.entrySet();
+		Iterator<Entry<String, String>> it = entryValues.iterator();
+		StringBuffer stringPayload = new StringBuffer("{");
+		
+		while(it.hasNext()){
+			Entry<String, String> entry = it.next();
+			stringPayload.append("\"").append(entry.getKey()).append("\"")
+						.append(":")
+						.append("\"").append(entry.getValue()).append("\"");
+			if(it.hasNext()){
+				stringPayload.append(",");
+			}
+		}
+		stringPayload.append("}");
+		
+		MqttMessage message = new MqttMessage(stringPayload.toString().getBytes());
+		return message;
 	}
 
 	

@@ -31,10 +31,10 @@ public class BEMqttConverterTest extends TestCase{
 	private static Logger log = LoggerFactory.getLogger(BEMqttConverterTest.class);
 	
 	@Test
-	public void toMessageNormalCaseTest(){
+	public void fromMessageNormalCaseTest(){
 
 		log.info("==============================");
-		log.info("toMessage Normal Case Test ");
+		log.info("fromMessage Normal Case Test ");
 		log.info("==============================");
 		
 		
@@ -138,5 +138,43 @@ public class BEMqttConverterTest extends TestCase{
 		//Then
 		Assert.assertEquals("testTopic", basEvent.getSystemId());
 		Assert.assertEquals("4.9", basEvent.getCompData().get("temp"));
+	}
+	
+	@Test
+	public void toMessageNormalCaseTest(){
+
+		log.info("==============================");
+		log.info("toMessage Normal Case Test ");
+		log.info("==============================");
+		
+		
+		//Given
+		BasicEventMqttMessageConverter converter = new BasicEventMqttMessageConverter();
+		HashMap<String,String> compData = new HashMap<String, String>();
+		MqttMessage message = null;
+
+		compData.put("tempunit", "C");
+		compData.put("windunit","mph");
+		compData.put("pressunit","mb");
+		compData.put("rainunit","mm");
+		compData.put("temptrend","-0.7");
+		compData.put("TtempTL","08:01");
+		compData.put("TtempTH","14:01");
+		compData.put("TdewpointTL","07:33");
+		compData.put("TdewpointTH","11:58");
+		
+		BasicEvent event = new BasicEvent();
+		event.setCompData(compData);
+		
+		//When
+		try {
+			 message = converter.toMessage(event);
+		} catch (MqttException e) {
+			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+		
+		//Then
+		log.info(message.toString());
 	}
 }
