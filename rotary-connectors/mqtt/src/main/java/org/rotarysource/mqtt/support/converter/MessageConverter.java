@@ -37,23 +37,21 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public interface MessageConverter {
 
 	/**
-	 * Convert a Java object to a JMS Message using the supplied session
+	 * Convert a Java object to a MQTT Message using the supplied session
 	 * to create the message object.
 	 * @param object the object to convert
-	 * @param session the Session to use for creating a JMS Message
-	 * @return the JMS Message
-	 * @throws javax.jms.JMSException if thrown by JMS API methods
-	 * @throws MessageConversionException in case of conversion failure
+	 * @return the MQTT Message
+	 * @throws MqttException in case of conversion failure
 	 */
 	MqttMessage toMessage(Object object) throws MqttException;
 
 	/**
-	 * Convert from a JMS Message to a Java object.
+	 * Convert from a MQTT Message to a Java object.
+	 * @param topic the topic where the message was captured
 	 * @param message the message to convert
 	 * @return the converted Java object
-	 * @throws javax.jms.JMSException if thrown by JMS API methods
-	 * @throws MessageConversionException in case of conversion failure
+	 * @throws MqttException in case of conversion failure
 	 */
-	Object fromMessage(MqttMessage message) throws MqttException;
+	Object fromMessage(String topic, MqttMessage message) throws MqttException;
 
 }

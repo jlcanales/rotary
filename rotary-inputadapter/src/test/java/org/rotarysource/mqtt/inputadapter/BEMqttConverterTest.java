@@ -127,15 +127,16 @@ public class BEMqttConverterTest extends TestCase{
 */
 		
 		MqttMessage message = new MqttMessage(sBuffer.toString().getBytes());
-		
+		BasicEvent basEvent = null;
 		//When
 		try {
-			converter.fromMessage(message);
+			basEvent = (BasicEvent) converter.fromMessage("testTopic", message);
 		} catch (MqttException e) {
 			e.printStackTrace();
 			Assert.assertTrue(false);
 		}
 		//Then
-		Assert.assertTrue(true);
+		Assert.assertEquals("testTopic", basEvent.getSystemId());
+		Assert.assertEquals("4.9", basEvent.getCompData().get("temp"));
 	}
 }
