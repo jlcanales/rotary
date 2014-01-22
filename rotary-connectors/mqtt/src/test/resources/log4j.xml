@@ -10,21 +10,7 @@
          <param name="ConversionPattern" value="[%30.30t] %-30.30c{1} %-5p %m%n"/>
       </layout>
    </appender>
-
-
-  <!--  ### Uncomment ALL for iBATIS logging -->
-<!-- 
-    <logger name="java.sql">
-        <level value="debug" />
-    </logger>
-
-    <logger name="org.apache.ibatis">
-        <level value="debug" />
-    </logger>
-    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <level value="debug" />
-    </logger>
--->  
+ 
 
     <root>
        <level value="DEBUG" />

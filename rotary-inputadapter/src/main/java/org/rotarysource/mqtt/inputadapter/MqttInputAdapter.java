@@ -1,47 +1,54 @@
-package org.rotarysource.inputadapter.jmsinputadapter;
+/*
+Copyright (c) 2014 the original author or authors.
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+ 
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+*/
+package org.rotarysource.mqtt.inputadapter;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.TextMessage;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.rotarysource.core.CepEngine;
 import org.rotarysource.events.BasicEvent;
-import org.rotarysource.signals.SignalCapable;
+import org.rotarysource.mqtt.listener.MessageListener;
+import org.rotarysource.mqtt.support.converter.MessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.support.converter.MessageConversionException;
-import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
+/**
+ * @author Jose Luis Canales Gasco
+ * @since 1.0
+ * @see 
+ */
+@ManagedResource(objectName="org.rotarysource.mbean.inputadapters:name=MqttInputAdapter", description="Mqtt Input Adapter managed counters", log=true,
+logFile="jmx.log", currencyTimeLimit=15, persistPolicy="OnUpdate", persistPeriod=200,
+persistLocation="foo", persistName="bar")
+public class MqttInputAdapter implements MessageListener {
 
-
-/** 
- * This class provides the Input Adapter for ProdEvent XML messages
- * through a JMS queue communication.
- * 
- * XMLInputAdapter implements a MessageListener that get XML events from
- * the queue, transform it in a ProdEvent object and injects it in the
- * Esper core.
- * 
- * Spring configuration for this class is definded in StatementProcessor-config.xml
- * @author J.L. Canales
- */ 
-@ManagedResource(objectName="org.rotarysource.mbean.inputadapters:name=BasicEventInputAdapter", description="XML Input Adapter managed counters", log=true,
-	    logFile="jmx.log", currencyTimeLimit=15, persistPolicy="OnUpdate", persistPeriod=200,
-	    persistLocation="foo", persistName="bar")
-public class BasicEventIA implements MessageListener
-{
     /** 
      * Slf4j logger instance
      */	
-	private static Logger log = LoggerFactory.getLogger(BasicEventIA.class);
+	private static Logger  log = LoggerFactory.getLogger(MqttInputAdapter.class);
     
     /** 
      * Reference to Cep Engine that events will be sent
@@ -60,37 +67,39 @@ public class BasicEventIA implements MessageListener
      * For JMX management. Number of bad formed Messages 
      */
     private int        			countBadFormed;
-
+    
+ 
     /** 
      * Create a new MqttInputAdapter, given a CepEngine
      * @param aiCepEngine Statement processor class to get the esper instance that process events.
      */
-	public BasicEventIA(CepEngine aiCepEngine)
+	public MqttInputAdapter(CepEngine aiCepEngine)
     {
         this.cepEngine      = aiCepEngine;
         this.countMessages  = 0;
         this.countBadFormed = 0;
-    }
+    }    
     
-    /** 
-     * Implements MessageListener onMessage method. This operation is called by
-     * spring every time a message is available in the queue.
-     * 
-     * @param message JMS message received by the JMS listener
-     */    
-    @Override
-	public void onMessage(Message message) {
+    
+	@Override
+	public void onMessage(String topic, MqttMessage message) {
+		// TODO Auto-generated method stub
+		log.debug("Received message from topic : {}", topic);
 
-    	TextMessage bytesMsg = (TextMessage) message;
     	BasicEvent 	basEvent = new BasicEvent();
     	
     	try {
-    		basEvent = (BasicEvent) msgConverter.fromMessage(bytesMsg);
-
-            cepEngine.getCepEngine().getEPRuntime().sendEvent(basEvent);
+    		if(msgConverter != null){
+	    		basEvent = (BasicEvent) msgConverter.fromMessage(topic, message);
+	
+	            cepEngine.getCepEngine().getEPRuntime().sendEvent(basEvent);
+    		}
+            else{
+            	log.error("There are not message converter defined. Received message will not be sent to CEP Engine");           	           	
+            }
             countMessages++;
             
-		} catch (MessageConversionException e) {
+		} catch (MqttException e) {
 			String 	  errorText  = "Msg Converter error. Bad Formed message";
 			BasicEvent errorEvent = new BasicEvent();
             Date      date       = new Date();  
@@ -110,16 +119,12 @@ public class BasicEventIA implements MessageListener
 	        cepEngine.getCepEngine().getEPRuntime().sendEvent(errorEvent);
 	        countBadFormed++;
 	        log.error(errorText);
-	        log.debug("Bad formed message {}", bytesMsg);
-
-		} catch (JMSException e) {
-			String 	  errorText  = "JMS Conection problem";
-			log.error(errorText, e);
+	        log.debug("Bad formed message {}", message.toString());
 		}
+		
 
 	}
 
-    
 	/**
 	 * Return Menssage Converter Object set up for this item
 	 * @return MessageConverter Message Converter
@@ -135,11 +140,11 @@ public class BasicEventIA implements MessageListener
      */
 	public void setMsgConverter(MessageConverter aiMsgConverter) {
 		this.msgConverter = aiMsgConverter;
-	}    
- 
+	}
+	
 	/**
-	 * Return the number of message processed by XMLInputAdapter instance
-	 * @return int Message nunber
+	 * Return the number of message processed by MqttInputAdapter instance
+	 * @return int Message number
 	 */
     @ManagedAttribute(description="Processed Messages counter",persistPeriod=300)
 	public int getCountMessages() {
@@ -148,7 +153,7 @@ public class BasicEventIA implements MessageListener
     
     /**
      * Return the Message Number Failed while they was been processed 
-     * by XMLInputAdapter
+     * by MqttInputAdapter
      * @return int Bad Formed Messages Counter
      */
     @ManagedAttribute(description="Bad Formed Messages counter",persistPeriod=300)
@@ -164,5 +169,6 @@ public class BasicEventIA implements MessageListener
         this.countMessages  = 0;
         this.countBadFormed = 0;	
 	}
-
+	
+	
 }
