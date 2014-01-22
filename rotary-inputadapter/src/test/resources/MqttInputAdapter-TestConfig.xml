@@ -4,6 +4,31 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+
+    <!-- CEP engine structure definition                                    -->
+    <!-- In this bean all the statements are injected                       -->
+	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
+		<constructor-arg>
+			<set>
+				<ref bean="basicEventLogStatement" />
+			</set>
+		</constructor-arg>
+		<constructor-arg value = "0"/> <!-- 0: STANDALONE_HA_MODE  1: FILESOUPORT_HA_MODE-->
+	</bean>
+
+	<!-- START logAllStatement log all ProdEvent events received -->    
+	<bean id="basicEventLogStatement"
+		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
+		<property name="eplStatement" value="@Name('basicEventLogStatement') select istream * from BasicEvent" />
+		<property name="subscriber" ref="basicEventLogSubscriber"/>
+	</bean>   
+	
+	<bean id="basicEventLogSubscriber"
+		class="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber" />
+		  
+	<!-- END logAllStatement--> 
+	
+
  	<bean id="listenerContainer"
 		class="org.rotarysource.mqtt.listener.SimpleMqttMessageListenerContainer">
 		<property name="brokerUrl" value="tcp://broker.mqttdashboard.com:1883" />
@@ -12,6 +37,13 @@
 		<property name="messageListener" ref="mqttInputAdapter" />
 	</bean>
 	
-	<bean id="mqttInputAdapter" class="org.rotarysource.mqtt.inputadapter.MqttInputAdapter"/>
+	<bean id="mqttInputAdapter" class="org.rotarysource.mqtt.inputadapter.MqttInputAdapter">
+		<constructor-arg ref = "cepEngine"/>
+		<property name="msgConverter" ref="mqttMessageConverter"/>
+	</bean>
+	
+	<bean id="mqttMessageConverter"
+		class="org.rotarysource.mqtt.inputadapter.BasicEventMqttMessageConverter" />
+	
 	
 </beans>

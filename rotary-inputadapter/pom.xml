@@ -103,6 +103,11 @@
 			<groupId>org.rotarysource</groupId>
 			<artifactId>mqtt-connector</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-listener</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->

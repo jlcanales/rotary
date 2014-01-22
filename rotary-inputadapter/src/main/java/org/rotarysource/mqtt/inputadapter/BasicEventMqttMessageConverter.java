@@ -102,18 +102,24 @@ public class BasicEventMqttMessageConverter implements MessageConverter {
 		HashMap<String, String> compdata = new HashMap<String, String>();
 		BasicEvent 	       		basEvent = new BasicEvent();
 		
-		String messageString    = message.toString();		
-		String messageEntries[] = messageString.split(",");
+		String messageString    = message.toString();
+		messageString = messageString.substring(1,messageString.length() - 3); // Three characters }\r\n
+		String messageEntries[] = messageString.split("\r\n");
 
 		log.debug("Converting message from topic: {}", topic);
 		
 		// Key and Value extraction from each line
 		for( int i = 0; i < messageEntries.length; i++){
 
-			String keyValue[] = messageEntries[i].split("\":\"");
-			String key = keyValue[0].substring(keyValue[0].indexOf('\"') + 1);
-			String value = keyValue[1].substring(0, keyValue[1].indexOf('\"'));
+			String messageEntry = new String(messageEntries[i]);
+			if( messageEntry.charAt( messageEntry.length() - 1) == ','){
+				messageEntry = messageEntry.substring(0, messageEntry.length() - 1);
+			}
 			
+			String keyValue[] = messageEntry.split("\":");
+			String key = keyValue[0].replaceAll("\"","");
+			String value = keyValue[1].replaceAll("\"","");
+
 			log.debug("Adding Entry: key->{}, value->{} ", key, value);
 			
 			compdata.put(key, value);

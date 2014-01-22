@@ -42,11 +42,13 @@ public class BEMqttConverterTest extends TestCase{
 		BasicEventMqttMessageConverter converter = new BasicEventMqttMessageConverter();
 		StringBuffer sBuffer = new StringBuffer();
 		
-		sBuffer.append("\"date\"").append(":").append("\"18:26\"").append(",")
-		.append("\"temp\"").append(":").append("\"4.9\"").append(",")
-		.append("\"tempTL\"").append(":").append("\"-0.8\"").append(",")
-		.append("\"tempTH\"").append(":").append("\"8.9\"").append(",")
-		.append("\"intemp\"").append(":").append("\"19.5\"");
+		sBuffer.append("{\"date\"").append(":").append("\"18:26\"").append(",\r\n")
+		.append("\"temp\"").append(":").append("\"4.9\"").append(",\r\n")
+		.append("\"tempTL\"").append(":").append("\"-0.8\"").append(",\r\n")
+		.append("\"tempTH\"").append(":").append("\"8.9\"").append(",\r\n")
+		.append("\"intemp\"").append(":").append("\"19.5\"").append(",\r\n")
+		.append("\"WindRoseData\"").append(":").append("[55.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,103.0,9.0,55.0,9.0]").append(",\r\n")
+		.append("\"intemp\"").append(":").append("\"19.5\"").append("}\r\n");
 	/*
 		"date":"18:26",
 		"temp":"4.9",
