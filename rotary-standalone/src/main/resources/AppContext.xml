@@ -128,5 +128,26 @@
 	</bean>
 	<!-- END INPUT JMS QUEUES ADAPTAPTOR -->
 
+	<!-- *********************************************** -->
+	<!-- INPUT MQTT QUEUES ADAPTAPTOR -->
+	<!-- Input Adaptor Setup -->
+	<!-- *********************************************** -->
+	
+	<!-- MQTT Message converter -->	
+	<bean id="mqttMessageConverter"
+		class="org.rotarysource.mqtt.inputadapter.BasicEventMqttMessageConverter" />
+		
+ 	<bean id="mqttListenerContainer"
+		class="org.rotarysource.mqtt.listener.SimpleMqttMessageListenerContainer" init-method="doInitialize">
+		<property name="brokerUrl" value="tcp://broker.mqttdashboard.com:1883" />
+		<property name="destination" value="demo/dat/domhouse/temperature/current" />
+		<property name="concurrentConsumers" value="2" />
+		<property name="messageListener" ref="mqttInputAdapter" />
+	</bean>
+	
+	<bean id="mqttInputAdapter" class="org.rotarysource.mqtt.inputadapter.MqttInputAdapter">
+		<constructor-arg ref = "cepEngine"/>
+		<property name="msgConverter" ref="mqttMessageConverter"/>
+	</bean>
 
 </beans>
