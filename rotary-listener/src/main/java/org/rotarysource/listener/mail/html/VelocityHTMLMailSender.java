@@ -74,12 +74,27 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 			// Send mail
 			super.sendMail(setupParams, mailTexts[MAIL_TEXT], attachments, resources);
 	
-			return mailTexts[MAIL_TEXT];
+			return mailTexts[MAIL_HEADERED_TEXT];
 		
 	}
 	
 	
 	
+	/**
+	 * Compose a HTML test using the configured velocity engine. This method allow to
+	 * generate two HTML versions.
+	 *    <p>MAIL_TEXT is the text version to be sended.<p>
+	 *    <p>MAIL_HEADERED_TEXT is a instrumentialized version that include Header information. To generate it,
+	 *    velocity template must include a section like this:<p>
+	 *    <p> #if ( ${includeHeader} == 1)
+	 *        //// your code here
+	 *        #end
+	 *     <p>
+	 * @param mailVariablesMap Variables to be substitute in velocity template
+	 * @return String array with two rows: result[ MAIL_TEXT] and result[ MAIL_HEADERED_TEXT]
+	 * @throws IllegalArgumentException Bad arguments used
+	 * @throws MailPreparationException HTML text could not be composed
+	 */
 	private String[] composeMail(Map<String, Object> mailVariablesMap)
 			throws IllegalArgumentException, MailPreparationException {
 		
