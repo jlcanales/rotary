@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>1.1.0.RELEASE</version>
+		<version>1.1.1.RELEASE</version>
 	</parent>
 
 
@@ -128,37 +128,37 @@
 			</plugin>
 
 
-			<plugin>
-				<groupId>com.sun.tools.jxc.maven2</groupId>
-				<artifactId>maven-jaxb-schemagen-plugin</artifactId>
-				<version>1.2</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.sun.tools.jxc.maven2</groupId> -->
+<!-- 				<artifactId>maven-jaxb-schemagen-plugin</artifactId> -->
+<!-- 				<version>1.2</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>generate-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>generate</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
 
-				<configuration>
-					<project>
-						${project}
-					</project>
-					<destdir>${project.build.directory}/schemas</destdir>
-					<srcdir>${project.build.sourceDirectory}</srcdir>
-					<includes>
-						<include>org/rotarysource/events/*</include>
-					</includes>
-					<schemas>
-						<schema>
-							<namespace>http://schema.rotarysource.org/BasicEvent/1.0.0</namespace>
-							<file>BasicEvent-v1_0_0.xsd</file>
-						</schema>
-					</schemas>
-					<verbose>true</verbose>
-				</configuration>
-			</plugin>
+<!-- 				<configuration> -->
+<!-- 					<project> -->
+<!-- 						${project} -->
+<!-- 					</project> -->
+<!-- 					<destdir>${project.build.directory}/schemas</destdir> -->
+<!-- 					<srcdir>${project.build.sourceDirectory}</srcdir> -->
+<!-- 					<includes> -->
+<!-- 						<include>org/rotarysource/events/*</include> -->
+<!-- 					</includes> -->
+<!-- 					<schemas> -->
+<!-- 						<schema> -->
+<!-- 							<namespace>http://schema.rotarysource.org/BasicEvent/1.0.0</namespace> -->
+<!-- 							<file>BasicEvent-v1_0_0.xsd</file> -->
+<!-- 						</schema> -->
+<!-- 					</schemas> -->
+<!-- 					<verbose>true</verbose> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
 
 
