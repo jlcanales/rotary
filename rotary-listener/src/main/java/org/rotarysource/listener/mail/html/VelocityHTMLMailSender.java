@@ -63,8 +63,30 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 	}	
 	
 	
-	
+	/**
+	 * This method has been renamed. Use composeAndSendMail instead.
+	 */
+	@Deprecated
 	public String sendMail(MailDataBean setupParams, Map<String, Object> composeParams,
+			String[] attachments, String[] resources) throws IllegalArgumentException,
+			MailException, RuntimeException {
+	
+			return composeAndSendMail(setupParams, composeParams, attachments, resources);
+		
+	}
+
+	/**
+	 * This method compose a HTML email based on velocity template and send it.
+	 * @param setupParams Mail information params to send the email @see{MailDataBean}
+	 * @param composeParams key,value list with params to be substitute in the velocity template
+	 * @param attachments path array to files to be attached to the email
+	 * @param resources path array to files to be included in the email
+	 * @return
+	 * @throws IllegalArgumentException Bad arguments included.
+	 * @throws MailException Mail could not be composed or sent.
+	 * @throws RuntimeException Unknown exception.
+	 */
+	public String composeAndSendMail(MailDataBean setupParams, Map<String, Object> composeParams,
 			String[] attachments, String[] resources) throws IllegalArgumentException,
 			MailException, RuntimeException {
 		
@@ -77,7 +99,6 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 			return mailTexts[MAIL_HEADERED_TEXT];
 		
 	}
-	
 	
 	
 	/**
