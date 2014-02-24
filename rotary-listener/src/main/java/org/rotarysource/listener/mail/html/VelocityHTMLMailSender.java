@@ -63,8 +63,30 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 	}	
 	
 	
-	
+	/**
+	 * This method has been renamed. Use composeAndSendMail instead.
+	 */
+	@Deprecated
 	public String sendMail(MailDataBean setupParams, Map<String, Object> composeParams,
+			String[] attachments, String[] resources) throws IllegalArgumentException,
+			MailException, RuntimeException {
+	
+			return composeAndSendMail(setupParams, composeParams, attachments, resources);
+		
+	}
+
+	/**
+	 * This method compose a HTML email based on velocity template and send it.
+	 * @param setupParams Mail information params to send the email @see{MailDataBean}
+	 * @param composeParams key,value list with params to be substitute in the velocity template
+	 * @param attachments path array to files to be attached to the email
+	 * @param resources path array to files to be included in the email
+	 * @return
+	 * @throws IllegalArgumentException Bad arguments included.
+	 * @throws MailException Mail could not be composed or sent.
+	 * @throws RuntimeException Unknown exception.
+	 */
+	public String composeAndSendMail(MailDataBean setupParams, Map<String, Object> composeParams,
 			String[] attachments, String[] resources) throws IllegalArgumentException,
 			MailException, RuntimeException {
 		
@@ -74,12 +96,26 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 			// Send mail
 			super.sendMail(setupParams, mailTexts[MAIL_TEXT], attachments, resources);
 	
-			return mailTexts[MAIL_TEXT];
+			return mailTexts[MAIL_HEADERED_TEXT];
 		
 	}
 	
 	
-	
+	/**
+	 * Compose a HTML test using the configured velocity engine. This method allow to
+	 * generate two HTML versions.
+	 *    <p>MAIL_TEXT is the text version to be sended.<p>
+	 *    <p>MAIL_HEADERED_TEXT is a instrumentialized version that include Header information. To generate it,
+	 *    velocity template must include a section like this:<p>
+	 *    <p> #if ( ${includeHeader} == 1)
+	 *        //// your code here
+	 *        #end
+	 *     <p>
+	 * @param mailVariablesMap Variables to be substitute in velocity template
+	 * @return String array with two rows: result[ MAIL_TEXT] and result[ MAIL_HEADERED_TEXT]
+	 * @throws IllegalArgumentException Bad arguments used
+	 * @throws MailPreparationException HTML text could not be composed
+	 */
 	private String[] composeMail(Map<String, Object> mailVariablesMap)
 			throws IllegalArgumentException, MailPreparationException {
 		
