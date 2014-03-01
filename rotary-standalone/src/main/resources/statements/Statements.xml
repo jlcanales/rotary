@@ -11,6 +11,7 @@
 		class="org.rotarysource.core.statements.StatmntSingleQuery">
 		<property name="eplStatement" value="@Name('logAllStatement') select istream * from BasicEvent" />
 		<property name="listener" ref="logListener"/>
+		<property name="defaultActive" value="false"/>
 	</bean>     
 	<!-- END logAllStatement--> 
 	

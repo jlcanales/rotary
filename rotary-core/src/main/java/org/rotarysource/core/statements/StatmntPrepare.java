@@ -52,11 +52,19 @@ public class StatmntPrepare implements Statement {
 	 * EPL Statement for this Item
 	 */
 	private String eplStatement;
+	
+	/**
+	 * Flag to indicate if statement stay active after registering
+	 */
+	private boolean defaultActive;
+
+
 
 	/**
 	 * Esper Statement Object to manage statements in Esper core
 	 */
 	protected EPStatement statementObj;
+	
 
 
 	/**
@@ -64,6 +72,7 @@ public class StatmntPrepare implements Statement {
 	 */
 	public StatmntPrepare() {
 		eplStatement = "";
+		defaultActive = true;
 	}
 
 	/**
@@ -74,6 +83,7 @@ public class StatmntPrepare implements Statement {
 	 */
 	public StatmntPrepare(String aiEplStatement) {
 		setEplStatement(aiEplStatement);
+		defaultActive = true;
 	}
 
 	/**
@@ -93,6 +103,9 @@ public class StatmntPrepare implements Statement {
 		}
 		try {
 				statementObj = cepEngine.getEPAdministrator().createEPL( eplStatement);
+				if(!defaultActive){
+					statementObj.stop();
+				}
 
 			
 		} catch (EPStatementExistsException exception) {
@@ -220,6 +233,14 @@ public class StatmntPrepare implements Statement {
 			statementObj.start();
 		}
 		
+	}
+    
+	public boolean isDefaultActive() {
+		return defaultActive;
+	}
+
+	public void setDefaultActive(boolean defaultActive) {
+		this.defaultActive = defaultActive;
 	}
     
 }
