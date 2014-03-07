@@ -58,7 +58,7 @@
 
 			</set>
 		</constructor-arg>
-		<constructor-arg value="1" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
+		<constructor-arg value="0" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
 	</bean>
 
 
