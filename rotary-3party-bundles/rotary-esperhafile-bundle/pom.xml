@@ -9,11 +9,11 @@
 
 <groupId>org.rotarysource</groupId>
 	<artifactId>com.expertech.bundles.esperha-ehafile</artifactId>
-	<version>4.9.0.1</version>
+	<version>4.11.0.1</version>
 	<packaging>bundle</packaging>
 
 	<name>esperha-ehafile OSGi Bundle</name>
-	<description>This OSGi bundle simply wraps esperha-ehafile-4.9.0.jar artifact.</description>
+	<description>This OSGi bundle simply wraps esperha-ehafile-4.11.0.jar artifact.</description>
 
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -78,7 +78,7 @@
 			<groupId>com.espertech</groupId>
 							<artifactId>esperha-ehafile</artifactId>
 			<optional>true</optional>
-			<version>4.9.0</version>
+			<version>4.11.0</version>
 		</dependency>
 	</dependencies>
 </project>
