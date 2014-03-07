@@ -89,7 +89,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Esper CEP Framework Version -->
-		<esper-version>4.9.0</esper-version>
+		<esper-version>4.11.0</esper-version>
 
 		<!-- Quartz SEP Framework Version -->
 		<quartz-version>2.2.0</quartz-version>

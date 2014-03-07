@@ -6,7 +6,7 @@
 JAVA_HOME=/usr
 
 #Only needed for EsperHA activation with Berkeley DB
-CEP_HOME=/apps/yell01_correlador
+CEP_HOME=/apps/rotarysource
 ESPERHA_STORAGE=${CEP_HOME}/esperha-default-store
 
 
