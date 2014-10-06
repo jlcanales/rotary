@@ -8,34 +8,12 @@
 			            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 			            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-	<bean id="registry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
-		<property name="port" value="8999"/>
-	</bean>
-	
-	<bean id="serverConnector"
-		      class="org.springframework.jmx.support.ConnectorServerFactoryBean">
-		  <property name="objectName" value="connector:name=rmi"/>
-		  <property name="serviceUrl" value="service:jmx:rmi://localhost/jndi/rmi://localhost:8999/myconnector"/>
-    </bean>
-	  
+
 	  <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
 	     <!-- indicate to first look for a server -->
 	     <property name="locateExistingServerIfPossible" value="true"/>	  
 	  </bean>	  
 
-<!--	
-	  <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter">
-	    <property name="beans">
-	      <map>
- 	        <entry key="com.edcontrol.server.mbean:name=SPServiceProviderBean" value-ref="SPServiceProviderBean"/>
-	     	<entry key="com.edcontrol.server.mbean.listeners:name=PropertyAgregatorListener" value-ref="PropertyAgregatorListener"/>
-
-	     	<entry key="com.edcontrol.server.mbean.inputadapters:name=XMLInputAdapter" value-ref="jmsInputAdapter"/>
-	      </map>
-	    </property>
-	    <property name="server" ref="mbeanServer"/>
-	  </bean>
--->
 	<context:mbean-export server="mbeanServer"/>
 	<task:annotation-driven/>
 		
