@@ -24,14 +24,6 @@ public class Application {
 
     public static void main(String[] args) {
 
-
-        log.info("CEP System version: 1.1.1.SNAPSHOT");
-        log.info("Starting server shell");
-
-
-        // Initialize engine
-        log.info("Getting Esper engine instance");
-
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
         // Connect to JMS
@@ -42,19 +34,19 @@ public class Application {
 
 
         // Register shutdown hook
-        Runtime.getRuntime().addShutdownHook(
+/*        Runtime.getRuntime().addShutdownHook(
                 new Thread(){
                     public void run()
                     {
-/*		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
+		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
 
 		            	ShutdownEvent event = new ShutdownEvent(this, "Shutdown Event triggered by main shutdownHook");
 		            	springAppContext.publishEvent( event);
-*/
+
                     }
                 }
         );
-
+*/
         log.info("Statements Processor started.");
 
 

@@ -3,14 +3,15 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
 	debug="false">
-
+<!--
 	<appender name="Terminal" class="org.apache.log4j.ConsoleAppender">
-		<param name="Threshold" value="INFO" />
+		<param name="Threshold" value="DEBUG" />
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d %-5p [%c{1}] %m%n" />
 		</layout>
 	</appender>
+-->
 
 	<appender name="LogListenerLogfile" class="org.apache.log4j.RollingFileAppender">
 		<param name="File" value="LogListener.log" />
@@ -45,13 +46,6 @@
 	</logger>
 
 	<!-- *********************************************** -->
-	<!-- Main class Log config -->
-	<!-- *********************************************** -->
-	<logger name="org.rotarysource.standalone">
-		<level value="INFO" />
-	</logger>
-
-	<!-- *********************************************** -->
 	<!-- Rotary Core Log config -->
 	<!-- *********************************************** -->
 	<logger name="org.rotarysource.core">
@@ -62,7 +56,7 @@
 	<!-- Esper CEP engine Log config -->
 	<!-- *********************************************** -->
 	<logger name="com.espertech.esper">
-		<level value="WARN" />
+		<level value="DEBUG" />
 	</logger>
 
 	<!-- *********************************************** -->
@@ -70,7 +64,6 @@
 	<!-- *********************************************** -->
 	<root>
 		<level value="WARN" />
-		<appender-ref ref="Terminal" />
 	</root>
 
 
