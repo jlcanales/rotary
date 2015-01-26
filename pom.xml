@@ -181,9 +181,10 @@
 								<goal>testCompile</goal>
 							</goals>
 							<configuration>
-								<includes>
+							<!--	<includes>
 									<include>**/test/java/**/*Test.java</include>
 								</includes>
+							-->
 							</configuration>
 						</execution>
 					</executions>

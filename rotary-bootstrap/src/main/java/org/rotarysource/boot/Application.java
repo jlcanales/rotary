@@ -1,18 +1,14 @@
-package demo;
+package org.rotarysource.boot;
 
 import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
-
-import java.util.Arrays;
 
 @Configuration
 //@ComponentScan
@@ -32,21 +28,6 @@ public class Application {
 
         jmsListenerContainer.start();
 
-
-        // Register shutdown hook
-/*        Runtime.getRuntime().addShutdownHook(
-                new Thread(){
-                    public void run()
-                    {
-		                ApplicationContext springAppContext = new ClassPathXmlApplicationContext("AppContext.xml");
-
-		            	ShutdownEvent event = new ShutdownEvent(this, "Shutdown Event triggered by main shutdownHook");
-		            	springAppContext.publishEvent( event);
-
-                    }
-                }
-        );
-*/
         log.info("Statements Processor started.");
 
 
