@@ -90,10 +90,8 @@
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
-				<!--<module>rotary-standalone</module>-->
+				<module>rotary-standalone</module>
 				<module>rotary-war</module>
-
-                <module>rotary-bootstrap</module>
 			</modules>
             <dependencies>
                 <!-- logging -->
@@ -114,6 +112,50 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+		</profile>
+
+		<!-- ###################################### -->
+		<!-- Spring Boot profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>SpringBoot-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>SpringBoot</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-connectors/mqtt</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+				<module>rotary-war</module>
+
+				<module>rotary-bootstrap</module>
+			</modules>
+			<dependencies>
+				<!-- logging -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<scope>provided</scope>
+				</dependency>
+
+				<dependency>
+					<groupId>commons-lang</groupId>
+					<artifactId>commons-lang</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
 
 
 		</profile>
