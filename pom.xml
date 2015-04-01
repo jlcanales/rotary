@@ -133,8 +133,6 @@
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
-				<module>rotary-war</module>
-
 				<module>rotary-bootstrap</module>
 			</modules>
 			<dependencies>
