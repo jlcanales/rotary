@@ -4,6 +4,7 @@
 .classpath
 .project
 .settings/
+.idea
 
 # Compiled source #
 ###################
@@ -13,11 +14,14 @@
 *.exe
 *.o
 *.so
+*.iml
 
 # Logs and databases #
 ######################
 *.log
 .lck
+
+
 # OS generated files #
 ######################
 .DS_Store
