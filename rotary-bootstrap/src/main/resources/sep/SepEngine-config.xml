@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+	<!-- This Spring XML config file contains all elements needed to setup correctly
+		 the Scheduled Events Processor engine.
+		 It contains some example for job and trigger factories needed to start SepEngine
+		 -->
+
+	<!-- **************************************************************** -->
+	<!-- This Section contains the SEP engine structure definition -->
+	<!-- In this bean all the available job Factories are injected in engine -->
+	<!-- **************************************************************** -->
+	<bean id="sepEngine" class="org.rotarysource.core.sep.SepEngineQuartzImpl" init-method="start">
+		<constructor-arg ref="scheduler" />
+		<constructor-arg>
+			<map>
+				<entry key="logTaskJob" value-ref="logTask" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- This Section contains the Quartz Scheduler configuration         -->
+	<!-- Quarth Scheduler is the main component of sepEngine to date jobs -->
+	<!-- **************************************************************** -->
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		destroy-method="destroy">
+		<property name="autoStartup" value="false" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<property name="overwriteExistingJobs" value="true" />
+		<!-- <property name="dataSource" ref="quartzDataSource" /> <property name="transactionManager" 
+			ref="quartzTxManager" /> -->
+		<property name="jobFactory">
+			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+		</property>
+		<property name="configLocation" value="classpath:sep/quartz.properties" />
+	</bean>
+
+	<!-- **************************************************************** -->
+	<!-- Task Configuration Section
+		 This section setup each available Task bean to be injected in
+		 each job type -->
+	<!-- **************************************************************** -->
+	
+	<!-- Basic LogTask.
+	     ask beans MUST BE always prototype because each task execution have
+	     its own parameters and must be diferent task class instances. -->
+	<bean id="logTask" class="org.rotarysource.core.sep.task.common.LogTask"
+		scope="prototype">
+		<property name="cepEngineBeanName" value="cepEngine"/>
+	</bean>
+
+</beans>

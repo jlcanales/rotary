@@ -21,7 +21,6 @@
 *.log
 .lck
 
-
 # OS generated files #
 ######################
 .DS_Store
