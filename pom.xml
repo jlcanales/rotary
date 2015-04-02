@@ -136,7 +136,10 @@
 				<module>rotary-bootstrap</module>
 			</modules>
 			<dependencies>
-				<!-- logging -->
+
+                <!-- ###################################### -->
+                <!-- Spring Boot Logging Dependencies -->
+                <!-- ###################################### -->
 				<dependency>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
