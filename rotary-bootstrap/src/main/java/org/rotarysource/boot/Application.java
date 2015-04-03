@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,7 @@ import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
 @Configuration
 //@ComponentScan
-//@EnableAutoConfiguration
+@EnableAutoConfiguration
 @ImportResource("AppContext.xml")
 public class Application {
 

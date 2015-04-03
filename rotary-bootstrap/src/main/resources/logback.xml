@@ -22,7 +22,7 @@
     <!-- *********************************************** -->
     <!-- Esper CEP engine Log config -->
     <!-- *********************************************** -->
-    <logger name="com.espertech.esper" level="ERROR" additivity="false">
+    <logger name="com.espertech" level="ERROR">
         <appender-ref ref="CONSOLE"/>
     </logger>
 

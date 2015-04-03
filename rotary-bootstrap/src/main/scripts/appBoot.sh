@@ -39,7 +39,19 @@ CONFIG_LOCATION=/Users/fusedev/install/rotary/
 
 SPRING_OPTS=""
 
+#################################################################
+#
+# EsperHA Specitic configuration
+# ESPERHA_STORAGE -> Directory where esper HA db will be created
 
+ESPERHA_STORAGE=${BOOT_HOME}/esperha-default-store
+
+ESPER_OPTS="-Despertech.esperha.home="$ESPERHA_STORAGE
+
+if [ ! -d "${ESPERHA_STORAGE}" ]
+then
+mkdir ${ESPERHA_STORAGE}
+fi
 
 #
 # Funciones para soporte
@@ -136,7 +148,7 @@ if [ -f $BOOT_PID ] && check_if_process_is_running
             exit 1
     fi
 fi
-java -jar $JAVA_OPTS -jar $BOOT_JAR  --spring.config.location=$CONFIG_LOCATION $SPRING_OPTS >> $BOOT_OUT 2>&1 &
+java  $JAVA_OPTS  $ESPER_OPTS -jar $BOOT_JAR  --spring.config.location=$CONFIG_LOCATION $SPRING_OPTS >> $BOOT_OUT 2>&1 &
 
 echo $" "
 echo -n "Rotary Starting"
