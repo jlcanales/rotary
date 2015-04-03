@@ -17,9 +17,9 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
 
-	<!-- Apply this xml file for Quartz derby persistence  availability
-	   <import resource="classpath:sep/SepEngine-derby-config.xml" />
-	-->
+	<!-- Apply this xml file for Quartz derby persistence  availability -->
+	<import resource="classpath:sep/SepEngine-derby-config.xml" />
+
 	<!-- Apply this xml file for Quartz RAM persistence  availability-->
 	<import resource="classpath:sep/SepEngine-config.xml" />
 	

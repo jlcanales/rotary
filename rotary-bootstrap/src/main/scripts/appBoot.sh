@@ -33,11 +33,17 @@ BOOT_OUT=$BOOT_HOME/logs/rotarycep.out
 #
 # Spring Boot Specitic configuration
 # CONFIG_LOCATION -> Directory where external application.properties is located
-# SPRING_OPTS -> Additional spring configuration
+# SPRING_OPTS -> Additional spring Boot configuration
+# SPRING_PROFILES -> Dinamic application profiles. It take next values
+#                    SepEngine-Ram -> SepEngine Ram persistence
+#                    SepEngine-Derby -> SepEngine Derby persistence
 
 CONFIG_LOCATION=/Users/fusedev/install/rotary/
 
 SPRING_OPTS=""
+SPRING_PROFILES="SepEngine-Ram"
+
+SPRING_PROFILES="-Dspring.profiles.active="$SPRING_PROFILES
 
 #################################################################
 #
@@ -148,7 +154,7 @@ if [ -f $BOOT_PID ] && check_if_process_is_running
             exit 1
     fi
 fi
-java  $JAVA_OPTS  $ESPER_OPTS -jar $BOOT_JAR  --spring.config.location=$CONFIG_LOCATION $SPRING_OPTS >> $BOOT_OUT 2>&1 &
+java  $JAVA_OPTS  $ESPER_OPTS $SPRING_PROFILES -jar $BOOT_JAR  --spring.config.location=$CONFIG_LOCATION $SPRING_OPTS >> $BOOT_OUT 2>&1 &
 
 echo $" "
 echo -n "Rotary Starting"
