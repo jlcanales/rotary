@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+
+
+
+
+
+    <logger name="org.rotarysource.boot.Application" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+
+    <!-- *********************************************** -->
+    <!-- Rotary Core Log config -->
+    <!-- *********************************************** -->
+    <logger name="org.rotarysource.core" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- *********************************************** -->
+    <!-- Esper CEP engine Log config -->
+    <!-- *********************************************** -->
+    <logger name="com.espertech" level="ERROR">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- *********************************************** -->
+    <!-- JMS Input Log config -->
+    <!-- *********************************************** -->
+    <logger name="org.rotarysource.inputadapter" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="org.rotarysource.inputadapter.BasicEventXMLMessageConverter" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- *********************************************** -->
+    <!-- Basic Listeners Log config -->
+    <!-- *********************************************** -->
+    <logger name="org.rotarysource.listener.common.LogListener" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.rotarysource.subscriber.basicevent.BasicEventLogSubscriber" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.rotarysource.listener.MapBaseListener" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+
+</configuration>

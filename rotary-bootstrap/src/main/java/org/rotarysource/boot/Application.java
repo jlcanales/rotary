@@ -4,6 +4,8 @@ import org.rotarysource.signals.shutdown.ShutdownEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,7 @@ import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
 @Configuration
 //@ComponentScan
-//@EnableAutoConfiguration
+@EnableAutoConfiguration
 @ImportResource("AppContext.xml")
 public class Application {
 
@@ -20,7 +22,15 @@ public class Application {
 
     public static void main(String[] args) {
 
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        //ApplicationContext ctx = SpringApplication.run(Application.class, args);
+
+        SpringApplication springApplication = new SpringApplication(Application.class);
+
+        springApplication.addListeners( new ApplicationPidFileWriter("rotarycep.pid"));
+        ApplicationContext ctx = springApplication.run(args);
+
+
+
 
         // Connect to JMS
         log.info("Connecting to JMS server through a Listener Container");
