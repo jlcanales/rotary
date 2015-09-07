@@ -7,7 +7,7 @@
 	<groupId>org.rotarysource</groupId>
 	<artifactId>rotary-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1.1.SNAPSHOT</version>
+	<version>1.2.0-RELEASE</version>
 	<name>Rotary Source</name>
 	<description>Rotary Framework Main build file</description>
 
