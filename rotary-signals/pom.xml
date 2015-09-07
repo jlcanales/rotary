@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>1.1.2.RELEASE</version>
+		<version>1.2.0-RELEASE</version>
 	</parent>
 
 	<name>Rotary Internal signals management</name>
 	<description>Rotary Internal signals management</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-signals</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -27,12 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.signals</artifactId-name>
-
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 			<build>
+				<finalName>org.rotary.servicemix.bundles.signals-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -79,17 +78,6 @@
 	</profiles>
 
 	<dependencies>
-
-		<!-- Logging dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
 
 		<!-- Testing dependencies -->
 		<dependency>

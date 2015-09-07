@@ -54,7 +54,7 @@ public class ServerShellMain
 
     public ServerShellMain() throws Exception
     {
-    	log.info("CEP System version: 1.1.2.RELEASE");
+    	log.info("CEP System version: 1.1.1.SNAPSHOT");
     	log.info("Starting server shell");
 
     	

@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>1.1.2.RELEASE</version>
+		<version>1.2.0-RELEASE</version>
 	</parent>
 	<name>Rotary Input Adapter</name>
 
 	<description>Rotary Input Adapter Module</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-inputadapter</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -27,11 +27,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.inputadapter</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
-			<build>
+			<build>			
+				<finalName>org.rotary.servicemix.bundles.inputadapter-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -70,7 +70,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-inputadapter</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 
@@ -100,7 +99,15 @@
 			<groupId>org.rotarysource</groupId>
 			<artifactId>rotary-signals</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>mqtt-connector</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.rotarysource</groupId>
+			<artifactId>rotary-listener</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- ###################################### -->
 		<!-- Esper Framework Dependencies -->
@@ -120,18 +127,6 @@
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-xsdboe</artifactId>
-		</dependency>
-
-
-		<!-- Logging dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 
 		<dependency>

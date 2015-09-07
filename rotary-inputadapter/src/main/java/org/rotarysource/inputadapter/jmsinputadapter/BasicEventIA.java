@@ -39,7 +39,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 public class BasicEventIA implements MessageListener
 {
     /** 
-     * Apache commons login logger instance
+     * Slf4j logger instance
      */	
 	private static Logger log = LoggerFactory.getLogger(BasicEventIA.class);
     
@@ -62,8 +62,8 @@ public class BasicEventIA implements MessageListener
     private int        			countBadFormed;
 
     /** 
-     * Create a new XMLInputAdapter, given a StatementProcessor
-     * @param aiStProcessor Statement processor class to get the esper instance that process events.
+     * Create a new MqttInputAdapter, given a CepEngine
+     * @param aiCepEngine Statement processor class to get the esper instance that process events.
      */
 	public BasicEventIA(CepEngine aiCepEngine)
     {

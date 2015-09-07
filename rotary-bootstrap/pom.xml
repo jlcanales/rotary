@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
+	<groupId>org.rotarysource</groupId>
+	<artifactId>rotary-bootstrap</artifactId>
+	<version>1.2.0-RELEASE</version>
+	<packaging>jar</packaging>
+
+	<name>Rotary Bootstrap</name>
+	<description>Rotary standalone boot</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>org.rotarysource.boot.Application</start-class>
+        <java.version>1.7</java.version>
+
+        <!-- Esper CEP Framework Version -->
+        <rotary-version>1.2.0-RELEASE</rotary-version>
+
+    </properties>
+
+	<dependencies>
+        <!-- ###################################### -->
+        <!-- Proyect Modules Dependencies -->
+        <!-- ###################################### -->
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-core</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-events</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-listener</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-inputadapter</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-jmx</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rotarysource</groupId>
+            <artifactId>rotary-signals</artifactId>
+            <version>${rotary-version}</version>
+        </dependency>
+
+        <!-- ###################################### -->
+        <!-- Spring Boot Modules Dependencies -->
+        <!-- ###################################### -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+        <!-- ###################################### -->
+        <!-- Spring Boot Logging Dependencies -->
+        <!-- ###################################### -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+	</dependencies>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+</project>

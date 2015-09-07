@@ -34,6 +34,8 @@ import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PreDestroy;
+
 /**
  * Implement the CEP Core class.
  * This class instance a Cep engine and register into it all
@@ -168,6 +170,7 @@ public class CepEngine implements SignalCapable{
 	 * the correct HA storage
 	 */	
 	@Override
+    @PreDestroy
 	public void shutdown(){
 		log.info("Starting CEP Engine graceful SHUTDOWN");
 		cepEngine.destroy();

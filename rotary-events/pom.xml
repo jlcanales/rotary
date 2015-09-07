@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>org.rotarysource</groupId>
 		<artifactId>rotary-parent</artifactId>
-		<version>1.1.2.RELEASE</version>
+		<version>1.2.0-RELEASE</version>
 	</parent>
 
 
 	<name>Rotary Events</name>
 	<description>Rotary Managed Events definition and Utils</description>
 
-	<artifactId>${artifactId-name}</artifactId>
+	<artifactId>rotary-events</artifactId>
 	<packaging>${packaging-mode}</packaging>
 
 
@@ -30,11 +30,11 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>org.rotary.servicemix.bundles.events</artifactId-name>
 				<packaging-mode>bundle</packaging-mode>
 			</properties>
 
 			<build>
+				 <finalName>org.rotary.servicemix.bundles.events-${version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -73,7 +73,6 @@
 				</property>
 			</activation>
 			<properties>
-				<artifactId-name>rotary-events</artifactId-name>
 				<packaging-mode>jar</packaging-mode>
 			</properties>
 		</profile>
@@ -82,19 +81,6 @@
 
 
 	<dependencies>
-
-		<!-- ###################################### -->
-		<!-- Logging dependencies -->
-		<!-- ###################################### -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
 
 		<!-- ###################################### -->
 		<!-- JAXB dependencies for XML marshall -->
@@ -127,38 +113,40 @@
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 
+<!--
+			<plugin>
+				<groupId>com.sun.tools.jxc.maven2</groupId>
+				<artifactId>maven-jaxb-schemagen-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 
-<!-- 			<plugin> -->
-<!-- 				<groupId>com.sun.tools.jxc.maven2</groupId> -->
-<!-- 				<artifactId>maven-jaxb-schemagen-plugin</artifactId> -->
-<!-- 				<version>1.2</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<phase>generate-resources</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>generate</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
+				<configuration>
+					<project>
+						${project}
+					</project>
+					<destdir>${project.build.directory}/schemas</destdir>
+					<srcdir>${project.build.sourceDirectory}</srcdir>
+					<includes>
+						<include>org/rotarysource/events/*</include>
+					</includes>
+					<schemas>
+						<schema>
+							<namespace>http://schema.rotarysource.org/BasicEvent/1.0.0</namespace>
+							<file>BasicEvent-v1_0_0.xsd</file>
+						</schema>
+					</schemas>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+-->			
 
-<!-- 				<configuration> -->
-<!-- 					<project> -->
-<!-- 						${project} -->
-<!-- 					</project> -->
-<!-- 					<destdir>${project.build.directory}/schemas</destdir> -->
-<!-- 					<srcdir>${project.build.sourceDirectory}</srcdir> -->
-<!-- 					<includes> -->
-<!-- 						<include>org/rotarysource/events/*</include> -->
-<!-- 					</includes> -->
-<!-- 					<schemas> -->
-<!-- 						<schema> -->
-<!-- 							<namespace>http://schema.rotarysource.org/BasicEvent/1.0.0</namespace> -->
-<!-- 							<file>BasicEvent-v1_0_0.xsd</file> -->
-<!-- 						</schema> -->
-<!-- 					</schemas> -->
-<!-- 					<verbose>true</verbose> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
 		</plugins>
 
 

@@ -7,7 +7,7 @@
 	<groupId>org.rotarysource</groupId>
 	<artifactId>rotary-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1.2.RELEASE</version>
+	<version>1.2.0-RELEASE</version>
 	<name>Rotary Source</name>
 	<description>Rotary Framework Main build file</description>
 
@@ -24,35 +24,6 @@
 
 
 	<profiles>
-		<!-- ###################################### -->
-		<!-- Specific profile to build OSGI bundles -->
-		<!-- ###################################### -->
-		<profile>
-			<id>OSGI-Platform</id>
-			<activation>
-				<property>
-					<name>platform</name>
-					<value>OSGI</value>
-				</property>
-			</activation>
-			<modules>
-				<module>rotary-events</module>
-				<module>rotary-core</module>
-				<module>rotary-listener</module>
-				<module>rotary-inputadapter</module>
-				<module>rotary-jmx</module>
-				<module>rotary-signals</module>
-				<module>rotary-appbundle</module>
-				<module>rotary-3party-bundles/rotary-esperbundle</module>
-				<module>rotary-3party-bundles/rotary-esperhabundle</module>
-				<module>rotary-3party-bundles/rotary-esperhafile-bundle</module>
-				<module>rotary-3party-bundles/rotary-esperhaxsdboe-bundle</module>
-			</modules>
-
-
-
-		</profile>
-
 
 		<!-- ###################################### -->
 		<!-- Default profile -->
@@ -70,12 +41,77 @@
 				<module>rotary-events</module>
 				<module>rotary-core</module>
 				<module>rotary-listener</module>
+				<module>rotary-connectors/mqtt</module>
 				<module>rotary-inputadapter</module>
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
 				<module>rotary-standalone</module>
-				<module>rotary-war</module>
 			</modules>
+            <dependencies>
+                <!-- logging -->
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+		</profile>
+
+		<!-- ###################################### -->
+		<!-- Spring Boot profile -->
+		<!-- ###################################### -->
+		<profile>
+			<id>SpringBoot-Platform</id>
+			<activation>
+				<property>
+					<name>platform</name>
+					<value>SpringBoot</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rotary-events</module>
+				<module>rotary-core</module>
+				<module>rotary-listener</module>
+				<module>rotary-connectors/mqtt</module>
+				<module>rotary-inputadapter</module>
+				<module>rotary-jmx</module>
+				<module>rotary-signals</module>
+				<module>rotary-bootstrap</module>
+			</modules>
+			<dependencies>
+
+                <!-- ###################################### -->
+                <!-- Spring Boot Logging Dependencies -->
+                <!-- ###################################### -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<scope>provided</scope>
+				</dependency>
+
+				<dependency>
+					<groupId>commons-lang</groupId>
+					<artifactId>commons-lang</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+
 
 		</profile>
 	</profiles>
@@ -98,9 +134,9 @@
 		<mockito-version>1.9.5</mockito-version>
 
 		<log4j-version>1.2.17</log4j-version>
-		<spring-version>3.1.3.RELEASE</spring-version>
+		<spring-version>4.1.3.RELEASE</spring-version>
 		<aspectj-version>1.7.1</aspectj-version> <!-- Must be compatible with spring-version -->
-		<slf4j-version>1.6.6</slf4j-version>
+		<slf4j-version>1.7.7</slf4j-version>
 		<jaxb-version>2.2</jaxb-version>
 		<activemq-version>5.5.1</activemq-version>
 		<!-- Java SDK version -->
@@ -142,9 +178,10 @@
 								<goal>testCompile</goal>
 							</goals>
 							<configuration>
-								<includes>
+							<!--	<includes>
 									<include>**/test/java/**/*Test.java</include>
 								</includes>
+							-->
 							</configuration>
 						</execution>
 					</executions>
@@ -266,7 +303,11 @@
 				<artifactId>rotary-signals</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.rotarysource</groupId>
+				<artifactId>mqtt-connector</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- ###################################### -->
 			<!-- Esper Framework Dependencies -->
 			<!-- ###################################### -->
@@ -377,6 +418,12 @@
 				<version>${activemq-version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.4</version>
+			</dependency>
+
 			<!-- ###################################### -->
 			<!-- for javax.jms 1.1 dependency -->
 			<!-- ###################################### -->
@@ -389,7 +436,7 @@
 				<groupId>org.apache.geronimo.specs</groupId>
 				<artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
 				<version>1.0.1</version>
-			</dependency>
+            </dependency>
 
 			<!-- Spring AOP + AspectJ -->
 			<dependency>
@@ -465,15 +512,5 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<dependencies>
-		<!-- logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-	</dependencies>
+
 </project>

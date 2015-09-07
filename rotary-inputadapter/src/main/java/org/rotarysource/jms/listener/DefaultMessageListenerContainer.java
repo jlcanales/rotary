@@ -4,6 +4,8 @@ import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PreDestroy;
+
 public class DefaultMessageListenerContainer extends
 		org.springframework.jms.listener.DefaultMessageListenerContainer
 		implements SignalCapable {
@@ -18,6 +20,7 @@ public class DefaultMessageListenerContainer extends
 	 * @see org.springframework.jms.listener.AbstractJmsListeningContainer#shutdown()
 	 */
 	@Override
+    @PreDestroy
 	public void shutdown(){
 		log.info("Starting Listener Container  SHUTDOWN process.");
 		super.stop();
