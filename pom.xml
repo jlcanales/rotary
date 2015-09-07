@@ -24,51 +24,6 @@
 
 
 	<profiles>
-		<!-- ###################################### -->
-		<!-- Specific profile to build OSGI bundles -->
-		<!-- ###################################### -->
-		<profile>
-			<id>OSGI-Platform</id>
-			<activation>
-				<property>
-					<name>platform</name>
-					<value>OSGI</value>
-				</property>
-			</activation>
-			<modules>
-				<module>rotary-events</module>
-				<module>rotary-core</module>
-				<module>rotary-listener</module>
-				<module>rotary-connectors/mqtt</module>
-				<module>rotary-inputadapter</module>
-				<module>rotary-jmx</module>
-				<module>rotary-signals</module>
-				<module>rotary-appbundle</module>
-				<module>rotary-3party-bundles/rotary-esperbundle</module>
-				<module>rotary-3party-bundles/rotary-esperhabundle</module>
-				<module>rotary-3party-bundles/rotary-esperhafile-bundle</module>
-				<module>rotary-3party-bundles/rotary-esperhaxsdboe-bundle</module>
-			</modules>
-
-            <dependencies>
-                <!-- logging -->
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>commons-lang</groupId>
-                    <artifactId>commons-lang</artifactId>
-                </dependency>
-            </dependencies>
-
-		</profile>
-
 
 		<!-- ###################################### -->
 		<!-- Default profile -->
@@ -91,7 +46,6 @@
 				<module>rotary-jmx</module>
 				<module>rotary-signals</module>
 				<module>rotary-standalone</module>
-				<module>rotary-war</module>
 			</modules>
             <dependencies>
                 <!-- logging -->
