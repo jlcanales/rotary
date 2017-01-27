@@ -153,10 +153,6 @@
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-ehafile</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esperha-xsdboe</artifactId>
-		</dependency>
 
 		<!-- ###################################### -->
 		<!-- Quartz Framework Dependencies -->
