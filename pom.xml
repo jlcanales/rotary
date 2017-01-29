@@ -137,8 +137,8 @@
 		<jaxb-version>2.2</jaxb-version>
 		<activemq-version>5.5.1</activemq-version>
 		<!-- Java SDK version -->
-		<source-java-version>1.6</source-java-version>
-		<target-java-version>1.6</target-java-version>
+		<source-java-version>1.8</source-java-version>
+		<target-java-version>1.8</target-java-version>
 	</properties>
 
 	<build>

@@ -22,7 +22,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>org.rotarysource.boot.Application</start-class>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
 
         <!-- Esper CEP Framework Version -->
         <rotary-version>2.0.0-SNAPSHOT</rotary-version>
