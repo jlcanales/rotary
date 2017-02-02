@@ -67,8 +67,7 @@ public class StatmntSingleEPL extends StatmntPrepare {
 	/**
 	 * Method to Statement registering in a EventProcessor engine
 	 * 
-	 * @param EPServiceProvider
-	 *            . Esper Event Processor engine where register the statement.
+	 * @param cepEngine Esper Event Processor engine where register the statement.
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {

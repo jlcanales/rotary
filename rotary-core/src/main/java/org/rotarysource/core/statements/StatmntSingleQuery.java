@@ -29,6 +29,7 @@ import com.espertech.esper.client.UpdateListener;
  * 
  * @author J.L. Canales
  */
+@Deprecated
 public class StatmntSingleQuery extends StatmntSingleEPL {
 
 	/**

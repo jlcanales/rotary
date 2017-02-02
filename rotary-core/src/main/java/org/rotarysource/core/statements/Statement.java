@@ -30,7 +30,7 @@ public interface Statement {
 	 /** 
      * Method to Statement registering in a EventProcessor engine
      * 
-     * @param cepEngine. Esper Event Processor engine where register the statement.
+     * @param cepEngine Esper Event Processor engine where register the statement.
      */		
 	public void register(EPServiceProvider cepEngine);
 	

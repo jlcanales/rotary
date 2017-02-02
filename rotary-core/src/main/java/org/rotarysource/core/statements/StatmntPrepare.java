@@ -36,8 +36,8 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 /**
  * Class to create and register a prepare EPL statement.
  * This kind of staments has not any listener associated. They are used
- * to prepare CEP windows, valiables, insertions, etc. and its execution
- * dont trigger any listener.
+ * to prepare CEP windows, variables, insertions, etc. and its execution
+ * don't trigger any listener.
  * 
  * @author J.L. Canales
  */
@@ -89,8 +89,7 @@ public class StatmntPrepare implements Statement {
 	/**
 	 * Method to Statement registering in a EventProcessor engine
 	 * 
-	 * @param EPServiceProvider
-	 *            . Esper Event Processor engine where register the statement.
+	 * @param cepEngine Esper Event Processor engine where register the statement.
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {
@@ -113,14 +112,15 @@ public class StatmntPrepare implements Statement {
 			
 			
 			// EPL statement can be named using @Name() notation in EPL sentence.
-			// Statement object hasnt any Name reference to recover the EPL so
+			// Statement object hasn't any Name reference to recover the EPL so
 			// Its necessary to parse the EPL to recover the EPL Name
 			String eplName = null;
 			String expression = ".*@Name\\('.*'\\).*";
 			//Make the comparison case-insensitive.  
 			Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);  
 			Matcher matcher = pattern.matcher(eplStatement); 
-			if(matcher.matches()){  
+			if(matcher.matches()){
+				//TODO: get name value from matcher
 				eplName = eplStatement.split("@Name\\('")[1].split("'\\)")[0];
 				log.debug("Localized EPL Name in EPL Statement: " + eplName);
 			}
@@ -148,9 +148,7 @@ public class StatmntPrepare implements Statement {
 	/**
 	 * Method to Statement unregistering in a EventProcessor engine when destoy
 	 * is called, Event Processor Engine stops to use this statement
-	 * 
-	 * @param EPServiceProvider
-	 *            . Esper Event Processor engine where register the statement.
+	 *
 	 */
 	@Override
 	public void destroy() {
