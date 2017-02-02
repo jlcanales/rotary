@@ -325,6 +325,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.espertech</groupId>
+				<artifactId>esperha-ehassr</artifactId>
+				<version>${esper-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.espertech</groupId>
 				<artifactId>esperha-ehassr-fs</artifactId>
 				<version>${esper-version}</version>
 			</dependency>

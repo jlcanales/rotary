@@ -95,6 +95,10 @@
 			<groupId>com.espertech</groupId>
 			<artifactId>esperha-ehassr-fs</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.espertech</groupId>
+			<artifactId>esperha-ehassr</artifactId>
+		</dependency>
 
 		<!-- ###################################### -->
 		<!-- Quartz Framework Dependencies -->
