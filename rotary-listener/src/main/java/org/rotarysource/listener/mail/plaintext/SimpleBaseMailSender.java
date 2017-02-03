@@ -32,8 +32,7 @@ public class SimpleBaseMailSender implements OAMailSender {
 	
 	@Override
 	public void sendMail(MailDataBean setupParams, String mailText,
-			String[] attachments, String[] resources) throws IllegalArgumentException,
-			MailException, RuntimeException {
+			String[] attachments, String[] resources) throws RuntimeException {
 		//Input data validation
 		if( this.templateMessage == null &&
 			(setupParams.getFromAddress().isEmpty()   ||

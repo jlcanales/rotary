@@ -46,7 +46,6 @@ public class AccumulatingStat
             }
             total += vals;
         }
-        double result = total / size;
-        return result;
+        return (double) (total / size);
     }
 }

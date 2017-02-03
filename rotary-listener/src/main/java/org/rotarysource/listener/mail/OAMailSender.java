@@ -21,7 +21,7 @@ public interface OAMailSender{
 	 * @throws MailException Exception throws when a mail send fails. 
 	 * @throws RuntimeException
 	 */
-	public void sendMail(MailDataBean setupParams, String mailText, String attachments[],
-					     String resources[] )throws IllegalArgumentException,MailException,RuntimeException;
+	void sendMail(MailDataBean setupParams, String mailText, String attachments[],
+					     String resources[] )throws RuntimeException;
 	
 }

@@ -75,9 +75,8 @@ public class BasicEventMqttMessageConverter implements MessageConverter {
 			}
 		}
 		stringPayload.append("}");
-		
-		MqttMessage message = new MqttMessage(stringPayload.toString().getBytes());
-		return message;
+
+		return new MqttMessage(stringPayload.toString().getBytes());
 	}
 
 	

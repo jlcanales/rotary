@@ -32,8 +32,7 @@ public class PlainTextMailSender extends SimpleBaseMailSender{
 	
 	
 	public String sendMail(MailDataBean setupParams, Map<String, Object> composeParams,
-			String[] attachments, String[] resources) throws IllegalArgumentException,
-			MailException, RuntimeException {
+			String[] attachments, String[] resources) throws RuntimeException {
 		
 			// Composition
 			String[] mailTexts = composeMail(composeParams);

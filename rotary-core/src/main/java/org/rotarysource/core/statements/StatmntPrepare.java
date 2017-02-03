@@ -197,19 +197,13 @@ public class StatmntPrepare implements Statement {
 	 */
     @ManagedAttribute(description="CEP Engine Registering Status") 
 	public boolean isRegistered() {
-		if( statementObj != null)
-			return true;
-		else
-			return false;
+		return statementObj != null;
 	}
 
     @ManagedAttribute(description="Statement Activation Status") 
 	@Override
 	public boolean isStarted() {
-		if( statementObj != null)
-			return statementObj.isStarted();
-		else
-			return false;
+		return statementObj != null && statementObj.isStarted();
 	}
     
     

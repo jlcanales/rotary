@@ -31,8 +31,8 @@ public interface Statement {
      * Method to Statement registering in a EventProcessor engine
      * 
      * @param cepEngine Esper Event Processor engine where register the statement.
-     */		
-	public void register(EPServiceProvider cepEngine);
+     */
+	 void register(EPServiceProvider cepEngine);
 	
 	 /** 
      * Method to Statement unregistering in a EventProcessor engine
@@ -40,24 +40,24 @@ public interface Statement {
      * and wipe it out from its statements register
      * 
      */
-	public void destroy();
+	 void destroy();
 	
 	/**
 	 * Method to Start and statement that is registered but is non active 
 	 * because it is stopped
 	 * 
 	 */
-	public void stop();
+	void stop();
 	
 	/**
 	 * Method to stop a registered statement and deactivate it. After stop is called
 	 * the statement will be still registered in the cep engine.
 	 * 
 	 */
-	public void start();
+	void start();
 	
 	/**
 	 * Checks the activation status.
 	 */
-	public boolean isStarted();
+	boolean isStarted();
 }

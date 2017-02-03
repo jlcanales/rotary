@@ -80,7 +80,6 @@ public class SimpleMqttMessageListenerContainer implements MqttCallback{
 	 * @param arg0
 	 */
 	public void deliveryComplete(IMqttDeliveryToken arg0) {
-		;	
 	}
 	
 	/**

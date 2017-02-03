@@ -110,7 +110,7 @@ public class SepEngineQuartzImpl implements SepEngine {
 			throws SchedulerException {
 		Assert.notNull(jobDescription, "Job to scheduler cannot be null!");
 
-		if (jobTaskMap.containsKey(jobDescription.getJobFactoryId()) == false) {
+		if (!jobTaskMap.containsKey(jobDescription.getJobFactoryId())) {
 			// Manage exception
 			StringBuffer errorTxt = new StringBuffer("Job Type not found for: ");
 			errorTxt.append(jobDescription.toString());

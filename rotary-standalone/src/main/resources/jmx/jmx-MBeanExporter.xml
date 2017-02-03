@@ -40,17 +40,13 @@
 	<task:annotation-driven/>
 		
 	  <bean id="abstractMessageListenerContainerJMX" class="org.rotarysource.jmx.jmsinputadapter.AbstractMessageListenerContainerJMX">
-	  	<constructor-arg>
-	  		<ref bean="listenerContainer"/>	
-	  	</constructor-arg>
+	  	<constructor-arg ref="listenerContainer"/>
 	  </bean>
 
 	  <bean id="systemSignalsJMX" class="org.rotarysource.jmx.core.SystemSignalsJMX"/>
 	  
 	  <bean id="sepJMX" class="org.rotarysource.jmx.core.SepJMX" >
-	  	<constructor-arg>
-	  		<ref bean="sepEngine"/>	
-	  	</constructor-arg>	  
+	  	<constructor-arg ref="sepEngine"/>
 	  </bean>
 
 </beans>

@@ -149,10 +149,7 @@ public class CepEngine implements SignalCapable {
 
         }
 
-
-        EPServiceProvider engine = EPServiceProviderManager.getDefaultProvider(configuration);
-
-        return engine;
+        return EPServiceProviderManager.getDefaultProvider(configuration);
     }
 
     /**

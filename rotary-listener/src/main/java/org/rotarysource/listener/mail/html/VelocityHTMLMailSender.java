@@ -68,8 +68,7 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 	 */
 	@Deprecated
 	public String sendMail(MailDataBean setupParams, Map<String, Object> composeParams,
-			String[] attachments, String[] resources) throws IllegalArgumentException,
-			MailException, RuntimeException {
+			String[] attachments, String[] resources) throws  RuntimeException {
 	
 			return composeAndSendMail(setupParams, composeParams, attachments, resources);
 		
@@ -87,8 +86,7 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 	 * @throws RuntimeException Unknown exception.
 	 */
 	public String composeAndSendMail(MailDataBean setupParams, Map<String, Object> composeParams,
-			String[] attachments, String[] resources) throws IllegalArgumentException,
-			MailException, RuntimeException {
+			String[] attachments, String[] resources) throws RuntimeException {
 		
 			// Composition
 			String[] mailTexts = composeMail(composeParams);
@@ -130,7 +128,7 @@ public class VelocityHTMLMailSender extends HTMLBaseMailSender{
 			result[ MAIL_TEXT] 			= VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, templateEncoding, templateVars);
 			// Get mail with header
 			templateVars.put("includeHeader", 1);
-	        result[ MAIL_HEADERED_TEXT] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, templateEncoding, templateVars);;
+	        result[ MAIL_HEADERED_TEXT] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, templateEncoding, templateVars);
 		}
 		catch(VelocityException exception){
 			//Map to MailPreparationException

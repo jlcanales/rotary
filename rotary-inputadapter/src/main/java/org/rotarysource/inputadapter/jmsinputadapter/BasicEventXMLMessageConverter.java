@@ -112,8 +112,7 @@ public class BasicEventXMLMessageConverter implements MessageConverter{
 			
 	        throw new MessageConversionException("Message has not right XML Format");
 		}
-		
-        Message message = session.createTextMessage(stXMLMarshalled);
-		return message;
+
+		return session.createTextMessage(stXMLMarshalled);
 	}
 }

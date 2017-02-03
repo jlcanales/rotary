@@ -53,9 +53,7 @@
 	     prototype.
 	     Nevertheless, task beans MUST BE always prototype because each task execution have
 	     its own parameters and must be diferent task class instances. -->
-	<bean id="taskMock" class="org.rotarysource.core.sep.task.TaskMock"
-		scope="singleton">
-	</bean>
+	<bean id="taskMock" class="org.rotarysource.core.sep.task.TaskMock"/>
 
 	<bean id="taskMockSpy" name="taskMockSpy" class="org.mockito.Mockito" factory-method="spy">
 		<constructor-arg ref="taskMock"/>

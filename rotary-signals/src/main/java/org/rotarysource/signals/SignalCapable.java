@@ -30,6 +30,6 @@ public interface SignalCapable {
 	/**
 	 * Process Shutdown signal.
 	 */
-	public void shutdown();
+	void shutdown();
 
 }

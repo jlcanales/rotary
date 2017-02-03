@@ -122,9 +122,7 @@
 	<bean id="basicEventInputAdapter"
 		class="org.rotarysource.inputadapter.jmsinputadapter.BasicEventIA">
 		<constructor-arg ref="cepEngine" />
-		<property name="msgConverter">
-			<ref bean="messageConverter" />
-		</property>
+		<property name="msgConverter" ref="messageConverter"/>
 	</bean>
 	<!-- END INPUT JMS QUEUES ADAPTAPTOR -->
 

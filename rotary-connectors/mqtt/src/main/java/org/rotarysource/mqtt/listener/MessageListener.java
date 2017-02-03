@@ -36,5 +36,5 @@ public interface MessageListener {
 	 * Passes a message to the listener.
 	 * @param message - the message passed to the listener
 	 */
-	public void onMessage(String topic, MqttMessage message);
+	void onMessage(String topic, MqttMessage message);
 }

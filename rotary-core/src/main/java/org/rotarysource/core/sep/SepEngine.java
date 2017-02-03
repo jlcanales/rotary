@@ -40,7 +40,6 @@ public interface SepEngine extends Lifecycle{
 	 * @see org.quartz.JobDetail
 	 * @see org.quartz.Trigger
 	 */
-	public abstract void scheduleJob(final JobDescription job)
-			throws SchedulerException;
+	void scheduleJob(final JobDescription job) throws SchedulerException;
 
 }
