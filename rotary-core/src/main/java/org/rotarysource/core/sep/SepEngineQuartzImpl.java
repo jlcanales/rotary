@@ -63,18 +63,14 @@ public class SepEngineQuartzImpl implements SepEngine {
 	private transient final HashMap<String, SepTask> jobTaskMap;
 
 	/**
-	 * Constructor of the <code>PEMScheduler</code> object.
+	 * Constructor of the <code>SepEngine</code> object.
 	 * 
 	 * This object is created by spring framework using this constructor.
 	 * 
-	 * @param scheduler
+	 * @param aiScheduler
 	 *            The Quartz scheduler
-	 * @param jobDetailFactory
-	 *            Job detail factory.
-	 * @param jobTriggerFactory
-	 *            Trigger factory.
-	 * @throws SchedulerException
-	 *             Returned exception when a Quartz initialization error happens
+	 * @param aiJobTaskMap
+	 *            Map with the SepTask that this SepEngine can schedule
 	 */
 	public SepEngineQuartzImpl(
 			final Scheduler aiScheduler,
@@ -144,8 +140,8 @@ public class SepEngineQuartzImpl implements SepEngine {
 	    Trigger trigger = newTrigger()
 	    					.withIdentity(jobDescription.getName(), jobDescription.getGroup())
 							.withSchedule(simpleSchedule()
-											.withRepeatCount(0)
-											.withMisfireHandlingInstructionFireNow())
+							.withRepeatCount(0)
+							.withMisfireHandlingInstructionFireNow())
 							.forJob(jobDetail)
 							.startAt(jobDescription.getFireDate())
 							.build();

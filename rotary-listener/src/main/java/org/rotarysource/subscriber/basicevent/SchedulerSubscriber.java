@@ -64,7 +64,7 @@ public class SchedulerSubscriber
 	/**
 	 * processEvent method that implements the Scheduling Event routine
 	 * 
-	 * @param BasicEvent Event received with scheduling information. That event must contain three fields
+	 * @param event Event received with scheduling information. That event must contain three fields
 	 * to schedule event.
 	 * <p>compData("jobName") Name of Job to be scheduled.</p>
 	 * <p>compData("jobGroup") Name of Job Group to be scheduled.</p>

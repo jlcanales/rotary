@@ -31,7 +31,7 @@ public interface SepEngine extends Lifecycle{
 	 * a <code>{@link Trigger}</code> associated with it and schedule the job.
 	 * </p>
 	 * 
-	 * @param JobDescription Job information needed to schedule a new job in scheduler engine.
+	 * @param job Job information needed to schedule a new job in scheduler engine.
 	 * @throws SchedulerException
 	 *           if the <code>JobDescription<code> or Trigger cannot be added to 
 	 *           the Scheduler, or there is an internal Scheduler error.
