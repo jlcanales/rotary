@@ -42,9 +42,7 @@
 	<!-- CEP engine bean creation -->
 	<!-- In this bean all the statements are injected -->
 	<!-- *********************************************** -->
-	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
-		<constructor-arg value="${cepengine.esper.hamode}" /> <!-- 0: STANDALONE_HA_MODE 1: FILESOUPORT_HA_MODE -->
-	</bean>
+	<bean id="cepEngine" class="org.rotarysource.core.CepEngine"/>
 
 
 	<!-- ********************************* -->

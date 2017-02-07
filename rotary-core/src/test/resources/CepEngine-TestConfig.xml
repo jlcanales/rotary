@@ -9,12 +9,12 @@
     <!-- CEP engine structure definition                                    -->
     <!-- In this bean all the statements are injected                       -->
 	<bean id="cepEngine" class="org.rotarysource.core.CepEngine">
-		<constructor-arg value = "0"/> <!-- 0: STANDALONE_HA_MODE  1: FILESOUPORT_HA_MODE-->
 		<property name="statements">
 			<list>
 				<ref bean="subscriberStatement"/>
 			</list>
 		</property>
+		<property name="haMode" value="STANDALONE_HA_MODE"/>
 	</bean>
 	
 	<!-- Statements for Object Under Test  -->

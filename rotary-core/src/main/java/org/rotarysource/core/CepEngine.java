@@ -32,6 +32,7 @@ import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -47,20 +48,28 @@ public class CepEngine implements SignalCapable {
 
     private static Logger log = LoggerFactory.getLogger(CepEngine.class);
 
-    /**
-     * Stand Alone Mode. Statement processor without High Availability behavior
-     */
-    private static final int STANDALONE_HA_MODE = 0;
+    public enum HaMode{
+        /**
+         * Stand Alone Mode. Statement processor without High Availability behavior
+         */
+        STANDALONE_HA_MODE(0),
 
-    /**
-     * BerkeleyDB Mode. Statement processor with disk persistence High Availability behavior
-     */
-    private static final int BERKELEYDB_HA_MODE = 1;
+        /**
+         * BerkeleyDB Mode. Statement processor with disk persistence High Availability behavior
+         */
+        BERKELEYDB_HA_MODE(1),
 
-    /**
-     * MySql Mode. Statement processor with MySQL database persistence Mode.
-     */
-    private static final int MYSQL_HA_MODE = 2;
+        /**
+         * MySql Mode. Statement processor with MySQL database persistence Mode.
+         */
+        MYSQL_HA_MODE(2);
+
+        private int haCode;
+
+        HaMode(int code){
+            this.haCode = code;
+        }
+    }
 
     /**
      * List of Statement Objects to be register in CEP engine
@@ -75,28 +84,7 @@ public class CepEngine implements SignalCapable {
     /**
      * Store the configurated EsperHA Mode
      */
-    private int haMode;
-
-    /**
-     * Create a new StatementProcessor.
-     * To Build it correctly, a statement list is needer to register EPL statements in the CEP core.
-     * It is necessary configure a HA mode too.
-     *
-     * @param statementList Statement object list with the EPL statements that maust be active when cep engine starts
-     * @param aiHAMode      Esper High Availability Mode. STANDALONE_HA_MODE = 0; BERKELEYDB_HA_MODE = 1; MYSQL_HA_MODE = 2;
-     */
-    public CepEngine(int aiHAMode) {
-
-        if (aiHAMode != STANDALONE_HA_MODE &&
-                aiHAMode != BERKELEYDB_HA_MODE &&
-                aiHAMode != MYSQL_HA_MODE) {
-            this.haMode = STANDALONE_HA_MODE; //Default Mode
-        } else {
-            this.haMode = aiHAMode;
-        }
-
-    }
-
+    private HaMode haMode = HaMode.STANDALONE_HA_MODE;
 
     @PostConstruct
     public void init(){
@@ -182,8 +170,22 @@ public class CepEngine implements SignalCapable {
         cepEngine.destroy();
     }
 
+    /**
+     * Set the list of statements available in this Cep Engine
+     * @param statements Statement object list with the EPL statements that maust be active when cep engine starts
+     */
     @Autowired
     public void setStatements(List<Statement> statements) {
         this.statements = statements;
+    }
+
+
+    /**
+     * Sets the High availability esper statement mode
+     * @param haMode Esper High Availability Mode. STANDALONE_HA_MODE = 0; BERKELEYDB_HA_MODE = 1; MYSQL_HA_MODE = 2;
+     */
+    @Value("${cepengine.esper.hamode}")
+    public void setHaMode(HaMode haMode) {
+        this.haMode = haMode;
     }
 }
