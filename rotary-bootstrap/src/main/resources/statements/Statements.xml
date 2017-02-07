@@ -20,7 +20,7 @@
 		class="org.rotarysource.core.statements.StatmntEPLSubscriber">
 		<property name="eplStatement" value="@Name('basicEventLogStatement') select istream * from BasicEvent" />
 		<property name="subscriber" ref="basicEventLogSubscriber"/>
-	</bean>     
+	</bean>
 	<!-- END logAllStatement--> 
 
 	<!-- START ScheduleEventStatement Schedule in SEP events with operation 'schedule' -->    

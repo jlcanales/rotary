@@ -1,5 +1,6 @@
 package org.rotarysource.subscriber.basicevent;
 
+import org.rotarysource.core.annotations.Subscriber;
 import org.rotarysource.events.BasicEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +22,18 @@ import org.slf4j.LoggerFactory;
  @author J. L. Canales
  * 
  */
+@Subscriber(eplStatement = "@Name('logAllSubscriber') select istream * from BasicEvent")
 public class BasicEventLogSubscriber
 {
 	private static Logger log = LoggerFactory.getLogger(BasicEventLogSubscriber.class);
 
 	/**
-	 * processEvent method implements a routine that go over generated Map
-	 * and log all its entries.
+	 * Implements a routine that process the BasicEvent object received from
+     * statement execution
 	 * 
-	 * @param Map<String, String> Map received form MapBaseListener parent class
+	 * @param event Basic event received from statement execution
 	 */
+
 	public void update(BasicEvent event) {
 
 		StringBuffer logText = new StringBuffer();

@@ -33,7 +33,6 @@ import junit.framework.TestCase;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
 @ContextConfiguration(locations = { "classpath:SepEngine-TestConfig.xml" })
 public class EngineTest extends TestCase {
 

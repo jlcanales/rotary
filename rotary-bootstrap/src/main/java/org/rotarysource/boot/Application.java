@@ -8,12 +8,13 @@ import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
 @Configuration
-//@ComponentScan
+@ComponentScan("org.rotarysource.subscriber.basicevent")
 @EnableAutoConfiguration
 @ImportResource("AppContext.xml")
 public class Application {

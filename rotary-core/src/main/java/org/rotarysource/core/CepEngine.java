@@ -31,7 +31,9 @@ import org.rotarysource.core.statements.Statement;
 import org.rotarysource.signals.SignalCapable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
@@ -83,7 +85,7 @@ public class CepEngine implements SignalCapable {
      * @param statementList Statement object list with the EPL statements that maust be active when cep engine starts
      * @param aiHAMode      Esper High Availability Mode. STANDALONE_HA_MODE = 0; BERKELEYDB_HA_MODE = 1; MYSQL_HA_MODE = 2;
      */
-    public CepEngine(List<Statement> statementList, int aiHAMode) {
+    public CepEngine(int aiHAMode) {
 
         if (aiHAMode != STANDALONE_HA_MODE &&
                 aiHAMode != BERKELEYDB_HA_MODE &&
@@ -92,9 +94,16 @@ public class CepEngine implements SignalCapable {
         } else {
             this.haMode = aiHAMode;
         }
-        this.statements = statementList;
+
+    }
+
+
+    @PostConstruct
+    public void init(){
+        cepEngine = initCepEngine();
         registerEsperStatements();
     }
+
 
     /**
      * Register and activate statements into cep engine.
@@ -107,7 +116,7 @@ public class CepEngine implements SignalCapable {
             return;
         }
 
-        cepEngine = initCepEngine();
+
 
         statements.forEach(statement -> {
             try {
@@ -173,5 +182,8 @@ public class CepEngine implements SignalCapable {
         cepEngine.destroy();
     }
 
-
+    @Autowired
+    public void setStatements(List<Statement> statements) {
+        this.statements = statements;
+    }
 }
