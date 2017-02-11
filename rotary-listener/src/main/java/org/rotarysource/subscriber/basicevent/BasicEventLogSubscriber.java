@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  @author J. L. Canales
  * 
  */
-@Subscriber(eplStatement = "@Name('logAllSubscriber') select istream * from BasicEvent")
+@Subscriber(eplStatement = "@Name('basicEventLogStatement') select istream * from BasicEvent")
 public class BasicEventLogSubscriber
 {
 	private static Logger log = LoggerFactory.getLogger(BasicEventLogSubscriber.class);

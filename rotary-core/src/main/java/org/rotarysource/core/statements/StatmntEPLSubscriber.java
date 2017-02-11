@@ -62,8 +62,7 @@ public class StatmntEPLSubscriber extends StatmntPrepare {
 	/**
 	 * Method to Statement registering in a EventProcessor engine
 	 * 
-	 * @param EPServiceProvider
-	 *            . Esper Event Processor engine where register the statement.
+	 * @param cepEngine Esper Event Processor engine where register the statement.
 	 */
 	@Override
 	public void register(EPServiceProvider cepEngine) {
@@ -92,7 +91,7 @@ public class StatmntEPLSubscriber extends StatmntPrepare {
 
 	/**
 	* Set the Listeners list for this item.
-	* @param aiListeners Listeners List to initialize this item
+	* @param aiSubscriber Listeners List to initialize this item
 	*/
 	public void setSubscriber(Object aiSubscriber) {
 		this.subscriber = aiSubscriber;

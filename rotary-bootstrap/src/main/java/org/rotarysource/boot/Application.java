@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
 
 @Configuration
-@ComponentScan("org.rotarysource.subscriber.basicevent")
+@ComponentScan({"org.rotarysource.core", "org.rotarysource.subscriber.basicevent"})
 @EnableAutoConfiguration
 @ImportResource("AppContext.xml")
 public class Application {

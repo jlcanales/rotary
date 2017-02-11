@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import javax.xml.bind.DatatypeConverter;
 
 import org.quartz.SchedulerException;
+import org.rotarysource.core.annotations.Subscriber;
 import org.rotarysource.core.sep.SepEngine;
 import org.rotarysource.core.sep.job.JobDescription;
 import org.rotarysource.events.BasicEvent;
