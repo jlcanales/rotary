@@ -51,14 +51,6 @@
 	<!-- ********************************* -->
 	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
 
-	<!-- Scheduling Subscriber -->
-	<!-- To use this Subscriber, <import resource="classpath:sep/SepEngine-config.xml" 
-		/> must be included in header of this xml file -->
-
-	<bean id="schedulerSubscriber"
-		class="org.rotarysource.subscriber.basicevent.SchedulerSubscriber">
-		<constructor-arg ref="sepEngine" />
-	</bean>
 
 
 	<!-- *********************************************** -->

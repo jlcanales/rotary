@@ -36,6 +36,7 @@ import org.springframework.util.Assert;
  @author J. L. Canales
  * 
  */
+@Subscriber(eplStatement = "@Name('scheduleEventStatement') select istream * from BasicEvent where compData('IdOperation')='Schedule' and eventType='INFO'")
 public class SchedulerSubscriber
 {
 	private static Logger log = LoggerFactory.getLogger(SchedulerSubscriber.class);

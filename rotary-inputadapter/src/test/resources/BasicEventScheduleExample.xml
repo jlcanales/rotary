@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:basicEvent xmlns:ns2="http://schema.rotarysource.org/BasicEvent/1.0.0">
+        <compData>
+            <entry>
+                <key>IdOperation</key>
+                <value>Delay</value>
+            </entry>
+            <entry>
+                <key>jobName</key>
+                <value>delayTest</value>
+            </entry>
+            <entry>
+                <key>jobGroup</key>
+                <value>org.rotarysource</value>
+            </entry>
+            <entry>
+                <key>taskType</key>
+                <value>logTaskJob</value>
+            </entry>
+            <entry>
+                <key>delay</key>
+                <value>30</value>
+            </entry>
+        </compData>
+    <eventCode>TEST</eventCode>
+    <eventId>1111-2222</eventId>
+    <eventTimestamp>1970-01-01T01:00:00+01:00</eventTimestamp>
+    <eventType>INFO</eventType>
+    <systemId>testsys</systemId>
+</ns2:basicEvent>

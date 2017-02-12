@@ -1,6 +1,6 @@
 package org.rotarysource.core.postprocessors;
 
-import org.rotarysource.core.CepEngine;
+
 import org.rotarysource.core.annotations.Subscriber;
 import org.rotarysource.core.statements.StatmntEPLSubscriber;
 import org.slf4j.Logger;
@@ -8,11 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +41,7 @@ public class SubscriberBeanPostProcessor implements BeanPostProcessor, Ordered, 
         if (clazz.isAnnotationPresent(Subscriber.class)) {
             final Subscriber annotation = (Subscriber) clazz.getAnnotation(Subscriber.class);
             log.info("Creating StatemntSingleEPL for Subscriber Bean '" + beanName + "' EPL : " + annotation.eplStatement());
+
             StatmntEPLSubscriber statmntEPLSubscriber = new StatmntEPLSubscriber(annotation.eplStatement());
             statmntEPLSubscriber.setSubscriber(bean);
             statmntEPLSubscriber.setDefaultActive(annotation.active());
