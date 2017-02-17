@@ -1,5 +1,7 @@
 package org.rotarysource.core.annotations;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -7,6 +9,7 @@ import java.lang.annotation.RetentionPolicy;
  * Created by javadev on 7/2/17.
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Component
 public @interface Listener {
 
     /**

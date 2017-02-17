@@ -22,8 +22,7 @@
 
 	<!-- Apply this xml file for Quartz RAM persistence  availability-->
 	<import resource="classpath:sep/SepEngine-config.xml" />
-	
-	<import resource="classpath:statements/Statements.xml" />
+
 	<import resource="classpath:jmx/jmx-MBeanExporter.xml" />
 
 
@@ -43,14 +42,6 @@
 	<!-- In this bean all the statements are injected -->
 	<!-- *********************************************** -->
 	<bean id="cepEngine" class="org.rotarysource.core.CepEngine"/>
-
-
-	<!-- ********************************* -->
-	<!-- Listener Definition -->
-	<!-- To be injected in any statement -->
-	<!-- ********************************* -->
-	<bean id="logListener" class="org.rotarysource.listener.common.LogListener" />
-
 
 
 	<!-- *********************************************** -->

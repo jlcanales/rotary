@@ -106,7 +106,7 @@ public class StatmntSingleEPL extends StatmntPrepare {
 			this.listeners = aiListeners;
 		}
 		else{
-			this.listeners = new ArrayList<UpdateListener>();
+			this.listeners = new ArrayList<>();
 		}
 	}
 

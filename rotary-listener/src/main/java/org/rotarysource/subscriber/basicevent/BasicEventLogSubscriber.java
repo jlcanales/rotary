@@ -4,7 +4,6 @@ import org.rotarysource.core.annotations.Subscriber;
 import org.rotarysource.events.BasicEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * Implements a Log Subscriber for Basic Events Object.
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Subscriber(eplStatement = "@Name('basicEventLogStatement') select istream * from BasicEvent")
-@Component
 public class BasicEventLogSubscriber
 {
 	private static Logger log = LoggerFactory.getLogger(BasicEventLogSubscriber.class);
@@ -38,7 +36,7 @@ public class BasicEventLogSubscriber
 
 	public void update(BasicEvent event) {
 
-		StringBuffer logText = new StringBuffer();
+		StringBuilder logText = new StringBuilder();
 		logText.append("Received event: ")
                .append( event.toString());		
        	log.info(logText.toString());

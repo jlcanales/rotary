@@ -27,7 +27,7 @@ public class SubscriberBeanPostProcessor implements BeanPostProcessor, Ordered, 
 
     private static Logger log = LoggerFactory.getLogger(SubscriberBeanPostProcessor.class);
 
-    ConfigurableBeanFactory beanFactory;
+    private ConfigurableBeanFactory beanFactory;
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -40,7 +40,7 @@ public class SubscriberBeanPostProcessor implements BeanPostProcessor, Ordered, 
 
         if (clazz.isAnnotationPresent(Subscriber.class)) {
             final Subscriber annotation = (Subscriber) clazz.getAnnotation(Subscriber.class);
-            log.info("Creating StatemntSingleEPL for Subscriber Bean '" + beanName + "' EPL : " + annotation.eplStatement());
+            log.info("Creating StatmntEPLSubscriber for Subscriber Bean '" + beanName + "' EPL : " + annotation.eplStatement());
 
             StatmntEPLSubscriber statmntEPLSubscriber = new StatmntEPLSubscriber(annotation.eplStatement());
             statmntEPLSubscriber.setSubscriber(bean);

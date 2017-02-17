@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.rotarysource.core.annotations.Listener;
 import org.rotarysource.listener.MapBaseListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  @author J. L. Canales
  * 
  */
+@Listener(eplStatement = "@Name('logAllStatement') select istream * from BasicEvent")
 public class LogListener extends MapBaseListener
 {
 	private static Logger log = LoggerFactory.getLogger(LogListener.class);
@@ -27,7 +29,7 @@ public class LogListener extends MapBaseListener
 	 * processEvent method implements a routine that go over generated Map
 	 * and log all its entries.
 	 * 
-	 * @param Map<String, String> Map received form MapBaseListener parent class
+	 * @param eventMap Map received form MapBaseListener parent class
 	 */
 	@Override
 	public void processEvent(Map<String, String> eventMap) {
@@ -35,7 +37,7 @@ public class LogListener extends MapBaseListener
 		Set<Entry<String, String>> entries = eventMap.entrySet();
 		
 		Iterator<Entry<String, String>> index = entries.iterator();
-		StringBuffer logText = new StringBuffer();
+		StringBuilder logText = new StringBuilder();
 		logText.append("Received event: ");
 		while(index.hasNext()){
 			Entry<String, String> nextEntry = index.next();
